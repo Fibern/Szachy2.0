@@ -17,6 +17,7 @@ int main()
 	if (!board.loadFromFile("images/bishopw.png"))
 	{
 		cout << "Siema Janekxdxd";
+		cout << "jdjdjdjdSiema Janekxd";
 	}
 
 	Sprite background(board);
