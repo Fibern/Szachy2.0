@@ -15,7 +15,7 @@ int main()
 
 	if (!board.loadFromFile("images/bishopb.png"))
 	{
-
+		cout << "zmiana";
 	}
 
 	Sprite background(board);
