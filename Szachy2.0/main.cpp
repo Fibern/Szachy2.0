@@ -7,13 +7,14 @@ using namespace std;
 
 int main()
 {
+	
 	RenderWindow window(sf::VideoMode(600, 600), "Szachy");
 
 	Event e;
 	
 	Texture board;
 
-	if (!board.loadFromFile("images/bishopb.png"))
+	if (!board.loadFromFile("images/bishopw.png"))
 	{
 
 	}
