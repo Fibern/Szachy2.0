@@ -66,10 +66,10 @@ int main()
 
 				if (e.key.code == Mouse::Left) {
 
-					if (background.getGlobalBounds().contains(pos.x, pos.y)) {
+					if (pawnw.getGlobalBounds().contains(pos.x, pos.y)) {
 						isMove = 1;
-						dx = pos.x - background.getPosition().x;
-						dy = pos.y - background.getPosition().y;
+						dx = pos.x - pawnw.getPosition().x;
+						dy = pos.y - pawnw.getPosition().y;
 					}
 
 				}
@@ -84,7 +84,7 @@ int main()
 
 
 			if (isMove) {
-				background.setPosition(pos.x - dx, pos.y - dy);
+				pawnw.setPosition(pos.x - dx, pos.y - dy);
 			}
 
 		}
@@ -92,7 +92,7 @@ int main()
 
 
 		window.clear();
-		window.draw(background);
+		window.draw(pawnw);
 		window.display();
 
 	}
