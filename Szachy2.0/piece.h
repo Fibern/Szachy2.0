@@ -2,8 +2,11 @@
 class Piece
 {
 private:
-	int row, column;
+	int row, col;
 	bool color;
-	asd
+	char id;
+public:
+	Piece(int row, int col);
+	~Piece();
 };
 

@@ -57,23 +57,22 @@ int main()
 
 			if (e.type == Event::MouseButtonPressed) {
 				if (e.key.code == Mouse::Left) {
-					if (pawnw.getGlobalBounds().contains(pos.x, pos.y)) {
+					if (pawnw.getGlobalBounds().contains(pos.x, pos.y))
 						isMove = 1;
-					}
 				}
 			}
 
 			if (e.type == Event::MouseButtonReleased) {
 				if (e.key.code == Mouse::Left && isMove) {
 					isMove = 0;
-					dx = floor(pos.x / 100) * 100;
-					dy = floor(pos.y / 100) * 100;
+					dx = (float)floor(pos.x / 100) * 100;
+					dy = (float)floor(pos.y / 100) * 100;
 					pawnw.setPosition(dx, dy);
 				}
 			}
 
 			if (isMove)
-				pawnw.setPosition(pos.x - 50, pos.y - 50);
+				pawnw.setPosition(pos.x - (float)50, pos.y - (float)50);
 		}
 
 		window.clear();
