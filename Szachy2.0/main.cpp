@@ -43,9 +43,7 @@ int main()
 	Sprite queen(t11);
 	Sprite kingw(t12);
 	Sprite kingb(t13);
-	float x = 0.78125;
-	board.setScale(x, x);
-	board.setTextureRect({ 0, 0, 1024, 1024});
+	board.setTextureRect({ 0, 0, 800, 800});
 
 	float dx = 0, dy = 0;
 	bool isMove = 0;
