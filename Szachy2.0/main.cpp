@@ -27,12 +27,22 @@ int main()
 	Texture kingw;
 	Texture kingb;
 
-	if (!board.loadFromFile("images/bishopw.png"))
-	{
-		
-	}
+	boardw.loadFromFile("images/brownl.png");
+	boardb.loadFromFile("images/brownd.png");
+	pawnw.loadFromFile("images/pawnw.png");
+	pawnb.loadFromFile("images/pawnb.png");
+	rookw.loadFromFile("images/rookw.png");
+	rookb.loadFromFile("images/rookb.png");
+	bishopw.loadFromFile("images/bishopw.png");
+	bishopb.loadFromFile("images/bishopb.png");
+	knightw.loadFromFile("images/knightw.png");
+	knightb.loadFromFile("images/knightb.png");
+	queenw.loadFromFile("images/queenw.png");
+	queenb.loadFromFile("images/queenb.png");
+	kingw.loadFromFile("images/kingw.png");
+	kingb.loadFromFile("images/kingb.png");
 
-	Sprite background(board);
+	Sprite background(boardw);
 
 	float dx = 0, dy = 0;
 	bool isMove = 0;
