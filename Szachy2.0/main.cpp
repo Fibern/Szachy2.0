@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 	
-	RenderWindow window(sf::VideoMode(600, 600), "Szachy");
+	RenderWindow window(VideoMode(1024, 1024), "Szachy");
 
 	Event e;
 	
