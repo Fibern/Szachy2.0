@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <time.h>
+#include <math.h>
 
 using namespace sf;
 using namespace std;
@@ -29,7 +30,6 @@ int main()
 	t13.loadFromFile("images/kingb.png");
 	t1.setRepeated(true);
 	
-
 	Sprite board(t1);
 	Sprite pawnw(t2);
 	Sprite pawnb(t3);
@@ -44,7 +44,7 @@ int main()
 	Sprite kingw(t12);
 	Sprite kingb(t13);
 	board.setTextureRect({ 0, 0, 800, 800});
-
+	pawnw.setPosition(0, 100);
 	float dx = 0, dy = 0;
 	bool isMove = 0;
 
@@ -59,23 +59,26 @@ int main()
 				if (e.key.code == Mouse::Left) {
 					if (pawnw.getGlobalBounds().contains(pos.x, pos.y)) {
 						isMove = 1;
-						dx = pos.x - pawnw.getPosition().x;
-						dy = pos.y - pawnw.getPosition().y;
 					}
 				}
 			}
 
 			if (e.type == Event::MouseButtonReleased) {
-				if (e.key.code == Mouse::Left)
+				if (e.key.code == Mouse::Left && isMove) {
 					isMove = 0;
+					dx = floor(pos.x / 100) * 100;
+					dy = floor(pos.y / 100) * 100;
+					pawnw.setPosition(dx, dy);
+				}
 			}
 
 			if (isMove)
-				pawnw.setPosition(pos.x - 50,pos.y - 50);
+				pawnw.setPosition(pos.x - 50, pos.y - 50);
 		}
 
 		window.clear();
 		window.draw(board);
+		window.draw(pawnw);
 		window.draw(pawnw);
 		window.display();
 	}
