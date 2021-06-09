@@ -12,7 +12,20 @@ int main()
 
 	Event e;
 	
-	Texture board;
+	Texture boardw;
+	Texture boardb;
+	Texture pawnw;
+	Texture pawnb;
+	Texture rookw;
+	Texture rookb;
+	Texture bishopw;
+	Texture bishopb;
+	Texture knightw;
+	Texture knightb;
+	Texture queenw;
+	Texture queenb;
+	Texture kingw;
+	Texture kingb;
 
 	if (!board.loadFromFile("images/bishopw.png"))
 	{
