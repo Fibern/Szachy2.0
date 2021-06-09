@@ -13,39 +13,39 @@ int main()
 	Event e;
 
 	
-	Texture t1, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14;
+	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
 
 	t1.loadFromFile("images/brown.png");
-	t3.loadFromFile("images/pawnw.png");
-	t4.loadFromFile("images/pawnb.png");
-	t5.loadFromFile("images/rookw.png");
-	t6.loadFromFile("images/rookb.png");
-	t7.loadFromFile("images/bishopw.png");
-	t8.loadFromFile("images/bishopb.png");
-	t9.loadFromFile("images/knightw.png");
-	t10.loadFromFile("images/knightb.png");
-	t11.loadFromFile("images/queenw.png");
-	t12.loadFromFile("images/queenb.png");
-	t13.loadFromFile("images/kingw.png");
-	t14.loadFromFile("images/kingb.png");
+	t2.loadFromFile("images/pawnw.png");
+	t3.loadFromFile("images/pawnb.png");
+	t4.loadFromFile("images/rookw.png");
+	t5.loadFromFile("images/rookb.png");
+	t6.loadFromFile("images/bishopw.png");
+	t7.loadFromFile("images/bishopb.png");
+	t8.loadFromFile("images/knightw.png");
+	t9.loadFromFile("images/knightb.png");
+	t10.loadFromFile("images/queenw.png");
+	t11.loadFromFile("images/queenb.png");
+	t12.loadFromFile("images/kingw.png");
+	t13.loadFromFile("images/kingb.png");
 	t1.setRepeated(true);
 	
 
 	Sprite board(t1);
-	Sprite pawnw(t3);
-	Sprite pawnb(t4);
-	Sprite rookw(t5);
-	Sprite rookb(t6);
-	Sprite bishopw(t7);
-	Sprite bishopb(t8);
-	Sprite knightw(t9);
-	Sprite knightb(t10);
-	Sprite queenw(t11);
-	Sprite queen(t12);
-	Sprite kingw(t13);
-	Sprite kingb(t14);
+	Sprite pawnw(t2);
+	Sprite pawnb(t3);
+	Sprite rookw(t4);
+	Sprite rookb(t5);
+	Sprite bishopw(t6);
+	Sprite bishopb(t7);
+	Sprite knightw(t8);
+	Sprite knightb(t9);
+	Sprite queenw(t10);
+	Sprite queen(t11);
+	Sprite kingw(t12);
+	Sprite kingb(t13);
 	float x = 0.78125;
-	board.setScale(x,x);
+	board.setScale(x, x);
 	board.setTextureRect({ 0, 0, 1024, 1024});
 
 	float dx = 0, dy = 0;
@@ -78,8 +78,8 @@ int main()
 		}
 
 		window.clear();
-		window.draw(pawnw);
 		window.draw(board);
+		window.draw(pawnw);
 		window.display();
 	}
 
