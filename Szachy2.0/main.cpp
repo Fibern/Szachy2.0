@@ -8,11 +8,10 @@ using namespace std;
 int main()
 {
 	
-	RenderWindow window(VideoMode(1024, 1024), "Szachy");
+	RenderWindow window(VideoMode(800, 800), "Szachy");
 
 	Event e;
 
-	RectangleShape board;
 	
 	Texture t1, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14;
 
@@ -29,6 +28,8 @@ int main()
 	t12.loadFromFile("images/queenb.png");
 	t13.loadFromFile("images/kingw.png");
 	t14.loadFromFile("images/kingb.png");
+	t1.setRepeated(true);
+	
 
 	Sprite board(t1);
 	Sprite pawnw(t3);
@@ -43,7 +44,9 @@ int main()
 	Sprite queen(t12);
 	Sprite kingw(t13);
 	Sprite kingb(t14);
-
+	float x = 0.78125;
+	board.setScale(x,x);
+	board.setTextureRect({ 0, 0, 1024, 1024});
 
 	float dx = 0, dy = 0;
 	bool isMove = 0;
@@ -76,6 +79,7 @@ int main()
 
 		window.clear();
 		window.draw(pawnw);
+		window.draw(board);
 		window.display();
 	}
 
