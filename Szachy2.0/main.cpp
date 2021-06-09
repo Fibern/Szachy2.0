@@ -8,10 +8,9 @@ using namespace std;
 int main()
 {
 	
-	RenderWindow window(VideoMode(800, 800), "Szachy");
+	RenderWindow window(VideoMode(800, 800), "Szachy", Style::Titlebar | Style::Close);
 
 	Event e;
-
 	
 	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
 
