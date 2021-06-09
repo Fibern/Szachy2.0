@@ -11,11 +11,12 @@ int main()
 	RenderWindow window(VideoMode(1024, 1024), "Szachy");
 
 	Event e;
-	
-	Texture t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14;
 
-	t1.loadFromFile("images/brownl.png");
-	t2.loadFromFile("images/brownd.png");
+	RectangleShape board;
+	
+	Texture t1, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14;
+
+	t1.loadFromFile("images/brown.png");
 	t3.loadFromFile("images/pawnw.png");
 	t4.loadFromFile("images/pawnb.png");
 	t5.loadFromFile("images/rookw.png");
@@ -29,8 +30,7 @@ int main()
 	t13.loadFromFile("images/kingw.png");
 	t14.loadFromFile("images/kingb.png");
 
-	Sprite boardl(t1);
-	Sprite boardd(t2);
+	Sprite board(t1);
 	Sprite pawnw(t3);
 	Sprite pawnb(t4);
 	Sprite rookw(t5);
