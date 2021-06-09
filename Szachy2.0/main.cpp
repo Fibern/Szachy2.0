@@ -12,37 +12,38 @@ int main()
 
 	Event e;
 	
-	Texture boardw;
-	Texture boardb;
-	Texture pawnw;
-	Texture pawnb;
-	Texture rookw;
-	Texture rookb;
-	Texture bishopw;
-	Texture bishopb;
-	Texture knightw;
-	Texture knightb;
-	Texture queenw;
-	Texture queenb;
-	Texture kingw;
-	Texture kingb;
+	Texture t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14;
 
-	boardw.loadFromFile("images/brownl.png");
-	boardb.loadFromFile("images/brownd.png");
-	pawnw.loadFromFile("images/pawnw.png");
-	pawnb.loadFromFile("images/pawnb.png");
-	rookw.loadFromFile("images/rookw.png");
-	rookb.loadFromFile("images/rookb.png");
-	bishopw.loadFromFile("images/bishopw.png");
-	bishopb.loadFromFile("images/bishopb.png");
-	knightw.loadFromFile("images/knightw.png");
-	knightb.loadFromFile("images/knightb.png");
-	queenw.loadFromFile("images/queenw.png");
-	queenb.loadFromFile("images/queenb.png");
-	kingw.loadFromFile("images/kingw.png");
-	kingb.loadFromFile("images/kingb.png");
+	t1.loadFromFile("images/brownl.png");
+	t2.loadFromFile("images/brownd.png");
+	t3.loadFromFile("images/pawnw.png");
+	t4.loadFromFile("images/pawnb.png");
+	t5.loadFromFile("images/rookw.png");
+	t6.loadFromFile("images/rookb.png");
+	t7.loadFromFile("images/bishopw.png");
+	t8.loadFromFile("images/bishopb.png");
+	t9.loadFromFile("images/knightw.png");
+	t10.loadFromFile("images/knightb.png");
+	t11.loadFromFile("images/queenw.png");
+	t12.loadFromFile("images/queenb.png");
+	t13.loadFromFile("images/kingw.png");
+	t14.loadFromFile("images/kingb.png");
 
-	Sprite background(boardw);
+	Sprite boardl(t1);
+	Sprite boardd(t2);
+	Sprite pawnw(t3);
+	Sprite pawnb(t4);
+	Sprite rookw(t5);
+	Sprite rookb(t6);
+	Sprite bishopw(t7);
+	Sprite bishopb(t8);
+	Sprite knightw(t9);
+	Sprite knightb(t10);
+	Sprite queenw(t11);
+	Sprite queen(t12);
+	Sprite kingw(t13);
+	Sprite kingb(t14);
+
 
 	float dx = 0, dy = 0;
 	bool isMove = 0;
