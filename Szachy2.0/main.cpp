@@ -54,7 +54,7 @@ int main()
 		while (window.pollEvent(e)) {
 			if (e.type == Event::Closed)
 				window.close();
-
+			
 			Vector2i pos = Mouse::getPosition(window);
 
 			if (e.type == Event::MouseButtonPressed) {
@@ -73,7 +73,7 @@ int main()
 			}
 
 			if (isMove)
-				pawnw.setPosition(pos.x - dx, pos.y - dy);
+				pawnw.setPosition(pos.x - 50,pos.y - 50);
 		}
 
 		window.clear();
