@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	
-	RenderWindow window(VideoMode(800, 800), "Szachy", Style::Titlebar | Style::Close);
+	RenderWindow window(VideoMode(800, 800), "Chess", Style::Titlebar | Style::Close);
 
 	Event e;
 	
