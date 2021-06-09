@@ -49,52 +49,34 @@ int main()
 	bool isMove = 0;
 
 	while (window.isOpen()) {
-
 		while (window.pollEvent(e)) {
-
-
-			if (e.type == Event::Closed) {
-
+			if (e.type == Event::Closed)
 				window.close();
-			}
 
 			Vector2i pos = Mouse::getPosition(window);
 
-			if (e.type == Event::MouseButtonPressed)
-			{
-
-
+			if (e.type == Event::MouseButtonPressed) {
 				if (e.key.code == Mouse::Left) {
-
 					if (pawnw.getGlobalBounds().contains(pos.x, pos.y)) {
 						isMove = 1;
 						dx = pos.x - pawnw.getPosition().x;
 						dy = pos.y - pawnw.getPosition().y;
 					}
-
 				}
-
 			}
 
 			if (e.type == Event::MouseButtonReleased) {
-				if (e.key.code == Mouse::Left) {
+				if (e.key.code == Mouse::Left)
 					isMove = 0;
-				}
 			}
 
-
-			if (isMove) {
+			if (isMove)
 				pawnw.setPosition(pos.x - dx, pos.y - dy);
-			}
-
 		}
-
-
 
 		window.clear();
 		window.draw(pawnw);
 		window.display();
-
 	}
 
 	return 0;
