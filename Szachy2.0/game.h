@@ -16,5 +16,7 @@ private:
 public:
 	Game();
 	virtual ~Game();
+	void drawBoard();
+	const RenderWindow& getWindow() const;
 };
 
