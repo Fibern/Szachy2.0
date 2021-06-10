@@ -66,9 +66,12 @@ int main()
 		window.display();
 	}*/
 
+
 	while (game.getWindow().isOpen()) {
-		game.drawBoard();
+		game.update();
+		game.render();
 	}
+
 
 	return 0;
 }
