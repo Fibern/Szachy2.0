@@ -11,7 +11,7 @@ void Game::initBoard() {
 
 	if (!this->boardt.loadFromFile("images/brown.png"))
 	{
-		std::cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << "\n";
+		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
 	}
 	this->boardt.setRepeated(true);
 	this->board.setTextureRect({ 0, 0, 800, 800 });
