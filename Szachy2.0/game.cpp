@@ -1,4 +1,5 @@
 #include "game.h"
+#include "piece.h"
 
 void Game::initWindow()
 {
@@ -6,9 +7,8 @@ void Game::initWindow()
 	this->window.setFramerateLimit(60);
 }
 
-void Game::initBoard() {
-	
-
+void Game::initBoard() 
+{
 	if (!this->boardt.loadFromFile("images/brown.png"))
 	{
 		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
@@ -16,7 +16,6 @@ void Game::initBoard() {
 	this->boardt.setRepeated(true);
 	this->board.setTextureRect({ 0, 0, 800, 800 });
 	this->board.setTexture(this->boardt);
-
 }
 
 Game::Game()
@@ -30,52 +29,49 @@ Game::~Game()
 
 }
 
-void Game::update() {
-	while (this->window.pollEvent(this->e)) {
+void Game::update() 
+{
+	bool dragging = 0;
+	Piece piece;
+	float dx{}, dy{};
+
+	while (this->window.pollEvent(this->e)) 
+	{
+		Vector2i pos = Mouse::getPosition(window);
+
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
+
+		if (e.type == Event::MouseButtonPressed) {
+			if (e.key.code == Mouse::Left) {
+				for (int i = 0; i < 16; i++) {
+					if (board.getGlobalBounds().contains(pos.x, pos.y)) {
+						dragging = 1;
+						piece = white[i];
+					}
+				}
+			}
+		}
+
+		if (e.type == Event::MouseButtonReleased) {
+			if (e.key.code == Mouse::Left && dragging) {
+				dragging = 0;
+				dx = (float)floor(pos.x / 100) * 100;
+				dy = (float)floor(pos.y / 100) * 100;
+				board.setPosition(dx, dy);
+			}
+		}
+
+		if (dragging) 
+			board.setPosition(pos.x - (float)50, pos.y - (float)50);
+	
+
 	}
 }
 
 void Game::drawBoard()
 {
-	//Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
-
-	//t1.loadFromFile("images/brown.png");
-	//t2.loadFromFile("images/pawnw.png");
-	//t3.loadFromFile("images/pawnb.png");
-	//t4.loadFromFile("images/rookw.png");
-	//t5.loadFromFile("images/rookb.png");
-	//t6.loadFromFile("images/bishopw.png");
-	//t7.loadFromFile("images/bishopb.png");
-	//t8.loadFromFile("images/knightw.png");
-	//t9.loadFromFile("images/knightb.png");
-	//t10.loadFromFile("images/queenw.png");
-	//t11.loadFromFile("images/queenb.png");
-	//t12.loadFromFile("images/kingw.png");
-	//t13.loadFromFile("images/kingb.png");
-
-	//Sprite board(t1);
-	//Sprite pawnw(t2);
-	//Sprite pawnb(t3);
-	//Sprite rookw(t4);
-	//Sprite rookb(t5);
-	//Sprite bishopw(t6);
-	//Sprite bishopb(t7);
-	//Sprite knightw(t8);
-	//Sprite knightb(t9);
-	//Sprite queenw(t10);
-	//Sprite queen(t11);
-	//Sprite kingw(t12);
-	//Sprite kingb(t13);
-
 	this->window.draw(board);
-
-}
-
-const RenderWindow& Game::getWindow() const
-{
-	return this->window;
 }
 
 void Game::render()
@@ -84,3 +80,13 @@ void Game::render()
 	drawBoard();
 	this->window.display();
 }
+
+const RenderWindow& Game::getWindow() const
+{
+	return this->window;
+}
+
+void Game::startingPosition() {
+
+}
+

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <time.h>
 #include <math.h>
+#include "piece.h"
 
 using namespace sf;
 using namespace std;
@@ -10,21 +11,24 @@ using namespace std;
 class Game
 {
 private:
+
+	Piece white[16];
+
 	RenderWindow window;
-	Event e;
 	void initWindow();
+
+	Event e;	
 	Texture boardt;
 	Sprite board;
 	void initBoard();
-
+	void drawBoard();
 
 public:
 
 	Game();
-	void update();
 	virtual ~Game();
-	void drawBoard();
-	const RenderWindow& getWindow() const;
+	void update();
 	void render();
+	void startingPosition();
+	const RenderWindow& getWindow() const;
 };
-
