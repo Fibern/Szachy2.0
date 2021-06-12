@@ -14,6 +14,7 @@ int main()
 	while (game.getWindow().isOpen()) {
 		game.update();
 		game.render();
+		//XD
 	}
 
 	return 0;
