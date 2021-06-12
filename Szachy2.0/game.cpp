@@ -31,13 +31,16 @@ Game::~Game()
 
 void Game::update() 
 {
-	bool dragging = 0;
-	Piece piece;
+	//Piece piece;
 	float dx{}, dy{};
+	
+	Vector2i pos = Mouse::getPosition(window);
+	Vector2f asd;
+	float x = (float)pos.x, y = (float)pos.y;
+	double xz = 0, zy = 9;
 
 	while (this->window.pollEvent(this->e)) 
 	{
-		Vector2i pos = Mouse::getPosition(window);
 
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
@@ -45,9 +48,9 @@ void Game::update()
 		if (e.type == Event::MouseButtonPressed) {
 			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
-					if (board.getGlobalBounds().contains(pos.x, pos.y)) {
+					IntRect bounds = (IntRect)white.sprite.getGlobalBounds();
+					if (bounds.contains(pos.x,pos.y)) {
 						dragging = 1;
-						piece = white[i];
 					}
 				}
 			}
@@ -58,12 +61,12 @@ void Game::update()
 				dragging = 0;
 				dx = (float)floor(pos.x / 100) * 100;
 				dy = (float)floor(pos.y / 100) * 100;
-				board.setPosition(dx, dy);
+				white.sprite.setPosition(dx, dy);
 			}
 		}
 
 		if (dragging) 
-			board.setPosition(pos.x - (float)50, pos.y - (float)50);
+			white.sprite.setPosition(pos.x - 50.f, pos.y - 50.f);
 	
 
 	}
@@ -72,6 +75,7 @@ void Game::update()
 void Game::drawBoard()
 {
 	this->window.draw(board);
+	this->window.draw(white.sprite);
 }
 
 void Game::render()

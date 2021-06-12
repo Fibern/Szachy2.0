@@ -4,6 +4,8 @@
 #include <time.h>
 #include <math.h>
 #include "piece.h"
+#include <array>
+#include <vector>
 
 using namespace sf;
 using namespace std;
@@ -12,8 +14,7 @@ class Game
 {
 private:
 
-	Piece white[16];
-
+	Piece white;
 	RenderWindow window;
 	void initWindow();
 
@@ -22,6 +23,7 @@ private:
 	Sprite board;
 	void initBoard();
 	void drawBoard();
+	bool dragging = 0;
 
 public:
 
