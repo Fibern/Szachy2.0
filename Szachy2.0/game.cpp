@@ -49,12 +49,12 @@ void Game::update()
 			this->window.close();
 
 		if (e.type == Event::MouseButtonPressed) {
-			if (e.key.code == Mouse::Right) {
+			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
 					if (player)
-						bounds = (IntRect)white[i].sprite.getGlobalBounds();
+						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
 					else
-						bounds = (IntRect)black[i].sprite.getGlobalBounds();
+						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
 					if (bounds.contains(pos.x,pos.y)) {
 						dragging[i] = 1;
 						break;
@@ -65,14 +65,14 @@ void Game::update()
 
 		if (e.type == Event::MouseButtonReleased) {
 			for (int i = 0; i < 16; i++) {
-				if (e.key.code == Mouse::Right && dragging[i]) {
+				if (e.key.code == Mouse::Left && dragging[i]) {
 					dragging[i] = 0;
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
 					if (player)
-						white[i].sprite.setPosition(dx, dy);
+						white[i].set(dx, dy);
 					else
-						black[i].sprite.setPosition(dx, dy);
+						black[i].set(dx, dy);
 					legal = 1;
 					if (legal) {
 						legal = 0;
@@ -85,9 +85,9 @@ void Game::update()
 		for (int i = 0; i < 32; i++) {
 			if (dragging[i]) {
 				if (player)
-					white[i].sprite.setPosition(pos.x - 50.f, pos.y - 50.f);
+					white[i].set(pos.x - 50.f, pos.y - 50.f);
 				else
-					black[i].sprite.setPosition(pos.x - 50.f, pos.y - 50.f);
+					black[i].set(pos.x - 50.f, pos.y - 50.f);
 			}
 		}
 
@@ -98,8 +98,8 @@ void Game::drawBoard()
 {
 	this->window.draw(board);
 	for (int i = 0; i < 16; i++) {
-		this->window.draw(white[i].sprite);
-		this->window.draw(black[i].sprite);
+		this->window.draw(white[i].getSprite());
+		this->window.draw(black[i].getSprite());
 	}
 }
 

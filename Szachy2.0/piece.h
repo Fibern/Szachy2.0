@@ -11,14 +11,15 @@ private:
 	char type{};
 	bool color{};
 	int x{}, y{};
-//	int row, col;
+	Sprite sprite;
+	//	int row, col;
 //	bool color;
 //  Sprite s
 //	char id;
 public:
 
-	Sprite sprite;
-
+	void set(float x, float y) { sprite.setPosition(x, y); }
+	Sprite getSprite() { return sprite; }
 	Piece() {}
 	void setPiece(char type, bool color, int x, int y);
 	~Piece();

@@ -32,7 +32,7 @@ void Piece::setPiece(char type, bool color, int x, int y) {
 }
 
 void Piece::setTexture() {
-    sprite = sf::Sprite();
+
     switch (type)
     {
     case 'K':
