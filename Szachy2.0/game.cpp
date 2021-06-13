@@ -9,8 +9,7 @@ void Game::initWindow()
 
 void Game::initBoard() 
 {
-	if (!this->boardt.loadFromFile("images/brown.png"))
-	{
+	if (!this->boardt.loadFromFile("images/brown.png")) {
 		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
 	}
 	this->boardt.setRepeated(true);
