@@ -8,9 +8,9 @@ class Piece
 private:
 
 	void setTexture();
-	char type;
-	bool color;
-	int x, y;
+	char type{};
+	bool color{};
+	int x{}, y{};
 //	int row, col;
 //	bool color;
 //  Sprite s
