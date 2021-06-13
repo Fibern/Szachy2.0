@@ -26,6 +26,9 @@ private:
 	void drawBoard();
 	bool dragging[32]{};
 
+	bool player;
+	bool legal;
+
 public:
 
 	Game();
