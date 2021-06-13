@@ -14,7 +14,8 @@ class Game
 {
 private:
 
-	Piece white;
+	Piece white[16];
+	Piece black[16];
 	RenderWindow window;
 	void initWindow();
 
@@ -23,7 +24,7 @@ private:
 	Sprite board;
 	void initBoard();
 	void drawBoard();
-	bool dragging = 0;
+	bool dragging[32]{};
 
 public:
 
