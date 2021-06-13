@@ -24,7 +24,8 @@ public:
 
 //	Piece(int row, int col, bool color, char id, Sprite s);
 //	void Update();
-	Piece() {
+	Piece() 
+	{
 		type = 'K';
 		this->setTexture();
 	}

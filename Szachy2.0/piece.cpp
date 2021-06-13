@@ -1,6 +1,5 @@
 #include "piece.h"
 #include "pieceTex.h"
-//
 
 //Piece::Piece() 
 //{
@@ -23,7 +22,8 @@ Piece::~Piece()
 
 }
 
-void Piece::setTexture() {
+void Piece::setTexture() 
+{
     sprite = sf::Sprite();
     switch (type)
     {
@@ -46,7 +46,7 @@ void Piece::setTexture() {
     //    m_sprite.setTexture(m_player ? PieceTex::whitePawn : PieceTex::blackPawn);
     //    break;
     //default:
-    //    std::cerr << "Error piece type does not exist.\n";
+    //    std::cerr << "Error piece type does not exist." << endl;
     //    break;
     }
     //m_sprite.setOrigin(sf::Vector2f(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2));

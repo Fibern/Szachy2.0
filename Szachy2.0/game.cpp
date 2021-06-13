@@ -65,7 +65,6 @@ void Game::update()
 
 		if (dragging) 
 			white.sprite.setPosition(pos.x - 50.f, pos.y - 50.f);
-	
 
 	}
 }
