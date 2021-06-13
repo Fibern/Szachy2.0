@@ -9,8 +9,7 @@ void Game::initWindow()
 
 void Game::initBoard() 
 {
-	if (!this->boardt.loadFromFile("images/brown.png"))
-	{
+	if (!this->boardt.loadFromFile("images/brown.png")) {
 		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
 	}
 	this->boardt.setRepeated(true);
@@ -49,9 +48,8 @@ void Game::update()
 			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
 					IntRect bounds = (IntRect)white.sprite.getGlobalBounds();
-					if (bounds.contains(pos.x,pos.y)) {
+					if (bounds.contains(pos.x,pos.y))
 						dragging = 1;
-					}
 				}
 			}
 		}
