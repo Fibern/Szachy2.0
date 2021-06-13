@@ -49,7 +49,7 @@ void Game::update()
 			this->window.close();
 
 		if (e.type == Event::MouseButtonPressed) {
-			if (e.key.code == Mouse::Right) {
+			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
 					if (player)
 						bounds = (IntRect)white[i].sprite.getGlobalBounds();
@@ -65,7 +65,7 @@ void Game::update()
 
 		if (e.type == Event::MouseButtonReleased) {
 			for (int i = 0; i < 16; i++) {
-				if (e.key.code == Mouse::Right && dragging[i]) {
+				if (e.key.code == Mouse::Left && dragging[i]) {
 					dragging[i] = 0;
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
