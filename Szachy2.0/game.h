@@ -15,7 +15,7 @@ private:
 	RenderWindow window;
 	void initWindow();
 
-	Event e;	
+	Event e;
 	Texture boardt;
 	Sprite board;
 	void initBoard();

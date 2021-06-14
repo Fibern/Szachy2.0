@@ -15,7 +15,7 @@ void Game::initWindow()
 	this->window.setFramerateLimit(60);
 }
 
-void Game::initBoard() 
+void Game::initBoard()
 {
 	if (!this->boardt.loadFromFile("images/brown.png"))
 		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
@@ -24,13 +24,13 @@ void Game::initBoard()
 	this->board.setTexture(this->boardt);
 }
 
-void Game::update() 
+void Game::update()
 {
 	float dx{}, dy{};
-	
+
 	Vector2i pos = Mouse::getPosition(window);
 
-	while (this->window.pollEvent(this->e)) 
+	while (this->window.pollEvent(this->e))
 	{
 
 		if (this->e.type == sf::Event::Closed)
@@ -108,7 +108,7 @@ const RenderWindow& Game::getWindow() const
 	return this->window;
 }
 
-void Game::startingPosition() 
+void Game::startingPosition()
 {
 	white[0].setPiece('R', 1, 0, 7);
 	white[1].setPiece('N', 1, 1, 7);

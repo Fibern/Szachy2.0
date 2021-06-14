@@ -3,7 +3,7 @@
 #include <iostream>
 #include "pieceTex.h"
 
-class Piece 
+class Piece
 {
 private:
 
