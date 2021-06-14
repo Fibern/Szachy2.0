@@ -63,22 +63,23 @@ void Game::update()
 
 					if (isLegal(tmp)) {
 						if (player) {
-							white[i].set(dx, dy);
+							white[i].setPos(dx, dy);
 							cout << cordToString(white[i].cordToString(), white[i].cordToString((int)dx / 100, (int)dy / 100));
 							white[i].updateCord(dx / 100, dy / 100);
 						}
 						else {
-							black[i].set(dx, dy);
+							black[i].setPos(dx, dy);
 							cout << cordToString(black[i].cordToString(), black[i].cordToString((int)dx / 100, (int)dy / 100));
 							black[i].updateCord(dx / 100.f, dy / 100.f);
 						}
+						checkMoves();
 						player = !player;
 					}
 					else {
 						if (player)
-							white[i].set((float)bounds.left, (float)bounds.top);
+							white[i].setPos((float)bounds.left, (float)bounds.top);
 						else
-							black[i].set((float)bounds.left, (float)bounds.top);
+							black[i].setPos((float)bounds.left, (float)bounds.top);
 					}
 				}
 			}
@@ -87,9 +88,9 @@ void Game::update()
 		for (int i = 0; i < 32; i++) {
 			if (dragging[i]) {
 				if (player)
-					white[i].set(pos.x - 50.f, pos.y - 50.f);
+					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
 				else
-					black[i].set(pos.x - 50.f, pos.y - 50.f);
+					black[i].setPos(pos.x - 50.f, pos.y - 50.f);
 			}
 		}
 
@@ -145,6 +146,138 @@ void Game::startingPosition()
 
 }
 
+void Game::checkMoves() {
+	//funkcja zapisuje wszystkie ruchy
+	char type;
+	Piece tmp;
+
+	for (int i = 0; i < 16; i++) {
+		if (player) {
+			type = white[i].getType();
+			tmp = white[i];
+		}
+		else {
+			type = black[i].getType();
+			tmp = black[i];
+		}
+
+		switch (type)
+		{
+		case 'K':
+			checkKing(tmp);
+			break;
+		case 'Q':
+			checkQueen(tmp);
+			break;
+		case 'R':
+			checkRook(tmp);
+			break;
+		case 'B':
+			checkBishop(tmp);
+			break;
+		case 'N':
+			checkKnight(tmp);
+			break;
+		case 'P':
+			checkPawn(tmp);
+			break;
+		default:
+			break;
+		}
+
+	}
+
+}
+
+//funkcje dla ka¿dej figury
+void Game::checkRook(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+	Piece tmp;
+
+	for (int i = x; i < 8; i++) {
+		tmp = checkPiece(x, y);
+		if (tmp.getSet()) {
+			if ((tmp.getColor() && player) || (!tmp.getColor() && !player)) {
+				break;
+			}
+			else {
+				//wpisz ruch
+				break;
+			}
+		}
+		else {
+			//wpisz ruch
+		}
+
+	}
+	for (int i = x; i >= 0; i--) {}
+	for (int i = y; i < 8; i++) {}
+	for (int i = y; i >= 0; i--) {}
+
+}
+
+void Game::checkPawn(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+}
+
+void Game::checkBishop(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+
+	for (int i = x; i < 8; i++) {
+		for (int j = y; j < 8; j++) {
+
+		}
+	}
+
+	for (int i = x; i < 8; i++) {
+		for (int j = y; j >= 0; j--) {
+
+		}
+	}
+
+	for (int i = x; i >= 0; i--) {
+		for (int j = y; j < 8; j++) {
+
+		}
+	}
+
+	for (int i = x; i >= 0; i--) {
+		for (int j = y; j >= 0; j--) {
+
+		}
+	}
+}
+void Game::checkKnight(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+}
+void Game::checkKing(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+}
+void Game::checkQueen(Piece tmp) {
+	int x = tmp.getX();
+	int y = tmp.getY();
+}
+
+Piece Game::checkPiece(int x, int y) {
+	Piece tmp;
+	for (int i = 0; i < 16; i++) {
+		if (white[i].getX() == x && white[i].getY() == y) {
+			tmp = white[i];
+			break;
+		}
+		if (black[i].getX() == x && black[i].getY() == y) {
+			tmp = black[i];
+			break;
+		}
+	}
+	return tmp;
+}
+
 bool Game::isLegal(Piece piece) {
 	if (true)
 		return 1;
@@ -156,9 +289,3 @@ string Game::cordToString(string s1, string s2)
 {
 	return s1 + s2;
 }
-
-/*
-funkcja zapisuje wszystkie ruchy
-funkcje dla ka¿dej figury
-zmienna która zbiera ruchy
-*/

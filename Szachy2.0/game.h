@@ -40,4 +40,13 @@ public:
 
 	bool isLegal(Piece piece);
 	string cordToString(string s1, string s2);
+
+	void checkMoves();
+	void checkRook(Piece tmp);
+	void checkPawn(Piece tmp);
+	void checkBishop(Piece tmp);
+	void checkKnight(Piece tmp);
+	void checkKing(Piece tmp);
+	void checkQueen(Piece tmp);
+	Piece checkPiece(int x, int y);
 };

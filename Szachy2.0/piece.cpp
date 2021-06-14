@@ -9,6 +9,7 @@ void Piece::setPiece(char type, bool color, int x, int y)
 	this->y = y;
 	this->setTexture();
 	this->sprite.setPosition(x * 100.f, y * 100.f);
+	this->set = 1;
 }
 
 void Piece::setTexture()

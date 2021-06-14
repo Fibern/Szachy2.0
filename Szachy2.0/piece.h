@@ -13,14 +13,22 @@ private:
 	bool color{};
 	int x{}, y{};
 	Sprite sprite;
+	bool set = 0;
 
 public:
 
 	Piece() {}
 	virtual ~Piece() {}
-	void set(float x, float y) { sprite.setPosition(x, y); }
-	Sprite getSprite() { return sprite; }
+
+	void setPos(float x, float y) { sprite.setPosition(x, y); }
 	void setPiece(char type, bool color, int x, int y);
+
+	Sprite getSprite() { return sprite; }
+	char getType() { return type; }
+	int getX() { return x; }
+	int getY() { return y; }
+	bool getColor() { return color; }
+	bool getSet() { return set; }
 
 	void updateCord(float x, float y);
 	string cordToString();
