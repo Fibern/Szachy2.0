@@ -23,7 +23,7 @@ private:
 	bool dragging[32]{};
 
 	bool player;
-	bool legal;
+	IntRect bounds;
 
 public:
 
@@ -33,4 +33,6 @@ public:
 	void render();
 	void startingPosition();
 	const RenderWindow& getWindow() const;
+
+	bool isLegal();
 };

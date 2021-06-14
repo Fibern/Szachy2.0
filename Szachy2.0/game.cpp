@@ -4,7 +4,6 @@
 Game::Game()
 {
 	this->player = 1;
-	this->legal = 0;
 	this->initWindow();
 	this->initBoard();
 	this->startingPosition();
@@ -27,14 +26,9 @@ void Game::initBoard()
 
 void Game::update() 
 {
-	//Piece piece;
 	float dx{}, dy{};
 	
 	Vector2i pos = Mouse::getPosition(window);
-	Vector2f asd;
-	float x = (float)pos.x, y = (float)pos.y;
-	double xz = 0, zy = 9;
-	IntRect bounds;
 
 	while (this->window.pollEvent(this->e)) 
 	{
@@ -49,7 +43,7 @@ void Game::update()
 						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
 					else
 						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
-					if (bounds.contains(pos.x,pos.y)) {
+					if (bounds.contains(pos.x, pos.y)) {
 						dragging[i] = 1;
 						break;
 					}
@@ -63,14 +57,19 @@ void Game::update()
 					dragging[i] = 0;
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
-					if (player)
-						white[i].set(dx, dy);
-					else
-						black[i].set(dx, dy);
-					legal = 1;
-					if (legal) {
-						legal = 0;
+
+					if (isLegal()) {
+						if (player)
+							white[i].set(dx, dy);
+						else
+							black[i].set(dx, dy);
 						player = !player;
+					}
+					else {
+						if (player)
+							white[i].set((float)bounds.left, (float)bounds.top);
+						else
+							black[i].set((float)bounds.left, (float)bounds.top);
 					}
 				}
 			}
@@ -137,3 +136,9 @@ void Game::startingPosition()
 
 }
 
+bool Game::isLegal() {
+	if (true)
+		return 1;
+	else
+		return 0;
+}
