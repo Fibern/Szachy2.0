@@ -193,12 +193,12 @@ void Game::checkMoves() {
 void Game::checkRook(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
-	Piece tmp;
+	Piece temp;
 
 	for (int i = x; i < 8; i++) {
-		tmp = checkPiece(x, y);
-		if (tmp.getSet()) {
-			if ((tmp.getColor() && player) || (!tmp.getColor() && !player)) {
+		temp = checkPiece(x, y);
+		if (temp.getSet()) {
+			if ((temp.getColor() && player) || (!temp.getColor() && !player)) {
 				break;
 			}
 			else {
