@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include<vector>
+#include<string>
 #include "piece.h"
 
 using namespace sf;
@@ -12,6 +14,7 @@ private:
 
 	Piece white[16];
 	Piece black[16];
+	Piece tmp;
 	RenderWindow window;
 	void initWindow();
 
@@ -24,6 +27,7 @@ private:
 
 	bool player;
 	IntRect bounds;
+	vector<string> possibleMoves;
 
 public:
 
@@ -34,5 +38,5 @@ public:
 	void startingPosition();
 	const RenderWindow& getWindow() const;
 
-	bool isLegal();
+	bool isLegal(Piece piece);
 };

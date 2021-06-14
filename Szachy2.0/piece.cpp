@@ -40,3 +40,14 @@ void Piece::setTexture()
 
 }
 
+void Piece::updateCord(float x, float y) {
+	this->x = (int)x;
+	this->y = (int)y;
+}
+
+string Piece::cordToString() {
+	string s;
+	s = static_cast<char>(x) + 'a';
+	s += to_string(8 - y);
+	return s;
+}

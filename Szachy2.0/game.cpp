@@ -27,7 +27,6 @@ void Game::initBoard()
 void Game::update()
 {
 	float dx{}, dy{};
-
 	Vector2i pos = Mouse::getPosition(window);
 
 	while (this->window.pollEvent(this->e))
@@ -39,10 +38,14 @@ void Game::update()
 		if (e.type == Event::MouseButtonPressed) {
 			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
-					if (player)
+					if (player) {
 						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
-					else
+						tmp = white[i];
+					}
+					else {
 						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
+						tmp = black[i];
+					}
 					if (bounds.contains(pos.x, pos.y)) {
 						dragging[i] = 1;
 						break;
@@ -58,11 +61,15 @@ void Game::update()
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
 
-					if (isLegal()) {
-						if (player)
+					if (isLegal(tmp)) {
+						if (player) {
 							white[i].set(dx, dy);
-						else
+							white[i].updateCord(dx / 100, dy / 100);
+						}
+						else {
 							black[i].set(dx, dy);
+							black[i].updateCord(dx / 100.f, dy / 100.f);
+						}
 						player = !player;
 					}
 					else {
@@ -136,9 +143,15 @@ void Game::startingPosition()
 
 }
 
-bool Game::isLegal() {
+bool Game::isLegal(Piece piece) {
 	if (true)
 		return 1;
 	else
 		return 0;
 }
+
+/*
+funkcja zapisuje wszystkie ruchy
+funkcje dla ka¿dej figury
+zmienna która zbiera ruchy
+*/
