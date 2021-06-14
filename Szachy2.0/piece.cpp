@@ -1,7 +1,8 @@
 #include "piece.h"
 #include "pieceTex.h"
 
-void Piece::setPiece(char type, bool color, int x, int y) {
+void Piece::setPiece(char type, bool color, int x, int y) 
+{
     this->type = type;
     this->color = color;
     this->x = x;
@@ -10,10 +11,10 @@ void Piece::setPiece(char type, bool color, int x, int y) {
     this->sprite.setPosition(x * 100.f, y * 100.f);
 }
 
-void Piece::setTexture() {
+void Piece::setTexture() 
+{
 
-    switch (type)
-    {
+    switch (type) {
     case 'K':
         sprite.setTexture(color ? PieceTex::wK : PieceTex::bK);
         break;
@@ -35,6 +36,6 @@ void Piece::setTexture() {
     default:
         cerr << "ERROR: Piece type does not exist." << endl;
         break;
-    
     }
+
 }

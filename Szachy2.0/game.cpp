@@ -109,7 +109,8 @@ const RenderWindow& Game::getWindow() const
 	return this->window;
 }
 
-void Game::startingPosition() {
+void Game::startingPosition() 
+{
 	white[0].setPiece('R', 1, 0, 7);
 	white[1].setPiece('N', 1, 1, 7);
 	white[2].setPiece('B', 1, 2, 7);
