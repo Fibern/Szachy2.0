@@ -15,9 +15,10 @@ private:
 
 public:
 
+	Piece() {}
+	virtual ~Piece() {}
 	void set(float x, float y) { sprite.setPosition(x, y); }
 	Sprite getSprite() { return sprite; }
-	Piece() {}
 	void setPiece(char type, bool color, int x, int y);
-	~Piece();
+
 };

@@ -1,22 +1,6 @@
 #include "game.h"
 #include "piece.h"
 
-void Game::initWindow()
-{
-	this->window.create(sf::VideoMode(800, 800), "Chess", sf::Style::Close | sf::Style::Titlebar);
-	this->window.setFramerateLimit(60);
-}
-
-void Game::initBoard() 
-{
-	if (!this->boardt.loadFromFile("images/brown.png")) {
-		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
-	}
-	this->boardt.setRepeated(true);
-	this->board.setTextureRect({ 0, 0, 800, 800 });
-	this->board.setTexture(this->boardt);
-}
-
 Game::Game()
 {
 	this->player = 1;
@@ -26,9 +10,19 @@ Game::Game()
 	this->startingPosition();
 }
 
-Game::~Game()
+void Game::initWindow()
 {
+	this->window.create(VideoMode(800, 800), "Chess", sf::Style::Close | sf::Style::Titlebar);
+	this->window.setFramerateLimit(60);
+}
 
+void Game::initBoard() 
+{
+	if (!this->boardt.loadFromFile("images/brown.png"))
+		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
+	this->boardt.setRepeated(true);
+	this->board.setTextureRect({ 0, 0, 800, 800 });
+	this->board.setTexture(this->boardt);
 }
 
 void Game::update() 

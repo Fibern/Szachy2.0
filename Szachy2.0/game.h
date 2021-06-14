@@ -1,11 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <time.h>
-#include <math.h>
 #include "piece.h"
-#include <array>
-#include <vector>
 
 using namespace sf;
 using namespace std;
@@ -32,7 +28,7 @@ private:
 public:
 
 	Game();
-	virtual ~Game();
+	virtual ~Game() {}
 	void update();
 	void render();
 	void startingPosition();
