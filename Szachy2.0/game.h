@@ -39,4 +39,5 @@ public:
 	const RenderWindow& getWindow() const;
 
 	bool isLegal(Piece piece);
+	string cordToString(string s1, string s2);
 };

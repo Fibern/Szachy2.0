@@ -64,10 +64,12 @@ void Game::update()
 					if (isLegal(tmp)) {
 						if (player) {
 							white[i].set(dx, dy);
+							cout << cordToString(white[i].cordToString(), white[i].cordToString((int)dx / 100, (int)dy / 100));
 							white[i].updateCord(dx / 100, dy / 100);
 						}
 						else {
 							black[i].set(dx, dy);
+							cout << cordToString(black[i].cordToString(), black[i].cordToString((int)dx / 100, (int)dy / 100));
 							black[i].updateCord(dx / 100.f, dy / 100.f);
 						}
 						player = !player;
@@ -148,6 +150,11 @@ bool Game::isLegal(Piece piece) {
 		return 1;
 	else
 		return 0;
+}
+
+string Game::cordToString(string s1, string s2)
+{
+	return s1 + s2;
 }
 
 /*
