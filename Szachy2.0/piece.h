@@ -12,10 +12,7 @@ private:
 	bool color{};
 	int x{}, y{};
 	Sprite sprite;
-	//	int row, col;
-//	bool color;
-//  Sprite s
-//	char id;
+
 public:
 
 	void set(float x, float y) { sprite.setPosition(x, y); }
@@ -24,4 +21,3 @@ public:
 	void setPiece(char type, bool color, int x, int y);
 	~Piece();
 };
-
