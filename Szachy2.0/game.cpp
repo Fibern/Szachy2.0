@@ -426,11 +426,13 @@ Piece Game::checkPiece(int x, int y) {
 	for (int i = 0; i < 16; i++) {
 		if (white[i].getX() == x && white[i].getY() == y) {
 			tmp = white[i];
-			break;
+			if (tmp.getSet())
+				break;
 		}
 		if (black[i].getX() == x && black[i].getY() == y) {
 			tmp = black[i];
-			break;
+			if (tmp.getSet())
+				break;
 		}
 	}
 	return tmp;
