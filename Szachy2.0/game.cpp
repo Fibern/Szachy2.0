@@ -9,7 +9,7 @@ Game::Game()
 	this->initBoard();
 	this->startingPosition();
 	this->checkMoves();
-	for (int i = 0; i < possibleMoves.size(); i++)
+	for (int i = 0; i < (int)possibleMoves.size(); i++)
 		cout << possibleMoves[i] << endl;
 }
 
@@ -85,7 +85,7 @@ void Game::update()
 						checkMoves();
 						takes((int)(dx / 100), (int)(dy / 100));
 						system("cls");
-						for (int i = 0; i < possibleMoves.size(); i++)
+						for (int i = 0; i < (int)possibleMoves.size(); i++)
 							cout << possibleMoves[i] << endl;
 					}
 					else {
@@ -409,7 +409,7 @@ Piece Game::checkPiece(int x, int y) {
 }
 
 bool Game::isLegal(string tmpMove) {
-	for (int i = 0; i < possibleMoves.size(); i++) {
+	for (int i = 0; i < (int)possibleMoves.size(); i++) {
 		if (tmpMove == possibleMoves[i])
 			return 1;
 	}
