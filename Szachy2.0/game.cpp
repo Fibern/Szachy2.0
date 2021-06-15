@@ -476,8 +476,8 @@ void Game::updateMoves(int x, int y, int i) {
 
 	system("cls");
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
-		if (possibleMoves[j][0] == 'P') {}
-		//	cout << possibleMoves[j] << endl;
+		//if (possibleMoves[j][0] == 'P')
+			cout << possibleMoves[j] << endl;
 	}
 }
 
