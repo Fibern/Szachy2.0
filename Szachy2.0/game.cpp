@@ -1,5 +1,6 @@
 #include "game.h"
 #include "piece.h"
+#include<windows.h>
 
 Game::Game()
 {
@@ -45,7 +46,7 @@ void Game::update()
 						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
 						tmp = white[i];
 					}
-					else if(!player && black[i].getSet()) {
+					else if (!player && black[i].getSet()) {
 						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
 						tmp = black[i];
 					}
@@ -83,7 +84,7 @@ void Game::update()
 						possibleMoves.clear();
 						checkMoves();
 						takes((int)(dx / 100), (int)(dy / 100));
-
+						system("cls");
 						for (int i = 0; i < possibleMoves.size(); i++)
 							cout << possibleMoves[i] << endl;
 					}
@@ -387,6 +388,9 @@ void Game::checkKing(Piece tmp) {
 void Game::checkQueen(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
+
+	checkRook(tmp);
+	checkBishop(tmp);
 }
 
 Piece Game::checkPiece(int x, int y) {
