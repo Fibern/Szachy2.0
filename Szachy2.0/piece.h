@@ -31,6 +31,5 @@ public:
 	bool getSet() { return set; }
 
 	void updateCord(float x, float y);
-	string cordToString();
 	string cordToString(int x, int y);
 };

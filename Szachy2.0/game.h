@@ -28,6 +28,8 @@ private:
 	bool player;
 	IntRect bounds;
 	vector<string> possibleMoves;
+	vector<string> gameMoves;
+	string tmpMove;
 
 public:
 
@@ -38,8 +40,7 @@ public:
 	void startingPosition();
 	const RenderWindow& getWindow() const;
 
-	bool isLegal(Piece piece);
-	string cordToString(string s1, string s2);
+	bool isLegal(string tmpMove);
 
 	void checkMoves();
 	void checkRook(Piece tmp);

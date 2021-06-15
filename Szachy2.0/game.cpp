@@ -7,6 +7,7 @@ Game::Game()
 	this->initWindow();
 	this->initBoard();
 	this->startingPosition();
+	this->checkMoves();
 }
 
 void Game::initWindow()
@@ -60,20 +61,30 @@ void Game::update()
 					dragging[i] = 0;
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
+					if (player)
+						tmpMove = white[i].cordToString((int)dx / 100, (int)dy / 100);
+					else
+						tmpMove = black[i].cordToString((int)dx / 100, (int)dy / 100);
 
-					if (isLegal(tmp)) {
+					if (isLegal(tmpMove)) {
 						if (player) {
 							white[i].setPos(dx, dy);
-							cout << cordToString(white[i].cordToString(), white[i].cordToString((int)dx / 100, (int)dy / 100));
 							white[i].updateCord(dx / 100, dy / 100);
 						}
 						else {
 							black[i].setPos(dx, dy);
-							cout << cordToString(black[i].cordToString(), black[i].cordToString((int)dx / 100, (int)dy / 100));
 							black[i].updateCord(dx / 100.f, dy / 100.f);
 						}
-						checkMoves();
+
+						gameMoves.push_back(tmpMove);
 						player = !player;
+						possibleMoves.clear();
+						checkMoves();
+
+						for (int i = 0; i < possibleMoves.size(); i++)
+						{
+							cout << possibleMoves[i] << endl; 
+						}
 					}
 					else {
 						if (player)
@@ -193,21 +204,21 @@ void Game::checkMoves() {
 void Game::checkRook(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
-	Piece temp;
+	Piece p;
+	for (int i = x + 1; i < 8; i++) {
+		p = checkPiece(i, y);
+		if (p.getSet()) {
 
-	for (int i = x; i < 8; i++) {
-		temp = checkPiece(x, y);
-		if (temp.getSet()) {
-			if ((temp.getColor() && player) || (!temp.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) {
 				break;
 			}
 			else {
-				//wpisz ruch
+				possibleMoves.push_back(tmp.cordToString(i, y));
 				break;
 			}
 		}
 		else {
-			//wpisz ruch
+			possibleMoves.push_back(tmp.cordToString(i, y));
 		}
 
 	}
@@ -278,14 +289,10 @@ Piece Game::checkPiece(int x, int y) {
 	return tmp;
 }
 
-bool Game::isLegal(Piece piece) {
-	if (true)
-		return 1;
-	else
-		return 0;
-}
-
-string Game::cordToString(string s1, string s2)
-{
-	return s1 + s2;
+bool Game::isLegal(string tmpMove) {
+	for (int i = 0; i < possibleMoves.size(); i++) {
+		if (tmpMove == possibleMoves[i])
+			return 1;
+	}
+	return 0;
 }
