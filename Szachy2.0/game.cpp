@@ -480,9 +480,9 @@ void Game::updateMoves(int x, int y, int i) {
 
 	gameMoves.push_back(tmpMove);
 	player = !player;
+	takes(x, y);
 	possibleMoves.clear();
 	checkMoves();
-	takes(x, y);
 	clearEnPassant();
 
 	if (player) {
@@ -496,15 +496,16 @@ void Game::updateMoves(int x, int y, int i) {
 
 	//system("cls");
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
-		cout << possibleMoves[j] << endl;
+		if (possibleMoves[j][0] == 'P') {}
+		//	cout << possibleMoves[j] << endl;
 	}
 }
 
 void Game::clearEnPassant() {
 	for (int i = 8; i < 16; i++){
 		if (player)
-			white[i].setEnPassant(0);
+			cout << black[i].getEnPassant();
 		else
-			black[i].setEnPassant(0);
+			cout << white[i].getEnPassant();
 	}
 }
