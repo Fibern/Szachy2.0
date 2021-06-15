@@ -35,13 +35,15 @@ public:
 
 	Game();
 	virtual ~Game() {}
-	void update();
-	void render();
+	void updateWindow();
+	void renderWindow();
 	void startingPosition();
 	const RenderWindow& getWindow() const;
 
 	bool isLegal(string tmpMove);
 	void takes(int x ,int y);
+	void updateMoves(int x, int y, int i);
+	void clearEnPassant();
 
 	void checkMoves();
 	void checkRook(Piece tmp);
