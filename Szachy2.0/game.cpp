@@ -41,11 +41,11 @@ void Game::update()
 		if (e.type == Event::MouseButtonPressed) {
 			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
-					if (player) {
+					if (player && white[i].getSet()) {
 						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
 						tmp = white[i];
 					}
-					else {
+					else if(!player && black[i].getSet()) {
 						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
 						tmp = black[i];
 					}
@@ -82,6 +82,7 @@ void Game::update()
 						player = !player;
 						possibleMoves.clear();
 						checkMoves();
+						takes((int)(dx / 100), (int)(dy / 100));
 
 						for (int i = 0; i < possibleMoves.size(); i++)
 							cout << possibleMoves[i] << endl;
@@ -112,8 +113,10 @@ void Game::drawBoard()
 {
 	this->window.draw(board);
 	for (int i = 0; i < 16; i++) {
-		this->window.draw(white[i].getSprite());
-		this->window.draw(black[i].getSprite());
+		if (white[i].getSet())
+			this->window.draw(white[i].getSprite());
+		if (black[i].getSet())
+			this->window.draw(black[i].getSprite());
 	}
 }
 
@@ -407,4 +410,17 @@ bool Game::isLegal(string tmpMove) {
 			return 1;
 	}
 	return 0;
+}
+
+void Game::takes(int x, int y) {
+	for (int i = 0; i < 16; i++) {
+		if (white[i].getX() == x && white[i].getY() == y && white[i].getSet() && player) {
+			white[i].taken();
+			break;
+		}
+		if (black[i].getX() == x && black[i].getY() == y && black[i].getSet() && !player) {
+			black[i].taken();
+			break;
+		}
+	}
 }

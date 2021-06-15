@@ -41,6 +41,7 @@ public:
 	const RenderWindow& getWindow() const;
 
 	bool isLegal(string tmpMove);
+	void takes(int x ,int y);
 
 	void checkMoves();
 	void checkRook(Piece tmp);
@@ -50,4 +51,6 @@ public:
 	void checkKing(Piece tmp);
 	void checkQueen(Piece tmp);
 	Piece checkPiece(int x, int y);
+
+
 };

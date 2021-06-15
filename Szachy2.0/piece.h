@@ -20,6 +20,7 @@ public:
 	Piece() {}
 	virtual ~Piece() {}
 
+	void taken() { set = 0; }
 	void setPos(float x, float y) { sprite.setPosition(x, y); }
 	void setPiece(char type, bool color, int x, int y);
 
@@ -32,4 +33,5 @@ public:
 
 	void updateCord(float x, float y);
 	string cordToString(int x, int y);
+
 };
