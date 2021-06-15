@@ -83,6 +83,7 @@ void Game::updateWindow()
 
 					}
 					else {
+						tmpMove = "";
 						if (player)
 							white[i].setPos((float)bounds.left, (float)bounds.top);
 						else
@@ -482,30 +483,36 @@ void Game::updateMoves(int x, int y, int i) {
 	player = !player;
 	takes(x, y);
 	possibleMoves.clear();
-	checkMoves();
 	clearEnPassant();
 
 	if (player) {
 		if (black[i].getType() == 'P' && tmpMove[2] == '7' && tmpMove[4] == '5')
 			black[i].setEnPassant(1);
+		if (black[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] != tmpMove[4])
+			takes(x, y - 1);
 	}
 	else {
 		if (white[i].getType() == 'P' && tmpMove[2] == '2' && tmpMove[4] == '4')
 			white[i].setEnPassant(1);
+		if (white[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] != tmpMove[4])
+			takes(x, y + 1);
+	}
+	
+
+	system("cls");
+	for (int j = 0; j < (int)possibleMoves.size(); j++) {
+		//if (possibleMoves[j][0] == 'P')
+			cout << possibleMoves[j] << endl;
 	}
 
-	//system("cls");
-	for (int j = 0; j < (int)possibleMoves.size(); j++) {
-		if (possibleMoves[j][0] == 'P') {}
-		//	cout << possibleMoves[j] << endl;
-	}
+	checkMoves();
 }
 
 void Game::clearEnPassant() {
 	for (int i = 8; i < 16; i++){
 		if (player)
-			cout << black[i].getEnPassant();
+			black[i].setEnPassant(0);
 		else
-			cout << white[i].getEnPassant();
+			white[i].setEnPassant(0);
 	}
 }
