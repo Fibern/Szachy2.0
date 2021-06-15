@@ -157,7 +157,7 @@ void Game::startingPosition()
 }
 
 void Game::checkMoves() {
-	//funkcja zapisuje wszystkie ruchy
+	//Funkcja zapisuje wszystkie ruchy
 	char type;
 	Piece tmp;
 
@@ -199,7 +199,7 @@ void Game::checkMoves() {
 
 }
 
-//Funkcje dla ka�dej figury
+//Funkcje dla każdej figury
 void Game::checkRook(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
@@ -208,68 +208,58 @@ void Game::checkRook(Piece tmp) {
 	for (int i = x + 1; i < 8; i++) {
 		p = checkPiece(i, y);
 		if (p.getSet()) {
-
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(i, y));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(i, y));
-		}
 	}
 
 	for (int i = x - 1; i >= 0; i--) {
 		p = checkPiece(i, y);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(i, y));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(i, y));
-		}
 	}
 
 	for (int i = y + 1; i < 8; i++) {
 		p = checkPiece(x, i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x, i));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(x, i));
-		}
 	}
 
 	for (int i = y - 1; i >= 0; i--) {
 		p = checkPiece(x, i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x, i));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(x, i));
-		}
 	}
-
 
 }
 
@@ -283,9 +273,8 @@ void Game::checkPawn(Piece tmp) {
 			possibleMoves.push_back(tmp.cordToString(x, y + 1));
 			if (y == 1) {
 				p = checkPiece(x, y + 2);
-				if (!p.getSet()) {
+				if (!p.getSet())
 					possibleMoves.push_back(tmp.cordToString(x, y + 2));
-				}
 			}
 		}
 		p = checkPiece(x + 1, y + 1);
@@ -309,9 +298,8 @@ void Game::checkPawn(Piece tmp) {
 			possibleMoves.push_back(tmp.cordToString(x, y - 1));
 			if (y == 6) {
 				p = checkPiece(x, y - 2);
-				if (!p.getSet()) {
+				if (!p.getSet()) 
 					possibleMoves.push_back(tmp.cordToString(x, y - 2));
-				}
 			}
 		}		
 		p = checkPiece(x + 1, y - 1);
@@ -339,65 +327,57 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i < 8 - x && i < 8 - y; i++) {
 		p = checkPiece(x + i, y + i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x + i, y + i));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(x + i, y + i));
-		}
 	}
 
 	for (int i = 1; i < 8 - x && i <= y; i++) {
 		p = checkPiece(x + i, y - i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x + i, y - i));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(x + i, y - i));
-		}
 	}
 
 	for (int i = 1; i <= x && i < 8 - y; i++) {
 		p = checkPiece(x - i, y + i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) 
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x - i, y + i));
 				break;
 			}
 		}
-		else {
+		else
 			possibleMoves.push_back(tmp.cordToString(x - i, y + i));
-		}
 	}
 
 	for (int i = 1; i <= x && i <= y; i++) {
 		p = checkPiece(x - i, y - i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) 
 				break;
-			}
 			else {
 				possibleMoves.push_back(tmp.cordToString(x - i, y - i));
 				break;
 			}
 		}
-		else {
+		else 
 			possibleMoves.push_back(tmp.cordToString(x - i, y - i));
-		}
 	}
 }
 
