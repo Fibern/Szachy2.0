@@ -84,7 +84,7 @@ void Game::update()
 						checkMoves();
 
 						for (int i = 0; i < possibleMoves.size(); i++)
-							cout << possibleMoves[i] << endl; 
+							cout << possibleMoves[i] << endl;
 					}
 					else {
 						if (player)
@@ -309,79 +309,67 @@ void Game::checkBishop(Piece tmp) {
 	int y = tmp.getY();
 	Piece p;
 
-	for (int i = x; i < 8; i++) {
-		for (int j = y; j < 8; j++) {
-			p = checkPiece(i, j);
-			if (p.getSet()) {
-
-				if ((p.getColor() && player) || (!p.getColor() && !player)) {
-					break;
-				}
-				else {
-					possibleMoves.push_back(tmp.cordToString(i, j));
-					break;
-				}
+	for (int i = 1; i < 8 - x && i < 8 - y; i++) {
+		p = checkPiece(x + i, y + i);
+		if (p.getSet()) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+				break;
 			}
 			else {
-				possibleMoves.push_back(tmp.cordToString(i, j));
+				possibleMoves.push_back(tmp.cordToString(x + i, y + i));
+				break;
 			}
+		}
+		else {
+			possibleMoves.push_back(tmp.cordToString(x + i, y + i));
 		}
 	}
 
-	for (int i = x; i < 8; i++) {
-		for (int j = y; j >= 0; j--) {
-			p = checkPiece(i, j);
-			if (p.getSet()) {
-
-				if ((p.getColor() && player) || (!p.getColor() && !player)) {
-					break;
-				}
-				else {
-					possibleMoves.push_back(tmp.cordToString(i, j));
-					break;
-				}
+	for (int i = 1; i < 8 - x && i <= y; i++) {
+		p = checkPiece(x + i, y - i);
+		if (p.getSet()) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+				break;
 			}
 			else {
-				possibleMoves.push_back(tmp.cordToString(i, j));
+				possibleMoves.push_back(tmp.cordToString(x + i, y - i));
+				break;
 			}
+		}
+		else {
+			possibleMoves.push_back(tmp.cordToString(x + i, y - i));
 		}
 	}
 
-	for (int i = x; i >= 0; i--) {
-		for (int j = y; j < 8; j++) {
-			p = checkPiece(i, j);
-			if (p.getSet()) {
-
-				if ((p.getColor() && player) || (!p.getColor() && !player)) {
-					break;
-				}
-				else {
-					possibleMoves.push_back(tmp.cordToString(i, j));
-					break;
-				}
+	for (int i = 1; i <= x && i < 8 - y; i++) {
+		p = checkPiece(x - i, y + i);
+		if (p.getSet()) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+				break;
 			}
 			else {
-				possibleMoves.push_back(tmp.cordToString(i, j));
+				possibleMoves.push_back(tmp.cordToString(x - i, y + i));
+				break;
 			}
+		}
+		else {
+			possibleMoves.push_back(tmp.cordToString(x - i, y + i));
 		}
 	}
 
-	for (int i = x; i >= 0; i--) {
-		for (int j = y; j >= 0; j--) {
-			p = checkPiece(i, j);
-			if (p.getSet()) {
-
-				if ((p.getColor() && player) || (!p.getColor() && !player)) {
-					break;
-				}
-				else {
-					possibleMoves.push_back(tmp.cordToString(i, j));
-					break;
-				}
+	for (int i = 1; i <= x && i <= y; i++) {
+		p = checkPiece(x - i, y - i);
+		if (p.getSet()) {
+			if ((p.getColor() && player) || (!p.getColor() && !player)) {
+				break;
 			}
 			else {
-				possibleMoves.push_back(tmp.cordToString(i, j));
+				possibleMoves.push_back(tmp.cordToString(x - i, y - i));
+				break;
 			}
+		}
+		else {
+			possibleMoves.push_back(tmp.cordToString(x - i, y - i));
 		}
 	}
 }
