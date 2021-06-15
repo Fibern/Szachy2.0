@@ -1,4 +1,4 @@
-#include "game.h"
+ï»¿#include "game.h"
 #include "piece.h"
 #include<windows.h>
 
@@ -198,7 +198,7 @@ void Game::checkMoves() {
 
 }
 
-//Funkcje dla ka¿dej figury
+//Funkcje dla kaï¿½dej figury
 void Game::checkRook(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
