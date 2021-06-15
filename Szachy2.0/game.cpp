@@ -231,6 +231,31 @@ void Game::checkRook(Piece tmp) {
 void Game::checkPawn(Piece tmp) {
 	int x = tmp.getX();
 	int y = tmp.getY();
+	Piece p;
+	if (!player) {
+		p = checkPiece(x, y + 1);
+		if (!p.getSet()) {
+			possibleMoves.push_back(tmp.cordToString(x, y + 1));
+			if (y == 1) {
+				p = checkPiece(x, y + 2);
+				if (!p.getSet()) {
+					possibleMoves.push_back(tmp.cordToString(x, y + 2));
+				}
+			}
+		}
+	}
+	else {
+		p = checkPiece(x, y - 1);
+		if (!p.getSet()) {
+			possibleMoves.push_back(tmp.cordToString(x, y - 1));
+			if (y == 6) {
+				p = checkPiece(x, y - 2);
+				if (!p.getSet()) {
+					possibleMoves.push_back(tmp.cordToString(x, y - 2));
+				}
+			}
+		}
+	}
 }
 
 void Game::checkBishop(Piece tmp) {
