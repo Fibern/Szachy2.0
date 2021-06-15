@@ -54,5 +54,4 @@ public:
 	void checkQueen(Piece tmp);
 	Piece checkPiece(int x, int y);
 
-
 };
