@@ -40,6 +40,7 @@ void Game::updateWindow()
 			this->window.close();
 
 		if (e.type == Event::MouseButtonPressed) {
+			bounds = {};
 			if (e.key.code == Mouse::Left) {
 				for (int i = 0; i < 16; i++) {
 					if (player && white[i].getSet()) {
@@ -95,12 +96,14 @@ void Game::updateWindow()
 
 		for (int i = 0; i < 32; i++) {
 			if (dragging[i]) {
-				if (player) {
+				if (player && white[i].getSet()) {
 					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
-					cout << "contains";
+					cout << white[i].getType();
 				}
-				else
+				else if (!player && black[i].getSet()) {
 					black[i].setPos(pos.x - 50.f, pos.y - 50.f);
+					cout << black[i].getType();
+				}
 			}
 		}
 
