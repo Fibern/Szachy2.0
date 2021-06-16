@@ -30,7 +30,7 @@ void Game::initBoard()
 
 void Game::updateWindow()
 {
-	
+
 	pos = Mouse::getPosition(window);
 
 	while (this->window.pollEvent(this->e))
@@ -169,31 +169,31 @@ void Game::checkMoves() {
 			type = black[i].getType();
 			tmpM = black[i];
 		}
-
-		switch (type)
-		{
-		case 'K':
-			checkKing(tmpM);
-			break;
-		case 'Q':
-			checkQueen(tmpM);
-			break;
-		case 'R':
-			checkRook(tmpM);
-			break;
-		case 'B':
-			checkBishop(tmpM);
-			break;
-		case 'N':
-			checkKnight(tmpM);
-			break;
-		case 'P':
-			checkPawn(tmpM);
-			break;
-		default:
-			break;
+		if (tmpM.getSet()) {
+			switch (type)
+			{
+			case 'K':
+				checkKing(tmpM);
+				break;
+			case 'Q':
+				checkQueen(tmpM);
+				break;
+			case 'R':
+				checkRook(tmpM);
+				break;
+			case 'B':
+				checkBishop(tmpM);
+				break;
+			case 'N':
+				checkKnight(tmpM);
+				break;
+			case 'P':
+				checkPawn(tmpM);
+				break;
+			default:
+				break;
+			}
 		}
-
 	}
 
 }
@@ -296,10 +296,10 @@ void Game::checkPawn(Piece tmp) {
 			possibleMoves.push_back(tmp.cordToString(x, y - 1));
 			if (y == 6) {
 				p = checkPiece(x, y - 2);
-				if (!p.getSet()) 
+				if (!p.getSet())
 					possibleMoves.push_back(tmp.cordToString(x, y - 2));
 			}
-		}		
+		}
 		p = checkPiece(x + 1, y - 1);
 		if (p.getSet() && !p.getColor())
 			possibleMoves.push_back(tmp.cordToString(x + 1, y - 1));
@@ -352,7 +352,7 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i <= x && i < 8 - y; i++) {
 		p = checkPiece(x - i, y + i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) 
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
 			else {
 				possibleMoves.push_back(tmp.cordToString(x - i, y + i));
@@ -366,14 +366,14 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i <= x && i <= y; i++) {
 		p = checkPiece(x - i, y - i);
 		if (p.getSet()) {
-			if ((p.getColor() && player) || (!p.getColor() && !player)) 
+			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
 			else {
 				possibleMoves.push_back(tmp.cordToString(x - i, y - i));
 				break;
 			}
 		}
-		else 
+		else
 			possibleMoves.push_back(tmp.cordToString(x - i, y - i));
 	}
 }
@@ -430,7 +430,7 @@ Piece Game::checkPiece(int x, int y) {
 		}
 		if (black[i].getX() == x && black[i].getY() == y) {
 			tmpM = black[i];
-			if (tmpM.getSet()){
+			if (tmpM.getSet()) {
 				tmpSet = 1;
 				break;
 			}
@@ -482,19 +482,19 @@ void Game::updateMoves(int x, int y, int i) {
 		if (white[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] == '5')
 			takes(x, y + 1);
 	}
-	
 
-	checkMoves();
 	system("cls");
+	checkMoves();
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
 		//if (possibleMoves[j][0] == 'P')
-			cout << possibleMoves[j] << endl;
+		cout << possibleMoves[j] << endl;
 	}
+
 
 }
 
 void Game::clearEnPassant() {
-	for (int i = 8; i < 16; i++){
+	for (int i = 8; i < 16; i++) {
 		if (player)
 			black[i].setEnPassant(0);
 		else
