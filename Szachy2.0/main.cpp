@@ -13,7 +13,6 @@ int main()
 }
 
 /*
-figura jest na górze
 
 promocje 
 roszady

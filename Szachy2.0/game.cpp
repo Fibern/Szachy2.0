@@ -94,7 +94,7 @@ void Game::updateWindow()
 			}
 		}
 
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < 16; i++) {
 			if (dragging[i]) {
 				if (player && white[i].getSet()) {
 					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
@@ -114,10 +114,24 @@ void Game::drawBoard()
 {
 	this->window.draw(board);
 	for (int i = 0; i < 16; i++) {
-		if (white[i].getSet())
+		if (white[i].getSet() && !dragging[i])
 			this->window.draw(white[i].getSprite());
-		if (black[i].getSet())
+		if (black[i].getSet() && !dragging[i])
 			this->window.draw(black[i].getSprite());
+	}
+	for (int i = 0; i < 16; i++) {
+		if (dragging[i]) {
+			if (player) {
+				if (black[i].getSet())
+					this->window.draw(black[i].getSprite());
+				this->window.draw(white[i].getSprite());
+			}
+			else {
+				if (black[i].getSet())
+					this->window.draw(white[i].getSprite());
+				this->window.draw(black[i].getSprite());
+			}
+		}
 	}
 }
 
@@ -212,7 +226,7 @@ void Game::checkRook(Piece tmp) {
 			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
 			else {
-				if(p.getType() == 'K'){/*tu jest szach*/ }
+				if (p.getType() == 'K') {/*tu jest szach*/ }
 				possibleMoves.push_back(tmp.cordToString(i, y));
 				break;
 			}
@@ -416,6 +430,19 @@ void Game::checkKnight(Piece tmp) {
 void Game::checkKing(Piece tmp) {
 	x = tmp.getX();
 	y = tmp.getY();
+	p = {};
+	cout << x << " " << y << " ";
+	for (int i = -1; i < 2 && x + i < 8; i++) {
+		if (i + x < 0)
+			continue;
+		for (int j = -1; j < 2 && y + j < 8; j++) {
+			if ((i == 0 && j == 0) || j + y < 0)
+				continue;
+			p = checkPiece(x + i, y + j);
+			if(!p.getSet() || (p.getSet() && ((!player && p.getColor()) || (player && !p.getColor()))))
+				possibleMoves.push_back(tmp.cordToString(x + i, y + j));
+		}
+	}
 }
 
 void Game::checkQueen(Piece tmp) {
@@ -491,8 +518,8 @@ void Game::updateMoves(int x, int y, int i) {
 	system("cls");
 	checkMoves();
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
-		//if (possibleMoves[j][0] == 'P')
-		cout << possibleMoves[j] << endl;
+		if (possibleMoves[j][0] == 'K')
+			cout << possibleMoves[j] << endl;
 	}
 
 

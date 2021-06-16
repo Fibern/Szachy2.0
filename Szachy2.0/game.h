@@ -23,7 +23,7 @@ private:
 	Sprite board;
 	void initBoard();
 	void drawBoard();
-	bool dragging[32]{};
+	bool dragging[16]{};
 
 	bool player;
 	IntRect bounds;
