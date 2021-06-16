@@ -38,6 +38,9 @@ private:
 	Piece tmpM, tmpP, p;
 	bool tmpSet{};
 
+	bool promotion = 0;
+
+
 public:
 
 	Game();
@@ -61,4 +64,5 @@ public:
 	void checkQueen(Piece tmp);
 	Piece checkPiece(int x, int y);
 
+	void checkPromotion(int i);
 };

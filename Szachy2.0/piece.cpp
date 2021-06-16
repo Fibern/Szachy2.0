@@ -1,13 +1,17 @@
 #include "piece.h"
 #include "pieceTex.h"
 
+void Piece::setPieceType(char type) {
+	this->type = type;
+	this->setTexture();
+}
+
 void Piece::setPiece(char type, bool color, int x, int y)
 {
-	this->type = type;
 	this->color = color;
+	this->setPieceType(type);
 	this->x = x;
 	this->y = y;
-	this->setTexture();
 	this->sprite.setPosition(x * 100.f, y * 100.f);
 	this->set = 1;
 }
@@ -44,6 +48,11 @@ void Piece::setTexture()
 void Piece::updateCord(float x, float y) {
 	this->x = (int)x;
 	this->y = (int)y;
+
+	if (this->type == 'P' && ((this->color && this->y == 0) || (!this->color && this->y == 7))) {
+		this->promotion = 1;
+	}
+
 }
 
 string Piece::cordToString(int x, int y) {

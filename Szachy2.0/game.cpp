@@ -118,6 +118,14 @@ void Game::drawBoard()
 			this->window.draw(white[i].getSprite());
 		if (black[i].getSet() && !dragging[i])
 			this->window.draw(black[i].getSprite());
+		if (white[i].getPromotion() || black[i].getPromotion()) {
+			if (player) {
+				
+			}
+			else {
+				
+			}
+		}
 	}
 	for (int i = 0; i < 16; i++) {
 		if (dragging[i]) {
@@ -484,11 +492,11 @@ bool Game::isLegal(string tmpMove) {
 void Game::takes(int x, int y) {
 	for (int i = 0; i < 16; i++) {
 		if (white[i].getX() == x && white[i].getY() == y && white[i].getSet() && player) {
-			white[i].taken();
+			white[i].changeSet(0);
 			break;
 		}
 		if (black[i].getX() == x && black[i].getY() == y && black[i].getSet() && !player) {
-			black[i].taken();
+			black[i].changeSet(0);
 			break;
 		}
 	}
@@ -497,10 +505,17 @@ void Game::takes(int x, int y) {
 void Game::updateMoves(int x, int y, int i) {
 
 	gameMoves.push_back(tmpMove);
+	
 	player = !player;
 	takes(x, y);
 	possibleMoves.clear();
 	clearEnPassant();
+
+	if (white[i].getPromotion())
+		white[i].changeSet(0);
+
+	if (black[i].getPromotion())
+		black[i].changeSet(0);
 
 	if (player) {
 		if (black[i].getType() == 'P' && tmpMove[2] == '7' && tmpMove[4] == '5')
@@ -513,6 +528,7 @@ void Game::updateMoves(int x, int y, int i) {
 			white[i].setEnPassant(1);
 		if (white[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] == '5')
 			takes(x, y + 1);
+
 	}
 
 	system("cls");
@@ -531,5 +547,18 @@ void Game::clearEnPassant() {
 			black[i].setEnPassant(0);
 		else
 			white[i].setEnPassant(0);
+	}
+}
+
+void Game::checkPromotion(int i) {
+	if (player) {
+		if (white[i].getType() == 'P' && ((white[i].getColor() && white[i].getY() == 0) || (!white[i].getColor() && white[i].getY() == 7))) {
+			this->promotion = 1;
+		}
+	}
+	else{
+		if (black[i].getType() == 'P' && ((black[i].getColor() && black[i].getY() == 0) || (!black[i].getColor() && black[i].getY() == 7))) {
+			this->promotion = 1;
+		}
 	}
 }
