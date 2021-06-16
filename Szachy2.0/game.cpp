@@ -30,8 +30,8 @@ void Game::initBoard()
 
 void Game::updateWindow()
 {
-	float dx{}, dy{};
-	Vector2i pos = Mouse::getPosition(window);
+	
+	pos = Mouse::getPosition(window);
 
 	while (this->window.pollEvent(this->e))
 	{
@@ -158,38 +158,35 @@ void Game::startingPosition()
 
 void Game::checkMoves() {
 	//Funkcja zapisuje wszystkie ruchy
-	char type;
-	Piece tmp;
-
 	for (int i = 0; i < 16; i++) {
 		if (player) {
 			type = white[i].getType();
-			tmp = white[i];
+			tmpM = white[i];
 		}
 		else {
 			type = black[i].getType();
-			tmp = black[i];
+			tmpM = black[i];
 		}
 
 		switch (type)
 		{
 		case 'K':
-			checkKing(tmp);
+			checkKing(tmpM);
 			break;
 		case 'Q':
-			checkQueen(tmp);
+			checkQueen(tmpM);
 			break;
 		case 'R':
-			checkRook(tmp);
+			checkRook(tmpM);
 			break;
 		case 'B':
-			checkBishop(tmp);
+			checkBishop(tmpM);
 			break;
 		case 'N':
-			checkKnight(tmp);
+			checkKnight(tmpM);
 			break;
 		case 'P':
-			checkPawn(tmp);
+			checkPawn(tmpM);
 			break;
 		default:
 			break;
@@ -201,9 +198,8 @@ void Game::checkMoves() {
 
 //Funkcje dla każdej figury
 void Game::checkRook(Piece tmp) {
-	int x = tmp.getX();
-	int y = tmp.getY();
-	Piece p;
+	x = tmp.getX();
+	y = tmp.getY();
 
 	for (int i = x + 1; i < 8; i++) {
 		p = checkPiece(i, y);
@@ -264,9 +260,9 @@ void Game::checkRook(Piece tmp) {
 }
 
 void Game::checkPawn(Piece tmp) {
-	int x = tmp.getX();
-	int y = tmp.getY();
-	Piece p;
+	x = tmp.getX();
+	y = tmp.getY();
+
 	if (!player) {
 		p = checkPiece(x, y + 1);
 		if (!p.getSet()) {
@@ -320,9 +316,8 @@ void Game::checkPawn(Piece tmp) {
 }
 
 void Game::checkBishop(Piece tmp) {
-	int x = tmp.getX();
-	int y = tmp.getY();
-	Piece p;
+	x = tmp.getX();
+	y = tmp.getY();
 
 	for (int i = 1; i < 8 - x && i < 8 - y; i++) {
 		p = checkPiece(x + i, y + i);
@@ -382,9 +377,9 @@ void Game::checkBishop(Piece tmp) {
 }
 
 void Game::checkKnight(Piece tmp) {
-	int x = tmp.getX();
-	int y = tmp.getY();
-	Piece p;
+	x = tmp.getX();
+	y = tmp.getY();
+
 	p = checkPiece(x - 2, y - 1);
 	if (((p.getSet() && (p.getColor() && !player) || (!p.getColor() && player)) || !p.getSet()) && x - 2 >= 0 && y - 1 >= 0)
 		possibleMoves.push_back(tmp.cordToString(x - 2, y - 1));
@@ -412,8 +407,8 @@ void Game::checkKnight(Piece tmp) {
 }
 
 void Game::checkKing(Piece tmp) {
-	int x = tmp.getX();
-	int y = tmp.getY();
+	x = tmp.getX();
+	y = tmp.getY();
 }
 
 void Game::checkQueen(Piece tmp) {
@@ -422,20 +417,26 @@ void Game::checkQueen(Piece tmp) {
 }
 
 Piece Game::checkPiece(int x, int y) {
-	Piece tmp;
+	tmpSet = 0;
 	for (int i = 0; i < 16; i++) {
 		if (white[i].getX() == x && white[i].getY() == y) {
-			tmp = white[i];
-			if (tmp.getSet())
+			tmpM = white[i];
+			if (tmpM.getSet()) {
+				tmpSet = 1;
 				break;
+			}
 		}
 		if (black[i].getX() == x && black[i].getY() == y) {
-			tmp = black[i];
-			if (tmp.getSet())
+			tmpM = black[i];
+			if (tmpM.getSet()){
+				tmpSet = 1;
 				break;
+			}
 		}
 	}
-	return tmp;
+	if (!tmpSet)
+		tmpM = {};
+	return tmpM;
 }
 
 bool Game::isLegal(string tmpMove) {
