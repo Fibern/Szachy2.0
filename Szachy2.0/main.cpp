@@ -11,3 +11,13 @@ int main()
 
 	return 0;
 }
+
+/*
+promocje 
+roszady
+
+szachy, maty, paty
+przypiêcia
+
+menu zapisywanie i wczytywanie
+*/

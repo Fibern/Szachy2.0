@@ -95,8 +95,10 @@ void Game::updateWindow()
 
 		for (int i = 0; i < 32; i++) {
 			if (dragging[i]) {
-				if (player)
+				if (player) {
 					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
+					cout << "contains";
+				}
 				else
 					black[i].setPos(pos.x - 50.f, pos.y - 50.f);
 			}
@@ -471,24 +473,24 @@ void Game::updateMoves(int x, int y, int i) {
 	if (player) {
 		if (black[i].getType() == 'P' && tmpMove[2] == '7' && tmpMove[4] == '5')
 			black[i].setEnPassant(1);
-		if (black[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] != tmpMove[4])
+		if (black[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] == '4')
 			takes(x, y - 1);
 	}
 	else {
 		if (white[i].getType() == 'P' && tmpMove[2] == '2' && tmpMove[4] == '4')
 			white[i].setEnPassant(1);
-		if (white[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] != tmpMove[4])
+		if (white[i].getType() == 'P' && tmpMove[1] != tmpMove[3] && tmpMove[2] == '5')
 			takes(x, y + 1);
 	}
 	
 
+	checkMoves();
 	system("cls");
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
 		//if (possibleMoves[j][0] == 'P')
 			cout << possibleMoves[j] << endl;
 	}
 
-	checkMoves();
 }
 
 void Game::clearEnPassant() {
