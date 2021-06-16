@@ -47,13 +47,12 @@ void Piece::updateCord(float x, float y) {
 }
 
 string Piece::cordToString(int x, int y) {
-	string s1, s2, type;
-	type = this->type;
-	s1 = type;
-	s1 += static_cast<char>(this->x) + 'a';
-	s1 += to_string(8 - this->y);
-	s2 = static_cast<char>(x) + 'a';
-	s2 += to_string(8 - y);
+	this->typeStr = this->type;
+	this->s1 = this->typeStr;
+	this->s1 += static_cast<char>(this->x) + 'a';
+	this->s1 += to_string(8 - this->y);
+	this->s2 = static_cast<char>(x) + 'a';
+	this->s2 += to_string(8 - y);
 	return s1 + s2;
 }
 

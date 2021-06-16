@@ -15,6 +15,7 @@ private:
 	Sprite sprite;
 	bool set = 0;
 	bool enPassant = 0;
+	string s1, s2, typeStr;
 
 public:
 
