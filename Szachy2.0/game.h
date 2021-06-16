@@ -31,6 +31,13 @@ private:
 	vector<string> gameMoves;
 	string tmpMove;
 
+	float dx{}, dy{};
+	int x{}, y{};
+	Vector2i pos{};
+	char type;
+	Piece tmpM, tmpP, p;
+	bool tmpSet{};
+
 public:
 
 	Game();
