@@ -212,6 +212,7 @@ void Game::checkRook(Piece tmp) {
 			if ((p.getColor() && player) || (!p.getColor() && !player))
 				break;
 			else {
+				if(p.getType() == 'K'){/*tu jest szach*/ }
 				possibleMoves.push_back(tmp.cordToString(i, y));
 				break;
 			}
@@ -292,6 +293,7 @@ void Game::checkPawn(Piece tmp) {
 			if (p.getSet() && p.getEnPassant())
 				possibleMoves.push_back(tmp.cordToString(x + 1, y + 1));
 		}
+
 	}
 	else {
 		p = checkPiece(x, y - 1);
