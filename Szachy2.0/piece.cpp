@@ -16,6 +16,12 @@ void Piece::setPiece(char type, bool color, int x, int y)
 	this->set = 1;
 }
 
+void Piece::promoted(char type) {
+	this->setPieceType(type);
+	this->set = 1;
+	this->promotion = 0;
+}
+
 void Piece::setTexture()
 {
 

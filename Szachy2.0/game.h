@@ -15,8 +15,11 @@ private:
 	Piece white[16];
 	Piece black[16];
 	Piece tmp;
+	Piece promotionWhite[4];
+	Piece promotionBlack[4];
 	RenderWindow window;
 	void initWindow();
+	void setPromotionPieces();
 
 	Event e;
 	Texture boardt;
@@ -53,6 +56,7 @@ public:
 	bool isLegal(string tmpMove);
 	void takes(int x ,int y);
 	void updateMoves(int x, int y, int i);
+	void updatePromotion(int i);
 	void clearEnPassant();
 
 	void checkMoves();

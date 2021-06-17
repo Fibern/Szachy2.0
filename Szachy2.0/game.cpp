@@ -9,8 +9,37 @@ Game::Game()
 	this->initBoard();
 	this->startingPosition();
 	this->checkMoves();
+	this->setPromotionPieces();
 	for (int i = 0; i < (int)possibleMoves.size(); i++)
 		cout << possibleMoves[i] << endl;
+}
+
+void Game::setPromotionPieces() {
+	promotionWhite[0].setPiece('Q', 1, 0, 0);
+	promotionWhite[1].setPiece('R', 1, 0, 0);
+	promotionWhite[2].setPiece('B', 1, 0, 0);
+	promotionWhite[3].setPiece('N', 1, 0, 0);
+	promotionWhite[0].changeSet(0);
+	promotionWhite[1].changeSet(0);
+	promotionWhite[2].changeSet(0);
+	promotionWhite[3].changeSet(0);
+	promotionWhite[0].scale(0.5f, 0.5f);
+	promotionWhite[1].scale(0.5f, 0.5f);
+	promotionWhite[2].scale(0.5f, 0.5f);
+	promotionWhite[3].scale(0.5f, 0.5f);
+
+	promotionBlack[0].setPiece('Q', 0, 0, 0);
+	promotionBlack[1].setPiece('R', 0, 0, 0);
+	promotionBlack[2].setPiece('B', 0, 0, 0);
+	promotionBlack[3].setPiece('N', 0, 0, 0);
+	promotionBlack[0].changeSet(0);
+	promotionBlack[1].changeSet(0);
+	promotionBlack[2].changeSet(0);
+	promotionBlack[3].changeSet(0);
+	promotionBlack[0].scale(0.5f, 0.5f);
+	promotionBlack[1].scale(0.5f, 0.5f);
+	promotionBlack[2].scale(0.5f, 0.5f);
+	promotionBlack[3].scale(0.5f, 0.5f);
 }
 
 void Game::initWindow()
@@ -42,18 +71,44 @@ void Game::updateWindow()
 		if (e.type == Event::MouseButtonPressed) {
 			bounds = {};
 			if (e.key.code == Mouse::Left) {
-				for (int i = 0; i < 16; i++) {
-					if (player && white[i].getSet()) {
-						bounds = (IntRect)white[i].getSprite().getGlobalBounds();
-						tmp = white[i];
+				if (!promotion) {
+					for (int i = 0; i < 16; i++) {
+						if (player && white[i].getSet()) {
+							bounds = (IntRect)white[i].getSprite().getGlobalBounds();
+							tmp = white[i];
+						}
+						else if (!player && black[i].getSet()) {
+							bounds = (IntRect)black[i].getSprite().getGlobalBounds();
+							tmp = black[i];
+						}
+						if (bounds.contains(pos.x, pos.y)) {
+							dragging[i] = 1;
+							break;
+						}
 					}
-					else if (!player && black[i].getSet()) {
-						bounds = (IntRect)black[i].getSprite().getGlobalBounds();
-						tmp = black[i];
-					}
-					if (bounds.contains(pos.x, pos.y)) {
-						dragging[i] = 1;
-						break;
+				}
+				else {
+					for (int i = 0; i < 16; i++) {
+						if (player && white[i].getPromotion()) {
+							for (int j = 0; j < 4; j++) {
+								bounds = (IntRect)promotionWhite[j].getSprite().getGlobalBounds();
+								if (bounds.contains(pos.x, pos.y)) {
+									white[i].promoted(promotionWhite[j].getType());
+									updatePromotion(i);
+									break;
+								}
+							}
+						}
+						else if (!player && black[i].getPromotion()) {
+							for (int j = 0; j < 4; j++) {
+								bounds = (IntRect)promotionBlack[j].getSprite().getGlobalBounds();
+								if (bounds.contains(pos.x, pos.y)) {
+									black[i].promoted(promotionBlack[j].getType());
+									updatePromotion(i);
+									break;
+								}
+							}
+						}
 					}
 				}
 			}
@@ -62,6 +117,7 @@ void Game::updateWindow()
 		if (e.type == Event::MouseButtonReleased) {
 			for (int i = 0; i < 16; i++) {
 				if (e.key.code == Mouse::Left && dragging[i]) {
+					 
 					dragging[i] = 0;
 					dx = (float)floor(pos.x / 100) * 100;
 					dy = (float)floor(pos.y / 100) * 100;
@@ -77,7 +133,7 @@ void Game::updateWindow()
 						}
 						else {
 							black[i].setPos(dx, dy);
-							black[i].updateCord(dx / 100.f, dy / 100.f);
+							black[i].updateCord(dx / 100.f, dy / 100.f);	
 						}
 
 						updateMoves((int)(dx / 100), int(dy / 100), i);
@@ -112,7 +168,10 @@ void Game::updateWindow()
 
 void Game::drawBoard()
 {
+	
+
 	this->window.draw(board);
+
 	for (int i = 0; i < 16; i++) {
 		if (white[i].getSet() && !dragging[i])
 			this->window.draw(white[i].getSprite());
@@ -120,10 +179,42 @@ void Game::drawBoard()
 			this->window.draw(black[i].getSprite());
 		if (white[i].getPromotion() || black[i].getPromotion()) {
 			if (player) {
-				
+				x = white[i].getX() * 100;
+				y = white[i].getY() * 100;
+				promotionWhite[0].changeColor(0);
+				promotionWhite[1].changeColor(0);
+				promotionWhite[2].changeColor(0);
+				promotionWhite[3].changeColor(0);
+
+				promotionWhite[0].setPos((float)x, (float)y);
+				promotionWhite[1].setPos((float)x + 50.f, (float)y);
+				promotionWhite[2].setPos((float)x, (float)y + 50.f);
+				promotionWhite[3].setPos((float)x + 50.f, (float)y + 50.f);
+
+				this->window.draw(promotionWhite[0].getSprite());
+				this->window.draw(promotionWhite[1].getSprite());
+				this->window.draw(promotionWhite[2].getSprite());
+				this->window.draw(promotionWhite[3].getSprite());
+
 			}
 			else {
-				
+				x = black[i].getX() * 100;
+				y = black[i].getY() * 100;
+				promotionBlack[0].changeColor(0);
+				promotionBlack[1].changeColor(0);
+				promotionBlack[2].changeColor(0);
+				promotionBlack[3].changeColor(0);
+
+				promotionBlack[0].setPos((float)x, (float)y);
+				promotionBlack[1].setPos((float)x + 50.f, (float)y);
+				promotionBlack[2].setPos((float)x, (float)y + 50.f);
+				promotionBlack[3].setPos((float)x + 50.f, (float)y + 50.f);
+
+				this->window.draw(promotionBlack[0].getSprite());
+				this->window.draw(promotionBlack[1].getSprite());
+				this->window.draw(promotionBlack[2].getSprite());
+				this->window.draw(promotionBlack[3].getSprite());
+
 			}
 		}
 	}
@@ -135,7 +226,7 @@ void Game::drawBoard()
 				this->window.draw(white[i].getSprite());
 			}
 			else {
-				if (black[i].getSet())
+				if (white[i].getSet())
 					this->window.draw(white[i].getSprite());
 				this->window.draw(black[i].getSprite());
 			}
@@ -504,16 +595,20 @@ void Game::takes(int x, int y) {
 
 void Game::updateMoves(int x, int y, int i) {
 
+
 	gameMoves.push_back(tmpMove);
-	
+
+	checkPromotion(i);
 	player = !player;
 	takes(x, y);
+	if (promotion)
+		player = !player;
+
 	possibleMoves.clear();
 	clearEnPassant();
 
 	if (white[i].getPromotion())
 		white[i].changeSet(0);
-
 	if (black[i].getPromotion())
 		black[i].changeSet(0);
 
@@ -531,6 +626,7 @@ void Game::updateMoves(int x, int y, int i) {
 
 	}
 
+
 	system("cls");
 	checkMoves();
 	for (int j = 0; j < (int)possibleMoves.size(); j++) {
@@ -538,7 +634,20 @@ void Game::updateMoves(int x, int y, int i) {
 			cout << possibleMoves[j] << endl;
 	}
 
+	for (int i = 0; i < (int)gameMoves.size(); i++)
+	{
+		cout << gameMoves[i] << " ";
+	}
 
+}
+
+void Game::updatePromotion(int i) {
+	gameMoves[gameMoves.size() - 1] += '=';
+	gameMoves[gameMoves.size() - 1] += player ? white[i].getType() : black[i].getType();
+	checkPromotion(i);
+	player = !player;
+	possibleMoves.clear();
+	checkMoves();
 }
 
 void Game::clearEnPassant() {
@@ -551,14 +660,14 @@ void Game::clearEnPassant() {
 }
 
 void Game::checkPromotion(int i) {
-	if (player) {
-		if (white[i].getType() == 'P' && ((white[i].getColor() && white[i].getY() == 0) || (!white[i].getColor() && white[i].getY() == 7))) {
+
+	this->promotion = 0;
+
+		if (white[i].getType() == 'P' && white[i].getY() == 0) {
 			this->promotion = 1;
 		}
-	}
-	else{
-		if (black[i].getType() == 'P' && ((black[i].getColor() && black[i].getY() == 0) || (!black[i].getColor() && black[i].getY() == 7))) {
+		if (black[i].getType() == 'P' && black[i].getY() == 7) {
 			this->promotion = 1;
 		}
-	}
+
 }

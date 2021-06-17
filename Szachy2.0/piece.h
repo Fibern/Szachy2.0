@@ -24,10 +24,12 @@ public:
 	virtual ~Piece() {}
 
 	void changeSet(bool set) { this->set = set; }
+	void changeColor(bool color) { this->color = color; }
 	void setPos(float x, float y) { sprite.setPosition(x, y); }
 	void setPieceType(char type);
 	void setPiece(char type, bool color, int x, int y);
 	void setEnPassant(bool z) { this->enPassant = z; }
+	void scale(float a, float b) { this->sprite.setScale(a, b); }
 
 	Sprite getSprite() { return sprite; }
 	char getType() { return type; }
@@ -38,6 +40,7 @@ public:
 	bool getEnPassant() { return enPassant; }
 	bool getPromotion() { return promotion; }
 
+	void promoted(char type);
 	void updateCord(float x, float y);
 	string cordToString(int x, int y);
 
