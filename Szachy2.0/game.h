@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include<vector>
-#include<string>
+#include <vector>
+#include <string>
 #include "piece.h"
 
 using namespace sf;
@@ -11,7 +11,7 @@ using namespace std;
 class Game
 {
 private:
-
+	
 	Piece white[16];
 	Piece black[16];
 	Piece tmp;
@@ -33,7 +33,7 @@ private:
 	vector<string> possibleMovesWhite{};
 	vector<string> possibleMovesBlack{};
 	vector<string> gameMoves;
-	string tmpMove, attackedX , attackedY;
+	string tmpMove;
 
 	float dx{}, dy{};
 	int x{}, y{};
@@ -41,10 +41,9 @@ private:
 	char type;
 	Piece tmpM, tmpP, p;
 	bool tmpSet{};
-
 	bool promotion = 0;
 
-
+	
 public:
 
 	Game();
@@ -68,6 +67,6 @@ public:
 	void checkKing(Piece tmp);
 	void checkQueen(Piece tmp);
 	Piece checkPiece(int x, int y);
-	bool checkAttacked(int x, int y);
+	void checkAttacked();
 	void checkPromotion(int i);
 };

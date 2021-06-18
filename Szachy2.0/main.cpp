@@ -6,7 +6,6 @@ using namespace sf;
 int main()
 {
 	Game game;
-	
 	//RenderWindow window;
 	//window.create(VideoMode(800, 800), "Chess");
 	//Texture xd;
@@ -38,13 +37,6 @@ int main()
 }
 
 /*
-
-promocje 
-//funkcja na releasie która ustawia promocje
-funkcja na kliku która pozwala na wybranie
-funkcja rysuj¹ca
-
-
 roszady
 
 ruchy królem
