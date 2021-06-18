@@ -30,10 +30,10 @@ private:
 
 	bool player;
 	IntRect bounds;
-	vector<string> possibleMovesWhite;
-	vector<string> possibleMovesBlack;
+	vector<string> possibleMovesWhite{};
+	vector<string> possibleMovesBlack{};
 	vector<string> gameMoves;
-	string tmpMove;
+	string tmpMove, attackedX , attackedY;
 
 	float dx{}, dy{};
 	int x{}, y{};
