@@ -30,7 +30,8 @@ private:
 
 	bool player;
 	IntRect bounds;
-	vector<string> possibleMoves;
+	vector<string> possibleMovesWhite;
+	vector<string> possibleMovesBlack;
 	vector<string> gameMoves;
 	string tmpMove;
 
@@ -67,6 +68,6 @@ public:
 	void checkKing(Piece tmp);
 	void checkQueen(Piece tmp);
 	Piece checkPiece(int x, int y);
-
+	bool checkAttacked(int x, int y);
 	void checkPromotion(int i);
 };
