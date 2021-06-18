@@ -324,7 +324,7 @@ void Game::checkRook(Piece tmp) {
 	for (int i = x + 1; i < 8; i++) {
 		p = checkPiece(i, y);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(i, y)) : possibleMovesBlack.push_back(tmp.cordToString(i, y));
@@ -338,7 +338,7 @@ void Game::checkRook(Piece tmp) {
 	for (int i = x - 1; i >= 0; i--) {
 		p = checkPiece(i, y);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(i, y)) : possibleMovesBlack.push_back(tmp.cordToString(i, y));
@@ -352,7 +352,7 @@ void Game::checkRook(Piece tmp) {
 	for (int i = y + 1; i < 8; i++) {
 		p = checkPiece(x, i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x, i)) : possibleMovesBlack.push_back(tmp.cordToString(x, i));
@@ -366,7 +366,7 @@ void Game::checkRook(Piece tmp) {
 	for (int i = y - 1; i >= 0; i--) {
 		p = checkPiece(x, i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x, i)) : possibleMovesBlack.push_back(tmp.cordToString(x, i));
@@ -451,7 +451,7 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i < 8 - x && i < 8 - y; i++) {
 		p = checkPiece(x + i, y + i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + i, y + i)) : possibleMovesBlack.push_back(tmp.cordToString(x + i, y + i));
@@ -465,7 +465,7 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i < 8 - x && i <= y; i++) {
 		p = checkPiece(x + i, y - i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + i, y - i)) : possibleMovesBlack.push_back(tmp.cordToString(x + i, y - i));
@@ -479,7 +479,7 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i <= x && i < 8 - y; i++) {
 		p = checkPiece(x - i, y + i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - i, y + i)) : possibleMovesBlack.push_back(tmp.cordToString(x - i, y + i));
@@ -493,7 +493,7 @@ void Game::checkBishop(Piece tmp) {
 	for (int i = 1; i <= x && i <= y; i++) {
 		p = checkPiece(x - i, y - i);
 		if (p.getSet()) {
-			if (p.getColor() == player)
+			if (p.getColor() == player && p.getType() != 'K')
 				break;
 			else {
 				tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - i, y - i)) : possibleMovesBlack.push_back(tmp.cordToString(x - i, y - i));
@@ -701,11 +701,39 @@ void Game::checkAttacked() {
 	system("cls");
 	if (player) {
 		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-			cout << possibleMovesWhite.size() << " " << i << " " << possibleMovesWhite[i] << endl;
 			if (possibleMovesWhite[i][0] == 'K') {
 				for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
 					if (possibleMovesBlack[j][0] == 'P' && possibleMovesBlack[j][1] == possibleMovesBlack[j][3])
 						continue;
+					if (possibleMovesBlack[j][1] != possibleMovesWhite[i][3] && possibleMovesBlack[j][2] != possibleMovesWhite[i][4]) {
+						if (possibleMovesBlack[j][0] == 'R' || possibleMovesBlack[j][0] == 'Q') {
+							if (possibleMovesBlack[j][3] == possibleMovesWhite[i][3] || possibleMovesBlack[j][4] == possibleMovesWhite[i][4]) {
+								if (possibleMovesBlack[j][3] == possibleMovesWhite[i][1] && possibleMovesBlack[j][4] == possibleMovesWhite[i][2]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+									i--;
+									break;
+								}
+							}
+						}
+						if (possibleMovesBlack[j][0] == 'B' || possibleMovesBlack[j][0] == 'Q') {
+							if (possibleMovesBlack[j][1] - possibleMovesWhite[i][3] == possibleMovesWhite[i][4] - possibleMovesBlack[j][2]) {
+								if (possibleMovesBlack[j][3] == possibleMovesWhite[i][1] && possibleMovesWhite[i][2] == possibleMovesBlack[j][4]) {
+									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+									i--;
+									break;
+								}
+							}
+							if (possibleMovesWhite[i][3] - possibleMovesBlack[j][1] == possibleMovesWhite[i][4] - possibleMovesBlack[j][2]) {
+								if (possibleMovesBlack[j][3] == possibleMovesWhite[i][1] && possibleMovesWhite[i][2] == possibleMovesBlack[j][4]) {
+									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+									i--;
+									break;
+								}
+							}
+						}
+					}
 					if (possibleMovesBlack[j][3] == possibleMovesWhite[i][3] && possibleMovesBlack[j][4] == possibleMovesWhite[i][4]) {
 						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
 						i--;
@@ -717,11 +745,39 @@ void Game::checkAttacked() {
 	}
 	else {
 		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
-			cout << possibleMovesBlack.size() << " " << i << " " << possibleMovesBlack[i] << endl;
 			if (possibleMovesBlack[i][0] == 'K') {
 				for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
 					if (possibleMovesWhite[j][0] == 'P' && possibleMovesWhite[j][1] == possibleMovesWhite[j][3])
 						continue;
+					if (possibleMovesWhite[j][1] != possibleMovesBlack[i][3] && possibleMovesWhite[j][2] != possibleMovesBlack[i][4]) {
+						if (possibleMovesWhite[j][0] == 'R' || possibleMovesWhite[j][0] == 'Q') {
+							if (possibleMovesWhite[j][3] == possibleMovesBlack[i][3] || possibleMovesWhite[j][4] == possibleMovesBlack[i][4]) {
+								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesWhite[j][4] == possibleMovesBlack[i][2]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+									i--;
+									break;
+								}
+							}
+						}
+						if (possibleMovesWhite[j][0] == 'B' || possibleMovesWhite[j][0] == 'Q') {
+							if (possibleMovesWhite[j][1] - possibleMovesBlack[i][3] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
+								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
+									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+									i--;
+									break;
+								}
+							}
+							if (possibleMovesBlack[i][3] - possibleMovesWhite[j][1] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
+								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
+									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+									i--;
+									break;
+								}
+							}
+						}
+					}
 					if (possibleMovesWhite[j][3] == possibleMovesBlack[i][3] && possibleMovesWhite[j][4] == possibleMovesBlack[i][4]) {
 						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
