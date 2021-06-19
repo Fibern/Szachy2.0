@@ -143,12 +143,12 @@ void Game::updateWindow()
 							black[i].setPos(dx, dy);
 							black[i].updateCord(dx / 100.f, dy / 100.f);
 							if (tmpMove == "Ke8c8") {
-								white[0].setPos(300, dy);
-								white[0].updateCord(3, dy / 100);
+								black[0].setPos(300, dy);
+								black[0].updateCord(3, dy / 100);
 							}
 							if (tmpMove == "Ke8g8") {
-								white[7].setPos(500, dy);
-								white[7].updateCord(5, dy / 100);
+								black[7].setPos(500, dy);
+								black[7].updateCord(5, dy / 100);
 							}
 						}
 
