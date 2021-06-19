@@ -38,13 +38,6 @@ int main()
 }
 
 /*
-
-promocje 
-//funkcja na releasie która ustawia promocje
-funkcja na kliku która pozwala na wybranie
-funkcja rysuj¹ca
-
-
 roszady
 
 ruchy królem
