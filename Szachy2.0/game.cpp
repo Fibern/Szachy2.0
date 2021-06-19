@@ -901,10 +901,11 @@ void Game::checkPin(Piece tmp) {
 					if (p.getType() == 'Q' || p.getType() == 'R') {
 						if (player) {
 							for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-								if (possibleMovesWhite[0] == 'O')
+								if (possibleMovesWhite[i][0] == 'O')
 									continue;
+								cout << static_cast<char>(pinned.getX()) << " " << pinned.getX();
 								if (possibleMovesWhite[i][1] == static_cast<char>(pinned.getX()) && possibleMovesWhite[i][2] == to_string(8 - pinned.getY())) {
-									if (possibleMovesWhite[i][2] != possibleMovesWhite[4]) {
+									if (possibleMovesWhite[i][2] != possibleMovesWhite[i][4]) {
 										possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
 										i--;
 									}
