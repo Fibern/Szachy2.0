@@ -35,7 +35,6 @@ private:
 	vector<string> gameMoves;
 	string tmpMove;
 
-	int asd[1699];
 	float dx{}, dy{};
 	int x{}, y{};
 	Vector2i pos{};
