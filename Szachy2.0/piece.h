@@ -16,6 +16,7 @@ private:
 	bool set = 0;
 	bool enPassant = 0;
 	bool promotion = 0;
+	bool castle = 0;
 	string s1, s2, typeStr;
 
 public:
@@ -39,6 +40,7 @@ public:
 	bool getSet() { return set; }
 	bool getEnPassant() { return enPassant; }
 	bool getPromotion() { return promotion; }
+	bool getCastle() { return castle; }
 
 	void promoted(char type);
 	void updateCord(float x, float y);

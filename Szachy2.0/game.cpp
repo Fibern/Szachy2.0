@@ -130,10 +130,26 @@ void Game::updateWindow()
 						if (player) {
 							white[i].setPos(dx, dy);
 							white[i].updateCord(dx / 100, dy / 100);
+							if (tmpMove == "Ke1c1") {
+								white[0].setPos(300, dy);
+								white[0].updateCord(3, dy / 100);
+							}
+							if (tmpMove == "Ke1g1") {
+								white[0].setPos(500, dy);
+								white[0].updateCord(5, dy / 100);
+							}
 						}
 						else {
 							black[i].setPos(dx, dy);
 							black[i].updateCord(dx / 100.f, dy / 100.f);
+							if (tmpMove == "Ke8c8") {
+								white[0].setPos(300, dy);
+								white[0].updateCord(3, dy / 100);
+							}
+							if (tmpMove == "Ke8g8") {
+								white[0].setPos(500, dy);
+								white[0].updateCord(5, dy / 100);
+							}
 						}
 
 						updateMoves((int)(dx / 100), int(dy / 100), i);
@@ -314,6 +330,8 @@ void Game::checkMoves() {
 		}
 	}
 	checkAttacked();
+	checkCastle(white[4]);
+	checkCastle(black[4]);
 }
 
 //Funkcje dla każdej figury
@@ -584,12 +602,20 @@ Piece Game::checkPiece(int x, int y) {
 bool Game::isLegal(string tmpMove) {
 	if (player) {
 		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+			if (tmpMove == "Ke1c1" && possibleMovesWhite[i] == "O-O-O")
+				return 1;
+			if (tmpMove == "Ke1g1" && possibleMovesWhite[i] == "O-O")
+				return 1;
 			if (tmpMove == possibleMovesWhite[i])
 				return 1;
 		}
 	}
 	else {
 		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+			if (tmpMove == "Ke8c8" && possibleMovesWhite[i] == "O-O-O")
+				return 1;
+			if (tmpMove == "Ke8g8" && possibleMovesWhite[i] == "O-O")
+				return 1;
 			if (tmpMove == possibleMovesBlack[i])
 				return 1;
 		}
@@ -698,7 +724,6 @@ void Game::checkPromotion(int i) {
 }
 
 void Game::checkAttacked() {
-	system("cls");
 	if (player) {
 		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
 			if (possibleMovesWhite[i][0] == 'K') {
@@ -718,7 +743,6 @@ void Game::checkAttacked() {
 						if (possibleMovesBlack[j][0] == 'B' || possibleMovesBlack[j][0] == 'Q') {
 							if (possibleMovesBlack[j][1] - possibleMovesWhite[i][3] == possibleMovesWhite[i][4] - possibleMovesBlack[j][2]) {
 								if (possibleMovesBlack[j][3] == possibleMovesWhite[i][1] && possibleMovesWhite[i][2] == possibleMovesBlack[j][4]) {
-									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
 									possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
 									i--;
 									break;
@@ -726,7 +750,6 @@ void Game::checkAttacked() {
 							}
 							if (possibleMovesWhite[i][3] - possibleMovesBlack[j][1] == possibleMovesWhite[i][4] - possibleMovesBlack[j][2]) {
 								if (possibleMovesBlack[j][3] == possibleMovesWhite[i][1] && possibleMovesWhite[i][2] == possibleMovesBlack[j][4]) {
-									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
 									possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
 									i--;
 									break;
@@ -762,7 +785,6 @@ void Game::checkAttacked() {
 						if (possibleMovesWhite[j][0] == 'B' || possibleMovesWhite[j][0] == 'Q') {
 							if (possibleMovesWhite[j][1] - possibleMovesBlack[i][3] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
 								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
-									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
 									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 									i--;
 									break;
@@ -770,7 +792,6 @@ void Game::checkAttacked() {
 							}
 							if (possibleMovesBlack[i][3] - possibleMovesWhite[j][1] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
 								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
-									//cout << possibleMovesBlack[j] << " " << possibleMovesWhite[i] << endl;
 									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 									i--;
 									break;
@@ -782,6 +803,70 @@ void Game::checkAttacked() {
 						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Game::checkCastle(Piece tmp) {
+	if (tmp.getColor() != player)
+		return;
+	x = tmp.getX();
+	y = tmp.getY();
+
+	if(tmp.getCastle()) {
+		p = checkPiece(0, y);
+		if (p.getCastle() && p.getSet()) {
+			if (!checkPiece(1, y).getSet() && !checkPiece(2, y).getSet() && !checkPiece(3, y).getSet()) {
+				if (player) {
+					possibleMovesWhite.push_back("O-O-O");
+					for (int i = 0; i < possibleMovesBlack.size(); i++) {
+						if (possibleMovesBlack[i][4] == '1') {
+							if (possibleMovesBlack[i][3] == 'b' && possibleMovesBlack[i][3] == 'c' && possibleMovesBlack[i][3] == 'd') {
+								possibleMovesWhite.pop_back();
+								break;
+							}
+						}
+					}
+				}
+				else {
+					possibleMovesBlack.push_back("O-O-O");
+					for (int i = 0; i < possibleMovesWhite.size(); i++) {
+						if (possibleMovesWhite[i][4] == '8') {
+							if (possibleMovesWhite[i][3] == 'b' && possibleMovesWhite[i][3] == 'c' && possibleMovesWhite[i][3] == 'd') {
+								possibleMovesBlack.pop_back();
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		p = checkPiece(7, y);
+		if (p.getCastle() && p.getSet()) {
+			if (!checkPiece(6, y).getSet() && !checkPiece(5, y).getSet()) {
+				if (player) {
+					possibleMovesBlack.push_back("O-O");
+					for (int i = 0; i < possibleMovesBlack.size(); i++) {
+						if (possibleMovesBlack[i][4] == '1') {
+							if (possibleMovesBlack[i][3] == 'f' && possibleMovesBlack[i][3] == 'g') {
+								possibleMovesBlack.pop_back();
+								break;
+							}
+						}
+					}
+				}
+				else {
+					possibleMovesBlack.push_back("O-O");
+					for (int i = 0; i < possibleMovesWhite.size(); i++) {
+						if (possibleMovesWhite[i][4] == '8') {
+							if (possibleMovesWhite[i][3] == 'f' && possibleMovesWhite[i][3] == 'g') {
+								possibleMovesBlack.pop_back();
+								break;
+							}
+						}
 					}
 				}
 			}

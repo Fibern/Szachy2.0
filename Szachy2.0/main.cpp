@@ -37,9 +37,7 @@ int main()
 }
 
 /*
-roszady
 
-ruchy królem
 szachy, maty, paty
 przypiêcia
 

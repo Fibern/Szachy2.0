@@ -10,6 +10,8 @@ void Piece::setPiece(char type, bool color, int x, int y)
 {
 	this->color = color;
 	this->setPieceType(type);
+	if (this->type == 'K' || this->type == 'R')
+		this->castle = 1;
 	this->x = x;
 	this->y = y;
 	this->sprite.setPosition(x * 100.f, y * 100.f);
@@ -58,6 +60,9 @@ void Piece::updateCord(float x, float y) {
 	if (this->type == 'P' && ((this->color && this->y == 0) || (!this->color && this->y == 7))) {
 		this->promotion = 1;
 	}
+
+	if (this->type == 'K' || this->type == 'R')
+		this->castle = 0;
 
 }
 

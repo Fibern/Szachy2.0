@@ -66,7 +66,9 @@ public:
 	void checkKnight(Piece tmp);
 	void checkKing(Piece tmp);
 	void checkQueen(Piece tmp);
+	void checkCastle(Piece tmp);
 	Piece checkPiece(int x, int y);
 	void checkAttacked();
 	void checkPromotion(int i);
+
 };
