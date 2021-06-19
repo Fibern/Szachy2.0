@@ -6,7 +6,6 @@ using namespace sf;
 int main()
 {
 	Game game;
-	
 	//RenderWindow window;
 	//window.create(VideoMode(800, 800), "Chess");
 	//Texture xd;
