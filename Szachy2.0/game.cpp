@@ -779,32 +779,37 @@ void Game::checkAttacked() {
 				for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
 					if (possibleMovesWhite[j][0] == 'P' && possibleMovesWhite[j][1] == possibleMovesWhite[j][3])
 						continue;
-					if (possibleMovesWhite[j][1] != possibleMovesBlack[i][3] && possibleMovesWhite[j][2] != possibleMovesBlack[i][4]) {
+					if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesWhite[j][4] == possibleMovesBlack[i][2]) {
 						if (possibleMovesWhite[j][0] == 'R' || possibleMovesWhite[j][0] == 'Q') {
-							if (possibleMovesWhite[j][3] == possibleMovesBlack[i][3] || possibleMovesWhite[j][4] == possibleMovesBlack[i][4]) {
-								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesWhite[j][4] == possibleMovesBlack[i][2]) {
-									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
-									i--;
-									break;
-								}
+							if (possibleMovesWhite[j][1] == possibleMovesWhite[j][3] && possibleMovesBlack[i][1] == possibleMovesBlack[i][3] && possibleMovesWhite[j][1] == possibleMovesBlack[i][1] && possibleMovesBlack[i][4] != possibleMovesWhite[j][2]) {
+								possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+								i--;
+								break;
+							}
+							if (possibleMovesWhite[j][2] == possibleMovesWhite[j][4] && possibleMovesBlack[i][2] == possibleMovesBlack[i][4] && possibleMovesWhite[j][2] == possibleMovesBlack[i][2] && possibleMovesBlack[i][3] != possibleMovesWhite[j][1]) {
+								possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+								i--;
+								break;
 							}
 						}
+
 						if (possibleMovesWhite[j][0] == 'B' || possibleMovesWhite[j][0] == 'Q') {
-							if (possibleMovesWhite[j][1] - possibleMovesBlack[i][3] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
-								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
+							if (possibleMovesWhite[j][1] - possibleMovesBlack[i][1] == possibleMovesBlack[i][2] - possibleMovesWhite[j][2]) {
+								if (possibleMovesWhite[j][3] - possibleMovesBlack[i][3] == possibleMovesBlack[i][4] - possibleMovesWhite[j][4] && possibleMovesBlack[i][4] != possibleMovesWhite[j][2]) {
 									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 									i--;
 									break;
 								}
 							}
-							if (possibleMovesBlack[i][3] - possibleMovesWhite[j][1] == possibleMovesBlack[i][4] - possibleMovesWhite[j][2]) {
-								if (possibleMovesWhite[j][3] == possibleMovesBlack[i][1] && possibleMovesBlack[i][2] == possibleMovesWhite[j][4]) {
+							if (possibleMovesWhite[j][1] - possibleMovesBlack[i][1] == possibleMovesWhite[j][2] - possibleMovesBlack[i][2]) {
+								if (possibleMovesWhite[j][3] - possibleMovesBlack[i][3] == possibleMovesWhite[j][4] - possibleMovesBlack[i][4] && possibleMovesBlack[i][4] != possibleMovesWhite[j][2]) {
 									possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 									i--;
 									break;
 								}
 							}
 						}
+
 					}
 					if (possibleMovesWhite[j][3] == possibleMovesBlack[i][3] && possibleMovesWhite[j][4] == possibleMovesBlack[i][4]) {
 						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
