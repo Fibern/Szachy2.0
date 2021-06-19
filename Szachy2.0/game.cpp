@@ -848,11 +848,11 @@ void Game::checkCastle(Piece tmp) {
 		if (p.getCastle() && p.getSet()) {
 			if (!checkPiece(6, y).getSet() && !checkPiece(5, y).getSet()) {
 				if (player) {
-					possibleMovesBlack.push_back("O-O");
+					possibleMovesWhite.push_back("O-O");
 					for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
 						if (possibleMovesBlack[i][4] == '1') {
 							if (possibleMovesBlack[i][3] == 'f' || possibleMovesBlack[i][3] == 'g') {
-								possibleMovesBlack.pop_back();
+								possibleMovesWhite.pop_back();
 								break;
 							}
 						}
