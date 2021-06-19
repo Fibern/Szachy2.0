@@ -824,7 +824,7 @@ void Game::checkCastle(Piece tmp) {
 					possibleMovesWhite.push_back("O-O-O");
 					for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
 						if (possibleMovesBlack[i][4] == '1') {
-							if (possibleMovesBlack[i][3] == 'b' && possibleMovesBlack[i][3] == 'c' && possibleMovesBlack[i][3] == 'd') {
+							if (possibleMovesBlack[i][3] == 'b' || possibleMovesBlack[i][3] == 'c' || possibleMovesBlack[i][3] == 'd') {
 								possibleMovesWhite.pop_back();
 								break;
 							}
@@ -835,7 +835,7 @@ void Game::checkCastle(Piece tmp) {
 					possibleMovesBlack.push_back("O-O-O");
 					for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
 						if (possibleMovesWhite[i][4] == '8') {
-							if (possibleMovesWhite[i][3] == 'b' && possibleMovesWhite[i][3] == 'c' && possibleMovesWhite[i][3] == 'd') {
+							if (possibleMovesWhite[i][3] == 'b' || possibleMovesWhite[i][3] == 'c' || possibleMovesWhite[i][3] == 'd') {
 								possibleMovesBlack.pop_back();
 								break;
 							}
@@ -851,7 +851,7 @@ void Game::checkCastle(Piece tmp) {
 					possibleMovesBlack.push_back("O-O");
 					for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
 						if (possibleMovesBlack[i][4] == '1') {
-							if (possibleMovesBlack[i][3] == 'f' && possibleMovesBlack[i][3] == 'g') {
+							if (possibleMovesBlack[i][3] == 'f' || possibleMovesBlack[i][3] == 'g') {
 								possibleMovesBlack.pop_back();
 								break;
 							}
@@ -862,7 +862,7 @@ void Game::checkCastle(Piece tmp) {
 					possibleMovesBlack.push_back("O-O");
 					for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
 						if (possibleMovesWhite[i][4] == '8') {
-							if (possibleMovesWhite[i][3] == 'f' && possibleMovesWhite[i][3] == 'g') {
+							if (possibleMovesWhite[i][3] == 'f' || possibleMovesWhite[i][3] == 'g') {
 								possibleMovesBlack.pop_back();
 								break;
 							}

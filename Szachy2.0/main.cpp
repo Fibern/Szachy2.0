@@ -38,8 +38,9 @@ int main()
 
 /*
 
-szachy, maty, paty
 przypiêcia
+
+szachy, maty, paty
 
 menu zapisywanie i wczytywanie
 */
