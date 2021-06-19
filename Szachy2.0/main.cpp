@@ -1,12 +1,18 @@
 #include "game.h"
+#include "menu.h"
 //#include<SFML/Graphics.hpp>
 
 using namespace sf;
 
 int main()
 {
+	RenderWindow window;
+	Menu menu(800.f, 800.f);
+	menu.draw(window);
 	Game game;
-	//RenderWindow window;
+
+	
+	
 	//window.create(VideoMode(800, 800), "Chess");
 	//Texture xd;
 	//xd.loadFromFile("images/queenw.png"); 
@@ -27,6 +33,7 @@ int main()
 	//	window.display();
 	//}
 	//
+	
 
 	while (game.getWindow().isOpen()) {
 		game.updateWindow();

@@ -167,11 +167,13 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="piece.cpp" />
     <ClCompile Include="pieceTex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="piece.h" />
     <ClInclude Include="pieceTex.h" />
   </ItemGroup>

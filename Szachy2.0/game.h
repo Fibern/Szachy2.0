@@ -11,7 +11,7 @@ using namespace std;
 class Game
 {
 private:
-	
+
 	Piece white[16];
 	Piece black[16];
 	Piece tmp;
@@ -43,7 +43,7 @@ private:
 	bool tmpSet{};
 	bool promotion = 0;
 
-	
+
 public:
 
 	Game();
@@ -54,7 +54,7 @@ public:
 	const RenderWindow& getWindow() const;
 
 	bool isLegal(string tmpMove);
-	void takes(int x ,int y);
+	void takes(int x, int y);
 	void updateMoves(int x, int y, int i);
 	void updatePromotion(int i);
 	void clearEnPassant();

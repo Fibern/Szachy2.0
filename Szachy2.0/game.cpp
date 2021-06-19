@@ -365,7 +365,7 @@ void Game::checkRook(Piece tmp) {
 				break;
 			}
 		}
-		else 
+		else
 			tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(i, y)) : possibleMovesBlack.push_back(tmp.cordToString(i, y));
 	}
 
@@ -379,7 +379,7 @@ void Game::checkRook(Piece tmp) {
 				break;
 			}
 		}
-		else 
+		else
 			tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x, i)) : possibleMovesBlack.push_back(tmp.cordToString(x, i));
 	}
 
@@ -393,7 +393,7 @@ void Game::checkRook(Piece tmp) {
 				break;
 			}
 		}
-		else 
+		else
 			tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x, i)) : possibleMovesBlack.push_back(tmp.cordToString(x, i));
 	}
 
@@ -760,7 +760,7 @@ void Game::checkAttacked() {
 									i--;
 									break;
 								}
-							}			
+							}
 						}
 
 					}
@@ -828,7 +828,7 @@ void Game::checkCastle(Piece tmp) {
 	x = tmp.getX();
 	y = tmp.getY();
 
-	if(tmp.getCastle()) {
+	if (tmp.getCastle()) {
 		p = checkPiece(0, y);
 		if (p.getCastle() && p.getSet()) {
 			if (!checkPiece(1, y).getSet() && !checkPiece(2, y).getSet() && !checkPiece(3, y).getSet()) {
@@ -929,9 +929,9 @@ void Game::checkPin(Piece tmp) {
 							}
 						}
 					}
-				else {
-					break;
-				}
+					else {
+						break;
+					}
 			}
 		}
 	}
