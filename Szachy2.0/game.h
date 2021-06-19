@@ -39,7 +39,7 @@ private:
 	int x{}, y{};
 	Vector2i pos{};
 	char type;
-	Piece tmpM, tmpP, p;
+	Piece tmpM, tmpP, p, pinned;
 	bool tmpSet{};
 	bool promotion = 0;
 
@@ -67,8 +67,8 @@ public:
 	void checkKing(Piece tmp);
 	void checkQueen(Piece tmp);
 	void checkCastle(Piece tmp);
+	void checkPin(Piece tmp);
 	Piece checkPiece(int x, int y);
 	void checkAttacked();
 	void checkPromotion(int i);
-
 };
