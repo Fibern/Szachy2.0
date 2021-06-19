@@ -895,60 +895,353 @@ void Game::checkPin(Piece tmp) {
 	for (int i = x + 1; i < 8; i++) {
 		p = checkPiece(i, y);
 		if (p.getSet()) {
-			if (p.getColor() == tmp.getColor()) {
-				if (pinned.getSet())
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
 					break;
-				else
-					pinned = p;
-			}
-			else {
-				if (pinned.getSet())
-					if (p.getType() == 'Q' || p.getType() == 'R') {
-						if (player) {
-							for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-								if (possibleMovesWhite[i][0] == 'O')
-									continue;
-								cout << static_cast<char>(pinned.getX()) << " " << pinned.getX();
-								if (possibleMovesWhite[i][1] == static_cast<char>(pinned.getX()) && possibleMovesWhite[i][2] == to_string(8 - pinned.getY())) {
-									if (possibleMovesWhite[i][2] != possibleMovesWhite[i][4]) {
-										possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
-										i--;
-									}
-								}
-							}
-						}
-						else {
-							for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
-								if (possibleMovesBlack[0] == 'O')
-									continue;
-								if (possibleMovesBlack[i][1] == static_cast<char>(pinned.getX()) && possibleMovesBlack[i][2] == to_string(8 - pinned.getY())) {
-									if (possibleMovesBlack[i][2] != possibleMovesBlack[4]) {
-										possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
-										i--;
-									}
+				if (p.getType() == 'Q' || p.getType() == 'R') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][2] != possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
 								}
 							}
 						}
 					}
-				else {
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][2] != possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
 					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
 				}
 			}
 		}
 	}
 	pinned = {};
-	for (int i = x - 1; i >= 0; i--) {}
+	for (int i = x - 1; i >= 0; i--) {
+		p = checkPiece(i, y);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'R') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][2] != possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][2] != possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 	pinned = {};
-	for (int i = y + 1; i < 8; i++) {}
+	for (int i = y + 1; i < 8; i++) {
+		p = checkPiece(x, i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'R') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][1] != possibleMovesWhite[j][3]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][1] != possibleMovesBlack[j][3]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 	pinned = {};
-	for (int i = y - 1; i >= 0; i--) {}
+	for (int i = y - 1; i >= 0; i--) {
+		p = checkPiece(x, i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'R') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][1] != possibleMovesWhite[j][3]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][1] != possibleMovesBlack[j][3]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
+	pinned = {};
 
+	for (int i = 1; i < 8 - x && i < 8 - y; i++) {
+		p = checkPiece(x + i, y + i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'B') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][3] - possibleMovesWhite[j][1] != possibleMovesWhite[j][2] - possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][3] - possibleMovesBlack[j][1] == possibleMovesBlack[j][2] - possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 	pinned = {};
-	for (int i = 1; i < 8 - x && i < 8 - y; i++) {}
+	for (int i = 1; i < 8 - x && i <= y; i++) {
+		p = checkPiece(x + i, y - i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'B') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][1] - possibleMovesWhite[j][3] != possibleMovesWhite[j][2] - possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][1] - possibleMovesBlack[j][3] == possibleMovesBlack[j][2] - possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 	pinned = {};
-	for (int i = 1; i < 8 - x && i <= y; i++) {}
+	for (int i = 1; i <= x && i < 8 - y; i++) {
+		p = checkPiece(x - i, y + i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'B') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][1] - possibleMovesWhite[j][3] != possibleMovesWhite[j][2] - possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][1] - possibleMovesBlack[j][3] == possibleMovesBlack[j][2] - possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 	pinned = {};
-	for (int i = 1; i <= x && i < 8 - y; i++) {}
-	pinned = {};
-	for (int i = 1; i <= x && i <= y; i++) {}
+	for (int i = 1; i <= x && i <= y; i++) {
+		p = checkPiece(x - i, y - i);
+		if (p.getSet()) {
+			if (pinned.getSet()) {
+				if (p.getColor() == pinned.getColor())
+					break;
+				if (p.getType() == 'Q' || p.getType() == 'B') {
+					if (player) {
+						for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
+							if (possibleMovesWhite[j][0] == 'O')
+								continue;
+							if (possibleMovesWhite[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesWhite[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesWhite[j][3] - possibleMovesWhite[j][1] != possibleMovesWhite[j][2] - possibleMovesWhite[j][4]) {
+									possibleMovesWhite.erase(possibleMovesWhite.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					else {
+						for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
+							if (possibleMovesBlack[j][0] == 'O')
+								continue;
+							if (possibleMovesBlack[j][1] == static_cast<char>(pinned.getX() + 'a') && possibleMovesBlack[j][2] == to_string(8 - pinned.getY())) {
+								if (possibleMovesBlack[j][3] - possibleMovesBlack[j][1] == possibleMovesBlack[j][2] - possibleMovesBlack[j][4]) {
+									possibleMovesBlack.erase(possibleMovesBlack.begin() + j);
+									j--;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			else {
+				if (p.getColor() != tmp.getColor())
+					break;
+				else {
+					pinned = p;
+				}
+			}
+		}
+	}
 }
