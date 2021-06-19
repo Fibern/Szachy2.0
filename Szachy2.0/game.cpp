@@ -135,8 +135,8 @@ void Game::updateWindow()
 								white[0].updateCord(3, dy / 100);
 							}
 							if (tmpMove == "Ke1g1") {
-								white[0].setPos(500, dy);
-								white[0].updateCord(5, dy / 100);
+								white[7].setPos(500, dy);
+								white[7].updateCord(5, dy / 100);
 							}
 						}
 						else {
@@ -147,8 +147,8 @@ void Game::updateWindow()
 								white[0].updateCord(3, dy / 100);
 							}
 							if (tmpMove == "Ke8g8") {
-								white[0].setPos(500, dy);
-								white[0].updateCord(5, dy / 100);
+								white[7].setPos(500, dy);
+								white[7].updateCord(5, dy / 100);
 							}
 						}
 
@@ -612,9 +612,9 @@ bool Game::isLegal(string tmpMove) {
 	}
 	else {
 		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
-			if (tmpMove == "Ke8c8" && possibleMovesWhite[i] == "O-O-O")
+			if (tmpMove == "Ke8c8" && possibleMovesBlack[i] == "O-O-O")
 				return 1;
-			if (tmpMove == "Ke8g8" && possibleMovesWhite[i] == "O-O")
+			if (tmpMove == "Ke8g8" && possibleMovesBlack[i] == "O-O")
 				return 1;
 			if (tmpMove == possibleMovesBlack[i])
 				return 1;
