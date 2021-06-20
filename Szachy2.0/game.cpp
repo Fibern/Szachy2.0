@@ -1,15 +1,22 @@
 ﻿#include "game.h"
 #include "piece.h"
-#include<windows.h>
+#include <windows.h>
 
 Game::Game()
 {
 	this->player = 1;
+	this->windowState = 1;
+
 	this->initWindow();
 	this->initBoard();
 	this->startingPosition();
 	this->checkMoves();
 	this->setPromotionPieces();
+
+	this->initBackgroundMenu();
+	this->initTextMenu();
+
+	this->initTextGameMenu();
 	//for (int i = 0; i < (int)possibleMovesWhite.size(); i++)
 	//	cout << possibleMovesWhite[i] << endl;
 }
@@ -48,12 +55,153 @@ void Game::initWindow()
 	this->window.setFramerateLimit(60);
 }
 
+void Game::initBackgroundMenu()
+{
+	if (!this->boardt.loadFromFile("images/brown.png"))
+		cout << "Can't load board texture!" << endl;
+	this->boardt.setRepeated(true);
+	this->board.setTextureRect({ 0, 0, 800, 800 });
+	this->board.setTexture(this->boardt);
+}
+
+void Game::initTextMenu()
+{
+	if (!font.loadFromFile("Comic_Sans.ttf"))
+		cout << "Can't load font!" << endl;
+
+	textMenu[0].setFont(font);
+	textMenu[0].setFillColor(Color::Black);
+	textMenu[0].setString("Play!");
+	textMenu[0].setPosition(Vector2f(800 / 2 - 30.f, 800 / 8 * 4));
+
+	textMenu[1].setFont(font);
+	textMenu[1].setFillColor(Color::Black);
+	textMenu[1].setString("Load game");
+	textMenu[1].setPosition(Vector2f(800 / 2 - 67.f, 800 / 8 * 5));
+
+	textMenu[2].setFont(font);
+	textMenu[2].setFillColor(Color::Black);
+	textMenu[2].setString("Exit");
+	textMenu[2].setPosition(Vector2f(800 / 2 - 30.f, 800 / 8 * 6));
+}
+
+void Game::drawMenu()
+{
+	this->window.draw(board);
+	for (int i = 0; i < 3; i++)
+		this->window.draw(textMenu[i]);
+	this->logot.loadFromFile("images/logo.png");
+	this->logo.setTexture(this->logot);
+	this->window.draw(logo);
+	logo.setPosition(Vector2f(200, 100));
+}
+
+void Game::updateWindowMenu()
+{
+	pos = Mouse::getPosition(window);
+
+	while (this->window.pollEvent(this->e)) {
+		if (this->e.type == sf::Event::Closed)
+			this->window.close();
+
+		if (e.type == Event::MouseMoved)
+		{
+			if (Mouse::getPosition(window).x >= textMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[0].getGlobalBounds().left + textMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[0].getGlobalBounds().top + textMenu[0].getGlobalBounds().height + 5)
+				textMenu[0].setFillColor(Color::White);
+			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5)
+				textMenu[1].setFillColor(Color::White);
+			else if (Mouse::getPosition(window).x >= textMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[2].getGlobalBounds().left + textMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[2].getGlobalBounds().top + textMenu[2].getGlobalBounds().height + 5)
+				textMenu[2].setFillColor(Color::White);
+			else
+			{
+				textMenu[0].setFillColor(Color::Black);
+				textMenu[1].setFillColor(Color::Black);
+				textMenu[2].setFillColor(Color::Black);
+			}
+		}
+
+		if (e.type == Event::MouseButtonPressed)
+			if (Mouse::getPosition(window).x >= textMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[0].getGlobalBounds().left + textMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[0].getGlobalBounds().top + textMenu[0].getGlobalBounds().height + 5)
+				windowState = 0;
+			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5);
+		// TODO
+			else if (Mouse::getPosition(window).x >= textMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[2].getGlobalBounds().left + textMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[2].getGlobalBounds().top + textMenu[2].getGlobalBounds().height + 5)
+				this->window.close();
+	}
+}
+
+void Game::initTextGameMenu()
+{
+	if (!font.loadFromFile("Comic_Sans.ttf"))
+		cout << "Can't load font!" << endl;
+
+	textGameMenu[0].setFont(font);
+	textGameMenu[0].setFillColor(Color::Black);
+	textGameMenu[0].setString("Resume");
+	textGameMenu[0].setPosition(Vector2f(800 / 2 - 50.f, 800 / 8 * 4));
+
+	textGameMenu[1].setFont(font);
+	textGameMenu[1].setFillColor(Color::Black);
+	textGameMenu[1].setString("Save game");
+	textGameMenu[1].setPosition(Vector2f(800 / 2 - 72.f, 800 / 8 * 5));
+
+	textGameMenu[2].setFont(font);
+	textGameMenu[2].setFillColor(Color::Black);
+	textGameMenu[2].setString("Exit");
+	textGameMenu[2].setPosition(Vector2f(800 / 2 - 30.f, 800 / 8 * 6));
+}
+
+void Game::drawGameMenu()
+{
+	this->window.draw(board);
+	for (int i = 0; i < 3; i++)
+		this->window.draw(textGameMenu[i]);
+	this->logot.loadFromFile("images/logo.png");
+	this->logo.setTexture(this->logot);
+	this->window.draw(logo);
+	logo.setPosition(Vector2f(200, 100));
+}
+
+void Game::updateWindowGameMenu()
+{
+	pos = Mouse::getPosition(window);
+
+	while (this->window.pollEvent(this->e)) {
+		if (this->e.type == sf::Event::Closed)
+			this->window.close();
+
+		if (e.type == Event::MouseMoved)
+		{
+			if (Mouse::getPosition(window).x >= textGameMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[0].getGlobalBounds().left + textGameMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[0].getGlobalBounds().top + textGameMenu[0].getGlobalBounds().height + 5)
+				textGameMenu[0].setFillColor(Color::White);
+			else if (Mouse::getPosition(window).x >= textGameMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[1].getGlobalBounds().left + textGameMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[1].getGlobalBounds().top + textGameMenu[1].getGlobalBounds().height + 5)
+				textGameMenu[1].setFillColor(Color::White);
+			else if (Mouse::getPosition(window).x >= textGameMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[2].getGlobalBounds().left + textGameMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[2].getGlobalBounds().top + textGameMenu[2].getGlobalBounds().height + 5)
+				textGameMenu[2].setFillColor(Color::White);
+			else
+			{
+				textGameMenu[0].setFillColor(Color::Black);
+				textGameMenu[1].setFillColor(Color::Black);
+				textGameMenu[2].setFillColor(Color::Black);
+			}
+		}
+
+		if (e.type == Event::MouseButtonPressed)
+			if (Mouse::getPosition(window).x >= textGameMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[0].getGlobalBounds().left + textGameMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[0].getGlobalBounds().top + textGameMenu[0].getGlobalBounds().height + 5)
+				windowState = 0;
+			else if (Mouse::getPosition(window).x >= textGameMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[1].getGlobalBounds().left + textGameMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[1].getGlobalBounds().top + textGameMenu[1].getGlobalBounds().height + 5);
+		// TODO
+			else if (Mouse::getPosition(window).x >= textGameMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[2].getGlobalBounds().left + textGameMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[2].getGlobalBounds().top + textGameMenu[2].getGlobalBounds().height + 5)
+				this->window.close();
+	}
+}
+
 void Game::initBoard()
 {
 	if (!this->boardt.loadFromFile("images/board.png"))
 		cout << "Can't load board texture!" << endl;
 	/*this->boardt.setRepeated(true);*/
-	this->board.setTextureRect({ 0, 0, 800, 800 });
+	//this->board.setTextureRect({ 0, 0, 800, 800 });
 	this->board.setTexture(this->boardt);
 }
 
@@ -162,9 +310,6 @@ void Game::updateWindow()
 					}
 				}
 			}
-
-
-
 		}
 
 		for (int i = 0; i < 16; i++) {
@@ -177,6 +322,9 @@ void Game::updateWindow()
 				}
 			}
 		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+			windowState = 2;
 
 	}
 }
@@ -250,7 +398,12 @@ void Game::drawBoard()
 void Game::renderWindow()
 {
 	this->window.clear();
-	drawBoard();
+	if (windowState == 0)
+		this->drawBoard();
+	else if (windowState == 1)
+		this->drawMenu();
+	else if (windowState == 2)
+		this->drawGameMenu();
 	this->window.display();
 }
 
