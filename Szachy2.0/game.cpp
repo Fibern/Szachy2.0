@@ -50,21 +50,18 @@ void Game::initWindow()
 
 void Game::initBoard()
 {
-	if (!this->boardt.loadFromFile("images/brown.png"))
-		cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << endl;
-	this->boardt.setRepeated(true);
+	if (!this->boardt.loadFromFile("images/board.png"))
+		cout << "Can't load board texture!" << endl;
+	/*this->boardt.setRepeated(true);*/
 	this->board.setTextureRect({ 0, 0, 800, 800 });
 	this->board.setTexture(this->boardt);
 }
 
 void Game::updateWindow()
 {
-
 	pos = Mouse::getPosition(window);
 
-	while (this->window.pollEvent(this->e))
-	{
-
+	while (this->window.pollEvent(this->e)) {
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
 
@@ -186,8 +183,6 @@ void Game::updateWindow()
 
 void Game::drawBoard()
 {
-
-
 	this->window.draw(board);
 
 	for (int i = 0; i < 16; i++) {

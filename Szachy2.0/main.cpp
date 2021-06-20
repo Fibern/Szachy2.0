@@ -6,10 +6,13 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window;
-	Menu menu(800.f, 800.f);
-	menu.draw(window);
+	//Menu menu;
 	Game game;
+
+	//while (menu.getWindow().isOpen()) {
+	//	//menu.updateWindow();
+	//	menu.renderWindow();
+	//}
 
 	
 	

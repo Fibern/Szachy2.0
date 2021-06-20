@@ -10,14 +10,25 @@ private:
 	int selectIndex;
 	Font font;
 	Text text[4];
+	Texture boardt;
+	Sprite board;
+	RenderWindow window;
+	Event e;
+	Vector2i pos{};
 
 public:
-	Menu(float width, float height);
-	~Menu() {}
+	Menu();
+	virtual ~Menu() {}
 
-	void draw(RenderWindow& window);
 	void moveUp();
 	void moveDown();
-
+	void initWindow();
+	void initBackground();
+	void initText();
+	void drawBackground();
+	void drawText();
+	void updateWindow();
+	void renderWindow();
+	const RenderWindow& getWindow() const;
 };
 
