@@ -51,7 +51,5 @@ int main()
 }
 
 /*
-szachy, maty, paty
-
 menu zapisywanie i wczytywanie
 */
