@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	this->player = 1;
+	this->player = 0;
 	this->initWindow();
 	this->initBoard();
 	this->startingPosition();
@@ -289,6 +289,7 @@ void Game::startingPosition()
 
 void Game::checkMoves() {
 	//Funkcja zapisuje wszystkie ruchy
+	check = 0;
 	for (int i = 0; i < 32; i++) {
 		if (i < 16) {
 			type = white[i].getType();
@@ -329,6 +330,9 @@ void Game::checkMoves() {
 	checkCastle(black[4]);
 	checkPin(white[4]);
 	checkPin(black[4]);
+	checkCheck(white[4]);
+	checkCheck(black[4]);
+	checkGameEnd();
 }
 
 //Funkcje dla każdej figury
@@ -401,7 +405,7 @@ void Game::checkPawn(Piece tmp) {
 	if (!tmp.getColor()) {
 		p = checkPiece(x, y + 1);
 		if (!p.getSet()) {
-			player ? possibleMovesWhite.push_back(tmp.cordToString(x, y + 1)) : possibleMovesBlack.push_back(tmp.cordToString(x, y + 1));
+			possibleMovesBlack.push_back(tmp.cordToString(x, y + 1));
 			if (y == 1) {
 				p = checkPiece(x, y + 2);
 				if (!p.getSet())
@@ -410,12 +414,12 @@ void Game::checkPawn(Piece tmp) {
 		}
 		if (x < 7) {
 			p = checkPiece(x + 1, y + 1);
-			if ((p.getSet() && p.getColor()) || tmp.getColor() != player)
+			if ((p.getSet() && p.getColor()) || tmp.getColor() != player || tmp.getType() == 'K')
 				possibleMovesBlack.push_back(tmp.cordToString(x + 1, y + 1));
 		}
 		if (x > 0) {
 			p = checkPiece(x - 1, y + 1);
-			if ((p.getSet() && p.getColor()) || tmp.getColor() != player)
+			if ((p.getSet() && p.getColor()) || tmp.getColor() != player || tmp.getType() == 'K')
 				possibleMovesBlack.push_back(tmp.cordToString(x - 1, y + 1));
 		}
 		if (y == 4) {
@@ -440,12 +444,12 @@ void Game::checkPawn(Piece tmp) {
 		}
 		if (x < 7) {
 			p = checkPiece(x + 1, y - 1);
-			if ((p.getSet() && !p.getColor()) || tmp.getColor() != player)
+			if ((p.getSet() && !p.getColor()) || tmp.getColor() != player || tmp.getType() == 'K')
 				possibleMovesWhite.push_back(tmp.cordToString(x + 1, y - 1));
 		}
 		if (x > 0) {
 			p = checkPiece(x - 1, y - 1);
-			if ((p.getSet() && !p.getColor()) || tmp.getColor() != player)
+			if ((p.getSet() && !p.getColor()) || tmp.getColor() != player || tmp.getType() == 'K')
 				possibleMovesWhite.push_back(tmp.cordToString(x - 1, y - 1));
 		}
 		if (y == 3) {
@@ -525,28 +529,28 @@ void Game::checkKnight(Piece tmp) {
 	y = tmp.getY();
 
 	p = checkPiece(x - 2, y - 1);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x - 2 >= 0 && y - 1 >= 0)
+	if (((p.getSet() && (p.getColor() != player || p.getType() == 'K')) || !p.getSet()) && x - 2 >= 0 && y - 1 >= 0)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - 2, y - 1)) : possibleMovesBlack.push_back(tmp.cordToString(x - 2, y - 1));
 	p = checkPiece(x - 2, y + 1);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x - 2 >= 0 && y + 1 < 8)
+	if (((p.getSet() && (p.getColor() != player || p.getType() == 'K')) || !p.getSet()) && x - 2 >= 0 && y + 1 < 8)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - 2, y + 1)) : possibleMovesBlack.push_back(tmp.cordToString(x - 2, y + 1));
 	p = checkPiece(x - 1, y - 2);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x - 1 >= 0 && y - 2 >= 0)
+	if (((p.getSet() && (p.getColor() != player || p.getType() == 'K')) || !p.getSet()) && x - 1 >= 0 && y - 2 >= 0)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - 1, y - 2)) : possibleMovesBlack.push_back(tmp.cordToString(x - 1, y - 2));
 	p = checkPiece(x - 1, y + 2);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x - 1 >= 0 && y + 2 < 8)
+	if (((p.getSet() && (p.getColor() != player || p.getType() == 'K')) || !p.getSet()) && x - 1 >= 0 && y + 2 < 8)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x - 1, y + 2)) : possibleMovesBlack.push_back(tmp.cordToString(x - 1, y + 2));
 	p = checkPiece(x + 1, y - 2);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x + 1 < 8 && y - 2 >= 0)
+	if (((p.getSet() && (p.getColor() != player) || p.getType() == 'K') || !p.getSet()) && x + 1 < 8 && y - 2 >= 0)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + 1, y - 2)) : possibleMovesBlack.push_back(tmp.cordToString(x + 1, y - 2));
 	p = checkPiece(x + 1, y + 2);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x + 1 < 8 && y + 2 < 8)
+	if (((p.getSet() && (p.getColor() != player) || p.getType() == 'K') || !p.getSet()) && x + 1 < 8 && y + 2 < 8)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + 1, y + 2)) : possibleMovesBlack.push_back(tmp.cordToString(x + 1, y + 2));
 	p = checkPiece(x + 2, y - 1);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x + 2 < 8 && y - 1 >= 0)
+	if (((p.getSet() && (p.getColor() != player) || p.getType() == 'K') || !p.getSet()) && x + 2 < 8 && y - 1 >= 0)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + 2, y - 1)) : possibleMovesBlack.push_back(tmp.cordToString(x + 2, y - 1));
 	p = checkPiece(x + 2, y + 1);
-	if (((p.getSet() && p.getColor() != player) || !p.getSet()) && x + 2 < 8 && y + 1 < 8)
+	if (((p.getSet() && (p.getColor() != player) || p.getType() == 'K') || !p.getSet()) && x + 2 < 8 && y + 1 < 8)
 		tmp.getColor() ? possibleMovesWhite.push_back(tmp.cordToString(x + 2, y + 1)) : possibleMovesBlack.push_back(tmp.cordToString(x + 2, y + 1));
 }
 
@@ -1238,5 +1242,380 @@ void Game::checkPin(Piece tmp) {
 				}
 			}
 		}
+	}
+}
+
+void Game::checkCheck(Piece tmp) {
+
+	x = tmp.getX();
+	y = tmp.getY();
+
+	if(player){
+		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+			if ((possibleMovesWhite[i][0] == 'P' && possibleMovesWhite[i][1] == possibleMovesWhite[i][3]) || possibleMovesWhite[i][0] == 'O')
+				continue;
+			if (possibleMovesWhite[i][3] == static_cast<char>(x + 'a') && possibleMovesWhite[i][4] == to_string(8 - y)) {
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+			if ((possibleMovesBlack[i][0] == 'P' && possibleMovesBlack[i][1] == possibleMovesBlack[i][3]) || possibleMovesBlack[i][0] == 'O')
+				continue;
+			if (possibleMovesBlack[i][3] == static_cast<char>(x + 'a') && possibleMovesBlack[i][4] == to_string(8 - y)) {
+				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+				i--;
+			}
+		}
+	}
+
+	if (player != tmp.getColor())
+		return;
+
+	if (player) {
+		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+			if ((possibleMovesBlack[i][0] == 'P' && possibleMovesBlack[i][1] == possibleMovesBlack[i][3]) || possibleMovesBlack[i][0] == 'O')
+				continue;
+			if (possibleMovesBlack[i][3] == static_cast<char>(x + 'a') && possibleMovesBlack[i][4] == to_string(8 - y)) {
+				clearCheck(static_cast<char>(x + 'a'), static_cast<char>(8 - y + '0'), possibleMovesBlack[i][1], possibleMovesBlack[i][2]);
+				check = 1;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+			if ((possibleMovesWhite[i][0] == 'P' && possibleMovesWhite[i][1] == possibleMovesWhite[i][3]) || possibleMovesWhite[i][0] == 'O')
+				continue;
+			if (possibleMovesWhite[i][3] == static_cast<char>(x + 'a') && possibleMovesWhite[i][4] == to_string(8 - y)) {
+				clearCheck(static_cast<char>(x + 'a'), static_cast<char>(8 - y + '0'), possibleMovesWhite[i][1], possibleMovesWhite[i][2]);
+				check = 1;
+			}
+		}
+	}
+}
+
+void Game::clearCheck(char xK, char yK, char xC, char yC) {
+
+	if (player) {
+		if (xC == xK) {
+			if (yK < yC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] > yK && possibleMovesWhite[i][4] <= yC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+			if (yK > yC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] < yK && possibleMovesWhite[i][4] >= yC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+		}
+		else if (yC == yK) {
+			if (xK < xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+			if (xK > xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K')
+						continue;
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+		}
+		else if (xC - xK == yC - yK) { 
+			if (xK < xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] - xK == possibleMovesWhite[i][4] - yK && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+			if (xK > xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] - xK == possibleMovesWhite[i][4] - yK && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+		}
+		else if(xC - xK == yK - yC) {
+			if (xK < xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] - xK == yK - possibleMovesWhite[i][4] && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+			if (xK > xC) {
+				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+					if (possibleMovesWhite[i][0] == 'K') {
+						continue;
+					}
+					if (possibleMovesWhite[i][0] == 'O') {
+						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+						i--;
+						continue;
+					}
+					if (possibleMovesWhite[i][3] - xK == yK - possibleMovesWhite[i][4] && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+						continue;
+					}
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+				if (possibleMovesWhite[i][0] == 'K') {
+					continue;
+				}
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+	}
+	else {
+	if (xC == xK) {
+		if (yK < yC) {
+			for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+				if (possibleMovesWhite[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesWhite[i][0] == 'O') {
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] > yK && possibleMovesWhite[i][4] <= yC) {
+					continue;
+				}
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+		if (yK > yC) {
+			for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+				if (possibleMovesWhite[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesWhite[i][0] == 'O') {
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] < yK && possibleMovesWhite[i][4] >= yC) {
+					continue;
+				}
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+	}
+	else if (yC == yK) {
+		if (xK < xC) {
+			for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+				if (possibleMovesWhite[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesWhite[i][0] == 'O') {
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+					continue;
+				}
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+		if (xK > xC) {
+			for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
+				if (possibleMovesWhite[i][0] == 'K')
+					continue;
+				if (possibleMovesWhite[i][0] == 'O') {
+					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+					continue;
+				}
+				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+				i--;
+			}
+		}
+	}
+	else if (xC - xK == yC - yK) {
+		if (xK < xC) {
+			for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+				if (possibleMovesBlack[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesBlack[i][0] == 'O') {
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesBlack[i][3] - xK == possibleMovesBlack[i][4] - yK && possibleMovesBlack[i][3] > xK && possibleMovesBlack[i][3] <= xC) {
+					continue;
+				}
+				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+				i--;
+			}
+		}
+		if (xK > xC) {
+			for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+				if (possibleMovesBlack[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesBlack[i][0] == 'O') {
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesBlack[i][3] - xK == possibleMovesBlack[i][4] - yK && possibleMovesBlack[i][3] < xK && possibleMovesBlack[i][3] >= xC) {
+					continue;
+				}
+				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+				i--;
+			}
+		}
+	}
+	else if (xC - xK == yK - yC) {
+		if (xK < xC) {
+			for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+				if (possibleMovesBlack[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesBlack[i][0] == 'O') {
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesBlack[i][3] - xK == yK - possibleMovesBlack[i][4] && possibleMovesBlack[i][3] > xK && possibleMovesBlack[i][3] <= xC) {
+					continue;
+				}
+				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+				i--;
+			}
+		}
+		if (xK > xC) {
+			for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+				if (possibleMovesBlack[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesBlack[i][0] == 'O') {
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+					i--;
+					continue;
+				}
+				if (possibleMovesBlack[i][3] - xK == yK - possibleMovesBlack[i][4] && possibleMovesBlack[i][3] < xK && possibleMovesBlack[i][3] >= xC) {
+					continue;
+				}
+				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+				i--;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+			if (possibleMovesBlack[i][0] == 'K') {
+				continue;
+			}
+			possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
+			i--;
+			}
+		}
+	}
+	
+}
+
+void Game::checkGameEnd() {
+	if (player && possibleMovesWhite.size() == 0) {
+		if (check)
+		else
+	}
+	if (!player && possibleMovesBlack.size() == 0) {
+		if (check)
+		else
 	}
 }

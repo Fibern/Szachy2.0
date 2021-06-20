@@ -42,7 +42,8 @@ private:
 	Piece tmpM, tmpP, p, pinned;
 	bool tmpSet{};
 	bool promotion = 0;
-
+	bool check = 0;
+	int gameEnd = 0;
 
 public:
 
@@ -68,7 +69,10 @@ public:
 	void checkQueen(Piece tmp);
 	void checkCastle(Piece tmp);
 	void checkPin(Piece tmp);
+	void checkCheck(Piece tmp);
+	void clearCheck(char xK, char yK, char xC, char yC);
 	Piece checkPiece(int x, int y);
 	void checkAttacked();
 	void checkPromotion(int i);
+	void checkGameEnd();
 };

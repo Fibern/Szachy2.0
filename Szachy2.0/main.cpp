@@ -7,14 +7,13 @@ using namespace sf;
 int main()
 {
 	//Menu menu;
-	Game game;
 
 	//while (menu.getWindow().isOpen()) {
-	//	//menu.updateWindow();
+	//	menu.updateWindow();
 	//	menu.renderWindow();
 	//}
 
-	
+	Game game;
 	
 	//window.create(VideoMode(800, 800), "Chess");
 	//Texture xd;
@@ -47,9 +46,6 @@ int main()
 }
 
 /*
-
-przypiêcia
-
 szachy, maty, paty
 
 menu zapisywanie i wczytywanie
