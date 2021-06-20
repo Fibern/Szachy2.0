@@ -18,12 +18,18 @@ private:
 	Piece promotionWhite[4];
 	Piece promotionBlack[4];
 	RenderWindow window;
+	int windowState; //0 - gra, 1 - menu, 2 - menu gry 
 	void initWindow();
 	void setPromotionPieces();
 
 	Event e;
+	Font font;
+	Text textMenu[3];
+	Text textGameMenu[3];
 	Texture boardt;
 	Sprite board;
+	Texture logot;
+	Sprite logo;
 	void initBoard();
 	void drawBoard();
 	bool dragging[16]{};
@@ -54,6 +60,15 @@ public:
 	void startingPosition();
 	const RenderWindow& getWindow() const;
 
+	void initBackgroundMenu();
+	void initTextMenu();
+	void drawMenu();
+	void updateWindowMenu();
+
+	void initTextGameMenu();
+	void drawGameMenu();
+	void updateWindowGameMenu();
+
 	bool isLegal(string tmpMove);
 	void takes(int x, int y);
 	void updateMoves(int x, int y, int i);
@@ -75,4 +90,6 @@ public:
 	void checkAttacked();
 	void checkPromotion(int i);
 	void checkGameEnd();
+
+	int getWindowState() { return windowState; }
 };

@@ -38,7 +38,12 @@ int main()
 	
 
 	while (game.getWindow().isOpen()) {
-		game.updateWindow();
+		if (game.getWindowState() == 1)
+			game.updateWindowMenu();
+		else if (game.getWindowState() == 2)
+			game.updateWindowGameMenu();
+		else
+			game.updateWindow();
 		game.renderWindow();
 	}
 
