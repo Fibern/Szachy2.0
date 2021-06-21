@@ -104,9 +104,9 @@ public:
 	void checkPromotion(int i);
 	void checkGameEnd();
 
-	void save();
+	void save(String s);
 	void loadFile();
-	void loadMoves(string move);
+	void loadMoves();
 
 	int getWindowState() { return windowState; }
 };

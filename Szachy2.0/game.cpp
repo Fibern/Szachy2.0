@@ -127,7 +127,10 @@ void Game::updateWindowMenu()
 			if (Mouse::getPosition(window).x >= textMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[0].getGlobalBounds().left + textMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[0].getGlobalBounds().top + textMenu[0].getGlobalBounds().height + 5)
 				windowState = 0;
 			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5)
-				windowState = 7;
+			{
+				windowState = 0;
+				loadFile();
+			}	//windowState = 7;
 			else if (Mouse::getPosition(window).x >= textMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[2].getGlobalBounds().left + textMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[2].getGlobalBounds().top + textMenu[2].getGlobalBounds().height + 5)
 				this->window.close();
 	}
@@ -1944,7 +1947,8 @@ void Game::checkGameEnd() {
 }
 
 void Game::save(String s) {
-	ofstream plik(s.toAnsiString());
+	//ofstream plik(s.toAnsiString());
+	ofstream plik("asd.txt");
 	if (plik.is_open()) {
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
 			if (i % 2 == 0) {
@@ -1967,7 +1971,8 @@ void Game::loadFile() {
 		while (!plik.eof()) {
 			plik >> ruch;
 			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
-				loadMoves(ruch);
+				tmpMove = ruch;
+				loadMoves();
 				licznik++;
 			}
 			licznikPlik++;
@@ -1976,54 +1981,59 @@ void Game::loadFile() {
 	}
 }
 
-void Game::loadMoves(string move) {
-	cout << "xxx" << move << "xxx" << endl;
+void Game::loadMoves() {
 	if (player) {
-		if (move == "O-O") move = "Ke1g1";
-		if (move == "O-O-O") move = "Ke1c1";
+		if (tmpMove == "O-O") tmpMove = "Ke1g1";
+		if (tmpMove == "O-O-O") tmpMove = "Ke1c1";
 	}
 	else{
-		if (move == "O-O") move = "Ke8g8";
-		if (move == "O-O-O") move = "Ke8c8";
+		if (tmpMove == "O-O") tmpMove = "Ke8g8";
+		if (tmpMove == "O-O-O") tmpMove = "Ke8c8";
 	}
 
-	x = (int)move[3] - int('a');
-	y = 8 - ((int)move[4] - (int)'0');
+	x = (int)tmpMove[1] - int('a');
+	y = 8 - ((int)tmpMove[2] - (int)'0');
 
 	for (int i = 0; i < 16; i++) {
-		if (checkPiece(x, y).getSet()) {
-			if (player) {
-				white[i].setPos((float)x * 100, (float)y * 100);
-				white[i].updateCord((float)x, (float)y);
-				if (move == "Ke1c1") {
-					white[0].setPos(300, (float)y * 100);
-					white[0].updateCord(3, (float)y);
-				}
-				if (move == "Ke1g1") {
-					white[7].setPos(500, (float)y);
-					white[7].updateCord(5, (float)y * 100);
-				}
-				updateMoves(x, y, i);
-				if (move[0] == 'P' && move[4] == '8' && move[5] == '=')
-					white[i].promoted(move[6]);
+		if (player && white[i].getSet() && white[i].getX() == x && white[i].getY() == y) {
+			x = (int)tmpMove[3] - int('a');
+			y = 8 - ((int)tmpMove[4] - (int)'0');
+			white[i].setPos((float)x * 100, (float)y * 100);
+			white[i].updateCord((float)x, (float)y);
+			if (tmpMove == "Ke1c1") {
+				white[0].setPos(300, (float)y * 100);
+				white[0].updateCord(3, (float)y);
+			}
+			if (tmpMove == "Ke1g1") {
+				white[7].setPos(500, (float)y);
+				white[7].updateCord(5, (float)y * 100);
+			}
+			updateMoves(x, y, i);
+			if (tmpMove[0] == 'P' && tmpMove[4] == '8' && tmpMove[5] == '=') {
+				white[i].promoted(tmpMove[6]);
 				updatePromotion(i);
 			}
-			else {
-				black[i].setPos((float)x * 100, (float)y * 100);
-				black[i].updateCord((float)x, (float)y);
-				if (move == "Ke8c8") {
-					black[0].setPos(300, (float)y * 100);
-					black[0].updateCord(3, (float)y);
-				}
-				if (move == "Ke8g8") {
-					black[7].setPos(500, (float)y * 100);
-					black[7].updateCord(5, (float)y);
-				}
-				updateMoves(x, y, i);
-				if (move[0] == 'P' && move[4] == '8' && move[5] == '=')
-					black[i].promoted(move[6]);
+			break;
+		}
+		if (!player && black[i].getSet() && black[i].getX() == x && black[i].getY() == y) {
+			x = (int)tmpMove[3] - int('a');
+			y = 8 - ((int)tmpMove[4] - (int)'0');
+			black[i].setPos((float)x * 100, (float)y * 100);
+			black[i].updateCord((float)x, (float)y);
+			if (tmpMove == "Ke8c8") {
+				black[0].setPos(300, (float)y * 100);
+				black[0].updateCord(3, (float)y);
+			}
+			if (tmpMove == "Ke8g8") {
+				black[7].setPos(500, (float)y * 100);
+				black[7].updateCord(5, (float)y);
+			}
+			updateMoves(x, y, i);
+			if (tmpMove[0] == 'P' && tmpMove[4] == '8' && tmpMove[5] == '=') {
+				black[i].promoted(tmpMove[6]);
 				updatePromotion(i);
 			}
+			break;
 		}
 	}
 }
