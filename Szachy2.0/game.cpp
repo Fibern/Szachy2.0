@@ -1,6 +1,5 @@
 ﻿#include "game.h"
 #include "piece.h"
-#include <windows.h>
 
 Game::Game()
 {
@@ -212,7 +211,7 @@ void Game::updateWindow()
 	while (this->window.pollEvent(this->e)) {
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
-
+		save();
 		if (e.type == Event::MouseButtonPressed) {
 			bounds = {};
 			if (e.key.code == Mouse::Left) {
@@ -1763,12 +1762,45 @@ void Game::clearCheck(char xK, char yK, char xC, char yC) {
 }
 
 void Game::checkGameEnd() {
-	if (player && possibleMovesWhite.size() == 0) {
-		if (check)
-		else
+	//if (player && possibleMovesWhite.size() == 0) {
+	//	if (check)
+	//	else
+	//}
+	//if (!player && possibleMovesBlack.size() == 0) {
+	//	if (check)
+	//	else
+	//}
+}
+
+void Game::save() {
+	ofstream plik("asd.txt");
+	if (plik.is_open()) {
+
+		for (int i = 0; i < (int)gameMoves.size(); i++) {
+			if (i % 2 == 0) {
+				plik << " " << to_string((i + 2) / 2) + ".";
+			}
+			plik << " " << gameMoves[i];
+		}
+		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
 	}
-	if (!player && possibleMovesBlack.size() == 0) {
-		if (check)
-		else
+}
+
+void Game::load() {
+	ifstream plik("asd.txt");
+	string ruch;
+	int licznikPlik = 0;
+	int licznik = 0;
+	if (plik.is_open()) {
+		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
+		while (!plik.eof()) {
+			plik >> ruch;
+			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
+				wpisz(ruch, gra, licznik);
+				licznik++;
+			}
+			licznikPlik++;
+		}
+		plik.close();
 	}
 }

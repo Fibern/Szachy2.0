@@ -3,7 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "piece.h"
+#include <windows.h>
 
 using namespace sf;
 using namespace std;
@@ -90,6 +92,9 @@ public:
 	void checkAttacked();
 	void checkPromotion(int i);
 	void checkGameEnd();
+
+	void save();
+	void load();
 
 	int getWindowState() { return windowState; }
 };
