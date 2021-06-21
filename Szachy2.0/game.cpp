@@ -146,7 +146,7 @@ void Game::initTextGameMenu()
 	textGameMenu[1].setFont(font);
 	textGameMenu[1].setFillColor(Color::Black);
 	textGameMenu[1].setString("Save game");
-	textGameMenu[1].setPosition(Vector2f(800 / 2 - 72.f, 800 / 8 * 5));
+	textGameMenu[1].setPosition(Vector2f(800 / 2 - 67.f, 800 / 8 * 5));
 
 	textGameMenu[2].setFont(font);
 	textGameMenu[2].setFillColor(Color::Black);
@@ -219,7 +219,7 @@ void Game::initTextAfterGameMenu()
 	textAfterGameMenu[3].setFont(font);
 	textAfterGameMenu[3].setFillColor(Color::Black);
 	textAfterGameMenu[3].setString("Save game");
-	textAfterGameMenu[3].setPosition(Vector2f(800 / 2 - 72.f, 800 / 8 * 5));
+	textAfterGameMenu[3].setPosition(Vector2f(800 / 2 - 67.f, 800 / 8 * 5));
 
 	textAfterGameMenu[4].setFont(font);
 	textAfterGameMenu[4].setFillColor(Color::Black);
@@ -279,32 +279,26 @@ void Game::initTextSL()
 	if (!font.loadFromFile("Comic_Sans.ttf"))
 		cout << "Can't load font!" << endl;
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 		textSL[i].setFont(font);
 		textSL[i].setFillColor(Color::Black);
 	}
 
 	textSL[0].setString("Input file name:");
-	textSL[0].setPosition(Vector2f(800 / 2 - 90.f, 800 / 8 * 4));
+	textSL[0].setPosition(Vector2f(800 / 2 - 110.f, 800 / 8 * 4));
 
-	while (this->window.pollEvent(this->e)) {
-		if (e.type == Event::TextEntered) {
-			playerInput += e.text.unicode;
-			textSL[1].setString(playerInput);
-		}
-	}
-	textSL[1].setPosition(Vector2f(800 / 2 - 93.f, 800 / 8 * 4));
+	textSL[1].setPosition(Vector2f(800 / 2 - 93.f, 800 / 8 * 5));
 
 	textSL[2].setString("Save game");
-	textSL[2].setPosition(Vector2f(800 / 2 - 85.f, 800 / 8 * 5));
+	textSL[2].setPosition(Vector2f(800 / 2 - 67.f, 800 / 8 * 6));
 	textSL[3].setString("Load game");
-	textSL[3].setPosition(Vector2f(800 / 2 - 72.f, 800 / 8 * 5));
+	textSL[3].setPosition(Vector2f(800 / 2 - 67.f, 800 / 8 * 6));
 
 	textSL[4].setString("Back to game");
-	textSL[4].setPosition(Vector2f(800 / 2 - 30.f, 800 / 8 * 6));
+	textSL[4].setPosition(Vector2f(800 / 2 - 80.f, 800 / 8 * 7));
 
 	textSL[5].setString("Back to menu");
-	textSL[5].setPosition(Vector2f(800 / 2 - 30.f, 800 / 8 * 6));
+	textSL[5].setPosition(Vector2f(800 / 2 - 84.f, 800 / 8 * 7));
 }
 
 void Game::drawSL()
@@ -337,15 +331,20 @@ void Game::updateWindowSL()
 				textSL[2].setFillColor(Color::White);
 			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5)
 				textSL[3].setFillColor(Color::White);
-			else if (Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
+			else if (windowState == 6 && Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
 				textSL[4].setFillColor(Color::White);
-			else if (Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
+			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
 				textSL[5].setFillColor(Color::White);
 			else
 			{
 				for (int i = 2; i < 6; i++)
 					textSL[i].setFillColor(Color::Black);
 			}
+		}
+
+		if (e.type == Event::TextEntered) {
+			playerInput += e.text.unicode;
+			textSL[1].setString(playerInput);
 		}
 
 		if (e.type == Event::MouseButtonPressed)
@@ -1945,7 +1944,7 @@ void Game::checkGameEnd() {
 }
 
 void Game::save(String s) {
-	ofstream plik(s.toAnsiString());
+	ofstream plik(s.toAnsiString() + ".pgn");
 	if (plik.is_open()) {
 
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
