@@ -20,7 +20,7 @@ private:
 	Piece promotionWhite[4];
 	Piece promotionBlack[4];
 	RenderWindow window;
-	int windowState; //0 - gra, 1 - menu, 2 - menu gry 
+	int windowState; //0 - gra, 1 - menu, 2 - menu gry, 3 - wygrana bialych, 4 - wygrana czarnych, 5 - remis
 	void initWindow();
 	void setPromotionPieces();
 
@@ -28,6 +28,7 @@ private:
 	Font font;
 	Text textMenu[3];
 	Text textGameMenu[3];
+	Text textAfterGameMenu[5];
 	Texture boardt;
 	Sprite board;
 	Texture logot;
@@ -70,6 +71,10 @@ public:
 	void initTextGameMenu();
 	void drawGameMenu();
 	void updateWindowGameMenu();
+
+	void initTextAfterGameMenu();
+	void drawAfterGameMenu();
+	void updateWindowAfterGameMenu();
 
 	bool isLegal(string tmpMove);
 	void takes(int x, int y);
