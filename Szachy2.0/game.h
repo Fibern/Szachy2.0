@@ -20,7 +20,7 @@ private:
 	Piece promotionWhite[4];
 	Piece promotionBlack[4];
 	RenderWindow window;
-	int windowState; //0 - gra, 1 - menu, 2 - menu gry, 3 - wygrana bialych, 4 - wygrana czarnych, 5 - remis
+	int windowState; //0 - gra, 1 - menu, 2 - menu gry, 3 - wygrana bialych, 4 - wygrana czarnych, 5 - remis, 6 - zapis, 7 - wczytywanie
 	void initWindow();
 	void setPromotionPieces();
 
@@ -29,6 +29,8 @@ private:
 	Text textMenu[3];
 	Text textGameMenu[3];
 	Text textAfterGameMenu[5];
+	Text textSL[6];
+	String playerInput;
 	Texture boardt;
 	Sprite board;
 	Texture logot;
@@ -76,6 +78,10 @@ public:
 	void drawAfterGameMenu();
 	void updateWindowAfterGameMenu();
 
+	void initTextSL();
+	void drawSL();
+	void updateWindowSL();
+
 	bool isLegal(string tmpMove);
 	void takes(int x, int y);
 	void updateMoves(int x, int y, int i);
@@ -98,7 +104,7 @@ public:
 	void checkPromotion(int i);
 	void checkGameEnd();
 
-	void save();
+	void save(String s);
 	void load();
 
 	int getWindowState() { return windowState; }
