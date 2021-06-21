@@ -1857,14 +1857,7 @@ void Game::checkGameEnd() {
 			windowState = 3;
 		else
 			windowState = 5;
-	//if (player && possibleMovesWhite.size() == 0) {
-	//	if (check)
-	//	else
-	//}
-	//if (!player && possibleMovesBlack.size() == 0) {
-	//	if (check)
-	//	else
-	//}
+	}
 }
 
 void Game::save() {
@@ -1891,7 +1884,6 @@ void Game::load() {
 		while (!plik.eof()) {
 			plik >> ruch;
 			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
-				wpisz(ruch, gra, licznik);
 				licznik++;
 			}
 			licznikPlik++;
