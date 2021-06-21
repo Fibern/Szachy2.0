@@ -44,6 +44,8 @@ int main()
 			game.updateWindowGameMenu();
 		else if (game.getWindowState() == 3 || game.getWindowState() == 4 || game.getWindowState() == 5)
 			game.updateWindowAfterGameMenu();
+		else if (game.getWindowState() == 6 || game.getWindowState() == 7)
+			game.updateWindowSL();
 		else
 			game.updateWindow();
 		game.renderWindow();
