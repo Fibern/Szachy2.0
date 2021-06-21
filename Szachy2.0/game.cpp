@@ -353,8 +353,8 @@ void Game::updateWindowSL()
 		if (e.type == Event::MouseButtonPressed)
 			if (windowState = 6 && Mouse::getPosition(window).x >= textSL[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[2].getGlobalBounds().left + textSL[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[2].getGlobalBounds().top + textSL[2].getGlobalBounds().height + 5)
 				save(playerInput);
-			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5);
-		// Tu daj loada
+			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5)
+				loadFile();
 			else if (windowState == 6 && Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
 				windowState = 0;
 			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
@@ -997,8 +997,8 @@ void Game::updateMoves(int x, int y, int i) {
 	//system("cls");
 
 	for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
-		//if (possibleMovesWhite[j][0] == 'K')
-			//cout << possibleMovesWhite[j] << endl;
+	//	if (possibleMovesWhite[j][0] == 'K')
+	//		cout << possibleMovesWhite[j] << endl;
 	}
 
 
@@ -1776,71 +1776,71 @@ void Game::clearCheck(char xK, char yK, char xC, char yC) {
 	else {
 		if (xC == xK) {
 			if (yK < yC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] > yK && possibleMovesWhite[i][4] <= yC) {
+					if (possibleMovesBlack[i][3] == xK && possibleMovesBlack[i][4] > yK && possibleMovesBlack[i][4] <= yC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 			if (yK > yC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] < yK && possibleMovesWhite[i][4] >= yC) {
+					if (possibleMovesBlack[i][3] == xK && possibleMovesBlack[i][4] < yK && possibleMovesBlack[i][4] >= yC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 		}
 		else if (yC == yK) {
 			if (xK < xC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+					if (possibleMovesBlack[i][4] == yK && possibleMovesBlack[i][3] > xK && possibleMovesBlack[i][3] <= xC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 			if (xK > xC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K')
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K')
 						continue;
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+					if (possibleMovesBlack[i][4] == yK && possibleMovesBlack[i][3] < xK && possibleMovesBlack[i][3] >= xC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
