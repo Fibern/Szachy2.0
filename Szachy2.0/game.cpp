@@ -18,6 +18,7 @@ Game::Game()
 	this->initTextGameMenu();
 
 	this->initTextAfterGameMenu();
+
 	//for (int i = 0; i < (int)possibleMovesWhite.size(); i++)
 	//	cout << possibleMovesWhite[i] << endl;
 }
@@ -293,7 +294,6 @@ void Game::updateWindow()
 	while (this->window.pollEvent(this->e)) {
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
-		save();
 		if (e.type == Event::MouseButtonPressed) {
 			bounds = {};
 			if (e.key.code == Mouse::Left) {
@@ -875,7 +875,6 @@ void Game::takes(int x, int y) {
 }
 
 void Game::updateMoves(int x, int y, int i) {
-
 
 	gameMoves.push_back(tmpMove);
 
@@ -1863,7 +1862,6 @@ void Game::checkGameEnd() {
 void Game::save() {
 	ofstream plik("asd.txt");
 	if (plik.is_open()) {
-
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
 			if (i % 2 == 0) {
 				plik << " " << to_string((i + 2) / 2) + ".";
@@ -1874,20 +1872,74 @@ void Game::save() {
 	}
 }
 
-void Game::load() {
+void Game::loadFile() {
 	ifstream plik("asd.txt");
 	string ruch;
 	int licznikPlik = 0;
 	int licznik = 0;
+	player = 1;
 	if (plik.is_open()) {
 		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
 		while (!plik.eof()) {
 			plik >> ruch;
 			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
+				loadMoves(ruch);
 				licznik++;
 			}
 			licznikPlik++;
 		}
 		plik.close();
+	}
+}
+
+void Game::loadMoves(string move) {
+	cout << "xxx" << move << "xxx" << endl;
+	if (player) {
+		if (move == "O-O") move = "Ke1g1";
+		if (move == "O-O-O") move = "Ke1c1";
+	}
+	else{
+		if (move == "O-O") move = "Ke8g8";
+		if (move == "O-O-O") move = "Ke8c8";
+	}
+
+	x = (int)move[3] - int('a');
+	y = 8 - ((int)move[4] - (int)'0');
+
+	for (int i = 0; i < 16; i++) {
+		if (checkPiece(x, y).getSet()) {
+			if (player) {
+				white[i].setPos((float)x * 100, (float)y * 100);
+				white[i].updateCord((float)x, (float)y);
+				if (move == "Ke1c1") {
+					white[0].setPos(300, (float)y * 100);
+					white[0].updateCord(3, (float)y);
+				}
+				if (move == "Ke1g1") {
+					white[7].setPos(500, (float)y);
+					white[7].updateCord(5, (float)y * 100);
+				}
+				updateMoves(x, y, i);
+				if (move[0] == 'P' && move[4] == '8' && move[5] == '=')
+					white[i].promoted(move[6]);
+				updatePromotion(i);
+			}
+			else {
+				black[i].setPos((float)x * 100, (float)y * 100);
+				black[i].updateCord((float)x, (float)y);
+				if (move == "Ke8c8") {
+					black[0].setPos(300, (float)y * 100);
+					black[0].updateCord(3, (float)y);
+				}
+				if (move == "Ke8g8") {
+					black[7].setPos(500, (float)y * 100);
+					black[7].updateCord(5, (float)y);
+				}
+				updateMoves(x, y, i);
+				if (move[0] == 'P' && move[4] == '8' && move[5] == '=')
+					black[i].promoted(move[6]);
+				updatePromotion(i);
+			}
+		}
 	}
 }

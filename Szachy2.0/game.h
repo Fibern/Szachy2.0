@@ -99,7 +99,8 @@ public:
 	void checkGameEnd();
 
 	void save();
-	void load();
+	void loadFile();
+	void loadMoves(string move);
 
 	int getWindowState() { return windowState; }
 };
