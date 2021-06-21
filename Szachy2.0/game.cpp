@@ -351,11 +351,11 @@ void Game::updateWindowSL()
 			if (windowState = 6 && Mouse::getPosition(window).x >= textSL[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[2].getGlobalBounds().left + textSL[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[2].getGlobalBounds().top + textSL[2].getGlobalBounds().height + 5)
 				save(playerInput);
 			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5);
-		// TODO
+		// Tu daj loada
 			else if (windowState == 6 && Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
-				this->windowState = 0;
+				windowState = 0;
 			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
-				this->windowState = 1;
+				windowState = 1;
 	}
 }
 
