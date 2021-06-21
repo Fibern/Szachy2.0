@@ -1,5 +1,4 @@
 #include "menu.h"
-
 Menu::Menu()
 {
 	this->initWindow();

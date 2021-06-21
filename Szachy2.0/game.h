@@ -105,7 +105,8 @@ public:
 	void checkGameEnd();
 
 	void save(String s);
-	void load();
+	void loadFile();
+	void loadMoves();
 
 	int getWindowState() { return windowState; }
 };
