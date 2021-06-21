@@ -127,7 +127,10 @@ void Game::updateWindowMenu()
 			if (Mouse::getPosition(window).x >= textMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[0].getGlobalBounds().left + textMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[0].getGlobalBounds().top + textMenu[0].getGlobalBounds().height + 5)
 				windowState = 0;
 			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5)
-				windowState = 7;
+			{
+				windowState = 0;
+				loadFile();
+			}	//windowState = 7;
 			else if (Mouse::getPosition(window).x >= textMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[2].getGlobalBounds().left + textMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[2].getGlobalBounds().top + textMenu[2].getGlobalBounds().height + 5)
 				this->window.close();
 	}
@@ -350,8 +353,8 @@ void Game::updateWindowSL()
 		if (e.type == Event::MouseButtonPressed)
 			if (windowState = 6 && Mouse::getPosition(window).x >= textSL[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[2].getGlobalBounds().left + textSL[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[2].getGlobalBounds().top + textSL[2].getGlobalBounds().height + 5)
 				save(playerInput);
-			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5);
-		// Tu daj loada
+			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5)
+				loadFile();
 			else if (windowState == 6 && Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
 				windowState = 0;
 			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
@@ -959,7 +962,6 @@ void Game::takes(int x, int y) {
 
 void Game::updateMoves(int x, int y, int i) {
 
-
 	gameMoves.push_back(tmpMove);
 
 	checkPromotion(i);
@@ -995,8 +997,8 @@ void Game::updateMoves(int x, int y, int i) {
 	//system("cls");
 
 	for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
-		//if (possibleMovesWhite[j][0] == 'K')
-			//cout << possibleMovesWhite[j] << endl;
+	//	if (possibleMovesWhite[j][0] == 'K')
+	//		cout << possibleMovesWhite[j] << endl;
 	}
 
 
@@ -1774,71 +1776,71 @@ void Game::clearCheck(char xK, char yK, char xC, char yC) {
 	else {
 		if (xC == xK) {
 			if (yK < yC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] > yK && possibleMovesWhite[i][4] <= yC) {
+					if (possibleMovesBlack[i][3] == xK && possibleMovesBlack[i][4] > yK && possibleMovesBlack[i][4] <= yC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 			if (yK > yC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][3] == xK && possibleMovesWhite[i][4] < yK && possibleMovesWhite[i][4] >= yC) {
+					if (possibleMovesBlack[i][3] == xK && possibleMovesBlack[i][4] < yK && possibleMovesBlack[i][4] >= yC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 		}
 		else if (yC == yK) {
 			if (xK < xC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K') {
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K') {
 						continue;
 					}
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] > xK && possibleMovesWhite[i][3] <= xC) {
+					if (possibleMovesBlack[i][4] == yK && possibleMovesBlack[i][3] > xK && possibleMovesBlack[i][3] <= xC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
 			if (xK > xC) {
-				for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
-					if (possibleMovesWhite[i][0] == 'K')
+				for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
+					if (possibleMovesBlack[i][0] == 'K')
 						continue;
-					if (possibleMovesWhite[i][0] == 'O') {
-						possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					if (possibleMovesBlack[i][0] == 'O') {
+						possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 						i--;
 						continue;
 					}
-					if (possibleMovesWhite[i][4] == yK && possibleMovesWhite[i][3] < xK && possibleMovesWhite[i][3] >= xC) {
+					if (possibleMovesBlack[i][4] == yK && possibleMovesBlack[i][3] < xK && possibleMovesBlack[i][3] >= xC) {
 						continue;
 					}
-					possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
+					possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
 					i--;
 				}
 			}
@@ -1946,7 +1948,6 @@ void Game::checkGameEnd() {
 void Game::save(String s) {
 	ofstream plik(s.toAnsiString() + ".pgn");
 	if (plik.is_open()) {
-
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
 			if (i % 2 == 0) {
 				plik << " " << to_string((i + 2) / 2) + ".";
@@ -1957,20 +1958,80 @@ void Game::save(String s) {
 	}
 }
 
-void Game::load() {
+void Game::loadFile() {
 	ifstream plik("asd.txt");
 	string ruch;
 	int licznikPlik = 0;
 	int licznik = 0;
+	player = 1;
 	if (plik.is_open()) {
 		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
 		while (!plik.eof()) {
 			plik >> ruch;
 			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
+				tmpMove = ruch;
+				loadMoves();
 				licznik++;
 			}
 			licznikPlik++;
 		}
 		plik.close();
+	}
+}
+
+void Game::loadMoves() {
+	if (player) {
+		if (tmpMove == "O-O") tmpMove = "Ke1g1";
+		if (tmpMove == "O-O-O") tmpMove = "Ke1c1";
+	}
+	else{
+		if (tmpMove == "O-O") tmpMove = "Ke8g8";
+		if (tmpMove == "O-O-O") tmpMove = "Ke8c8";
+	}
+
+	x = (int)tmpMove[1] - int('a');
+	y = 8 - ((int)tmpMove[2] - (int)'0');
+
+	for (int i = 0; i < 16; i++) {
+		if (player && white[i].getSet() && white[i].getX() == x && white[i].getY() == y) {
+			x = (int)tmpMove[3] - int('a');
+			y = 8 - ((int)tmpMove[4] - (int)'0');
+			white[i].setPos((float)x * 100, (float)y * 100);
+			white[i].updateCord((float)x, (float)y);
+			if (tmpMove == "Ke1c1") {
+				white[0].setPos(300, (float)y * 100);
+				white[0].updateCord(3, (float)y);
+			}
+			if (tmpMove == "Ke1g1") {
+				white[7].setPos(500, (float)y);
+				white[7].updateCord(5, (float)y * 100);
+			}
+			updateMoves(x, y, i);
+			if (tmpMove[0] == 'P' && tmpMove[4] == '8' && tmpMove[5] == '=') {
+				white[i].promoted(tmpMove[6]);
+				updatePromotion(i);
+			}
+			break;
+		}
+		if (!player && black[i].getSet() && black[i].getX() == x && black[i].getY() == y) {
+			x = (int)tmpMove[3] - int('a');
+			y = 8 - ((int)tmpMove[4] - (int)'0');
+			black[i].setPos((float)x * 100, (float)y * 100);
+			black[i].updateCord((float)x, (float)y);
+			if (tmpMove == "Ke8c8") {
+				black[0].setPos(300, (float)y * 100);
+				black[0].updateCord(3, (float)y);
+			}
+			if (tmpMove == "Ke8g8") {
+				black[7].setPos(500, (float)y * 100);
+				black[7].updateCord(5, (float)y);
+			}
+			updateMoves(x, y, i);
+			if (tmpMove[0] == 'P' && tmpMove[4] == '8' && tmpMove[5] == '=') {
+				black[i].promoted(tmpMove[6]);
+				updatePromotion(i);
+			}
+			break;
+		}
 	}
 }
