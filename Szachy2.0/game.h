@@ -104,8 +104,8 @@ public:
 	void checkPromotion(int i);
 	void checkGameEnd();
 
-	void save(String s);
-	void loadFile();
+	void saveFile(String s);
+	void loadFile(String s);
 	void loadMoves();
 
 	int getWindowState() { return windowState; }
