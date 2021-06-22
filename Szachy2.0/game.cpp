@@ -591,11 +591,6 @@ void Game::renderWindow()
 	this->window.display();
 }
 
-const RenderWindow& Game::getWindow() const
-{
-	return this->window;
-}
-
 void Game::startingPosition()
 {
 	white[0].setPiece('R', 1, 0, 7);

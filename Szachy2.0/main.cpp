@@ -1,9 +1,12 @@
 #include "game.h"
+#include <Windows.h>
 
 int main()
 {
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE); //Ukrywanie konsoli
 	Game game;	
 
+	//Pêtla g³ówna gry
 	while (game.getWindow().isOpen()) {
 		if (game.getWindowState() == 1)
 			game.updateWindowMenu();
