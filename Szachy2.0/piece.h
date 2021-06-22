@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <string>
 #include "pieceTex.h"
 
@@ -45,5 +44,4 @@ public:
 	void promoted(char type);
 	void updateCord(float x, float y);
 	string cordToString(int x, int y);
-
 };

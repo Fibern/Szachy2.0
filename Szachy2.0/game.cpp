@@ -20,8 +20,6 @@ Game::Game()
 	this->initTextAfterGameMenu();
 
 	this->initTextSL();
-	//for (int i = 0; i < (int)possibleMovesWhite.size(); i++)
-	//	cout << possibleMovesWhite[i] << endl;
 }
 
 void Game::setPromotionPieces() {
@@ -60,8 +58,7 @@ void Game::initWindow()
 
 void Game::initBackgroundMenu()
 {
-	if (!this->boardt.loadFromFile("images/brown.png"))
-		cout << "Can't load board texture!" << endl;
+	this->boardt.loadFromFile("images/brown.png");
 	this->boardt.setRepeated(true);
 	this->board.setTextureRect({ 0, 0, 800, 800 });
 	this->board.setTexture(this->boardt);
@@ -69,8 +66,7 @@ void Game::initBackgroundMenu()
 
 void Game::initTextMenu()
 {
-	if (!font.loadFromFile("Comic_Sans.ttf"))
-		cout << "Can't load font!" << endl;
+	font.loadFromFile("Comic_Sans.ttf");
 
 	textMenu[0].setFont(font);
 	textMenu[0].setFillColor(Color::Black);
@@ -138,8 +134,7 @@ void Game::updateWindowMenu()
 
 void Game::initTextGameMenu()
 {
-	if (!font.loadFromFile("Comic_Sans.ttf"))
-		cout << "Can't load font!" << endl;
+	font.loadFromFile("Comic_Sans.ttf");
 
 	textGameMenu[0].setFont(font);
 	textGameMenu[0].setFillColor(Color::Black);
@@ -207,8 +202,7 @@ void Game::updateWindowGameMenu()
 
 void Game::initTextAfterGameMenu()
 {
-	if (!font.loadFromFile("Comic_Sans.ttf"))
-		cout << "Can't load font!" << endl;
+	font.loadFromFile("Comic_Sans.ttf");
 
 	for (int i = 0; i < 3; i++) {
 		textAfterGameMenu[i].setFont(font);
@@ -285,8 +279,7 @@ void Game::updateWindowAfterGameMenu()
 
 void Game::initTextSL()
 {
-	if (!font.loadFromFile("Comic_Sans.ttf"))
-		cout << "Can't load font!" << endl;
+	font.loadFromFile("Comic_Sans.ttf");
 
 	for (int i = 0; i < 6; i++) {
 		textSL[i].setFont(font);
@@ -329,8 +322,6 @@ void Game::drawSL()
 void Game::updateWindowSL()
 {
 	pos = Mouse::getPosition(window);
-
-	//cout << playerInput.toAnsiString() << endl;
 
 	while (this->window.pollEvent(this->e)) {
 		if (this->e.type == sf::Event::Closed)
@@ -391,10 +382,7 @@ void Game::updateWindowSL()
 
 void Game::initBoard()
 {
-	if (!this->boardt.loadFromFile("images/board.png"))
-		cout << "Can't load board texture!" << endl;
-	/*this->boardt.setRepeated(true);*/
-	//this->board.setTextureRect({ 0, 0, 800, 800 });
+	this->boardt.loadFromFile("images/board.png");
 	this->board.setTexture(this->boardt);
 }
 
@@ -1021,23 +1009,6 @@ void Game::updateMoves(int x, int y, int i) {
 	}
 
 	checkMoves();
-	//system("cls");
-
-	for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
-		//	if (possibleMovesWhite[j][0] == 'K')
-		//		cout << possibleMovesWhite[j] << endl;
-	}
-
-
-	for (int j = 0; j < (int)possibleMovesBlack.size(); j++) {
-		//if (possibleMovesBlack[j][0] == 'B') 
-			//cout << possibleMovesBlack[j] << endl;
-	}
-	//for (int i = 0; i < (int)gameMoves.size(); i++)
-	//{
-	//	cout << gameMoves[i] << " ";
-	//}
-
 }
 
 void Game::updatePromotion(int i) {

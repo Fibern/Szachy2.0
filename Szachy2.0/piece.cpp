@@ -47,7 +47,6 @@ void Piece::setTexture()
 		sprite.setTexture(color ? PieceTex::wP : PieceTex::bP);
 		break;
 	default:
-		cerr << "ERROR: Piece type does not exist." << endl;
 		break;
 	}
 

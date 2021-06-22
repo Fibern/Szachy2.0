@@ -1,7 +1,4 @@
 #include "game.h"
-//#include<SFML/Graphics.hpp>
-
-using namespace sf;
 
 int main()
 {
@@ -23,7 +20,3 @@ int main()
 
 	return 0;
 }
-
-/*
-menu zapisywanie i wczytywanie
-*/
