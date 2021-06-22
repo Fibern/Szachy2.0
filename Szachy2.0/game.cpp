@@ -1973,36 +1973,32 @@ void Game::checkGameEnd() {
 }
 
 void Game::saveFile(String s) {
-	ofstream plik("pgns/" + s.toAnsiString() + ".pgn");
-	if (plik.is_open()) {
+	fileS.open("pgns/" + s.toAnsiString() + ".pgn");
+	if (fileS.is_open()) {
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
 			if (i % 2 == 0) {
-				plik << " " << to_string((i + 2) / 2) + ".";
+				fileS << " " << to_string((i + 2) / 2) + ".";
 			}
-			plik << " " << gameMoves[i];
+			fileS << " " << gameMoves[i];
 		}
-		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
 	}
 }
 
 void Game::loadFile(String s) {
-	ifstream plik("pgns/" + s.toAnsiString() + ".pgn");
-	string ruch;
-	int licznikPlik = 0;
-	int licznik = 0;
+	fileL.open("pgns/" + s.toAnsiString() + ".pgn");
+	counterL = 0;
+	counterFileL = 0;
 	player = 1;
-	if (plik.is_open()) {
-		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
-		while (!plik.eof()) {
-			plik >> ruch;
-			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
-				tmpMove = ruch;
+	if (fileL.is_open()) {
+		while (!fileL.eof()) {
+			fileL >> tmpMove;
+			if (counterFileL % 3 != 0) {
 				loadMoves();
-				licznik++;
+				counterL++;
 			}
-			licznikPlik++;
+			counterFileL++;
 		}
-		plik.close();
+		fileL.close();
 	}
 }
 

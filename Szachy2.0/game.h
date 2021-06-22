@@ -56,6 +56,13 @@ private:
 	bool check = 0;
 	int gameEnd = 0;
 
+	ifstream fileL;
+	string tmpMoveL;
+	int counterFileL = 0;
+	int counterL = 0;
+
+	ofstream fileS;
+
 public:
 
 	Game();
