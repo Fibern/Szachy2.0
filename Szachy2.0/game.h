@@ -56,6 +56,13 @@ private:
 	bool check = 0;
 	int gameEnd = 0;
 
+	ifstream fileL;
+	string tmpMoveL;
+	int counterFileL = 0;
+	int counterL = 0;
+
+	ofstream fileS;
+
 public:
 
 	Game();
@@ -104,8 +111,8 @@ public:
 	void checkPromotion(int i);
 	void checkGameEnd();
 
-	void save(String s);
-	void loadFile();
+	void saveFile(String s);
+	void loadFile(String s);
 	void loadMoves();
 
 	int getWindowState() { return windowState; }

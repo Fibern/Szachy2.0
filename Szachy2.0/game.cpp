@@ -126,11 +126,11 @@ void Game::updateWindowMenu()
 		if (e.type == Event::MouseButtonPressed)
 			if (Mouse::getPosition(window).x >= textMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[0].getGlobalBounds().left + textMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[0].getGlobalBounds().top + textMenu[0].getGlobalBounds().height + 5)
 				windowState = 0;
-			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5)
-			{
-				windowState = 0;
-				loadFile();
-			}	//windowState = 7;
+			else if (Mouse::getPosition(window).x >= textMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[1].getGlobalBounds().left + textMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[1].getGlobalBounds().top + textMenu[1].getGlobalBounds().height + 5) {
+				windowState = 7;
+				playerInput = "";
+				textSL[1].setString("");
+			}
 			else if (Mouse::getPosition(window).x >= textMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textMenu[2].getGlobalBounds().left + textMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textMenu[2].getGlobalBounds().top + textMenu[2].getGlobalBounds().height + 5)
 				this->window.close();
 	}
@@ -195,8 +195,11 @@ void Game::updateWindowGameMenu()
 		if (e.type == Event::MouseButtonPressed)
 			if (Mouse::getPosition(window).x >= textGameMenu[0].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[0].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[0].getGlobalBounds().left + textGameMenu[0].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[0].getGlobalBounds().top + textGameMenu[0].getGlobalBounds().height + 5)
 				windowState = 0;
-			else if (Mouse::getPosition(window).x >= textGameMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[1].getGlobalBounds().left + textGameMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[1].getGlobalBounds().top + textGameMenu[1].getGlobalBounds().height + 5)
+			else if (Mouse::getPosition(window).x >= textGameMenu[1].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[1].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[1].getGlobalBounds().left + textGameMenu[1].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[1].getGlobalBounds().top + textGameMenu[1].getGlobalBounds().height + 5) {
 				windowState = 6;
+				playerInput = "";
+				textSL[1].setString("");
+			}
 			else if (Mouse::getPosition(window).x >= textGameMenu[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textGameMenu[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textGameMenu[2].getGlobalBounds().left + textGameMenu[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textGameMenu[2].getGlobalBounds().top + textGameMenu[2].getGlobalBounds().height + 5)
 				this->window.close();
 	}
@@ -270,8 +273,11 @@ void Game::updateWindowAfterGameMenu()
 		}
 
 		if (e.type == Event::MouseButtonPressed)
-			if (Mouse::getPosition(window).x >= textAfterGameMenu[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textAfterGameMenu[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textAfterGameMenu[3].getGlobalBounds().left + textAfterGameMenu[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textAfterGameMenu[3].getGlobalBounds().top + textAfterGameMenu[3].getGlobalBounds().height + 5)
+			if (Mouse::getPosition(window).x >= textAfterGameMenu[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textAfterGameMenu[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textAfterGameMenu[3].getGlobalBounds().left + textAfterGameMenu[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textAfterGameMenu[3].getGlobalBounds().top + textAfterGameMenu[3].getGlobalBounds().height + 5) {
 				windowState = 6;
+				playerInput = "";
+				textSL[1].setString("");
+			}
 			else if (Mouse::getPosition(window).x >= textAfterGameMenu[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textAfterGameMenu[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textAfterGameMenu[4].getGlobalBounds().left + textAfterGameMenu[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textAfterGameMenu[4].getGlobalBounds().top + textAfterGameMenu[4].getGlobalBounds().height + 5)
 				this->window.close();
 	}
@@ -324,6 +330,8 @@ void Game::updateWindowSL()
 {
 	pos = Mouse::getPosition(window);
 
+	//cout << playerInput.toAnsiString() << endl;
+
 	while (this->window.pollEvent(this->e)) {
 		if (this->e.type == sf::Event::Closed)
 			this->window.close();
@@ -349,12 +357,31 @@ void Game::updateWindowSL()
 			playerInput += e.text.unicode;
 			textSL[1].setString(playerInput);
 		}
+		else if (Keyboard::isKeyPressed(Keyboard::BackSpace)) {
+			if (playerInput.getSize() > 1)
+				playerInput.erase(playerInput.getSize() - 1, 1);
+			else {
+				playerInput = "";
+				textSL[1].setString("");
+			}
+		}
+
+		if (playerInput.getSize() > 0)
+			if (playerInput[playerInput.toAnsiString().length() - 1] == '\b')
+				playerInput.erase(playerInput.getSize() - 1, 1);
+
+		textSL[1].setString(playerInput);
 
 		if (e.type == Event::MouseButtonPressed)
-			if (windowState = 6 && Mouse::getPosition(window).x >= textSL[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[2].getGlobalBounds().left + textSL[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[2].getGlobalBounds().top + textSL[2].getGlobalBounds().height + 5)
-				save(playerInput);
-			else if (windowState = 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5)
-				loadFile();
+			if (windowState == 6 && Mouse::getPosition(window).x >= textSL[2].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[2].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[2].getGlobalBounds().left + textSL[2].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[2].getGlobalBounds().top + textSL[2].getGlobalBounds().height + 5) {
+				saveFile(playerInput);
+				windowState = 1;
+			}
+			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[3].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[3].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[3].getGlobalBounds().left + textSL[3].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[3].getGlobalBounds().top + textSL[3].getGlobalBounds().height + 5) {
+				startingPosition();
+				windowState = 0;
+				loadFile(playerInput);
+			}
 			else if (windowState == 6 && Mouse::getPosition(window).x >= textSL[4].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[4].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[4].getGlobalBounds().left + textSL[4].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[4].getGlobalBounds().top + textSL[4].getGlobalBounds().height + 5)
 				windowState = 0;
 			else if (windowState == 7 && Mouse::getPosition(window).x >= textSL[5].getGlobalBounds().left - 5 && Mouse::getPosition(window).y >= textSL[5].getGlobalBounds().top - 5 && Mouse::getPosition(window).x < textSL[5].getGlobalBounds().left + textSL[5].getGlobalBounds().width + 5 && Mouse::getPosition(window).y < textSL[5].getGlobalBounds().top + textSL[5].getGlobalBounds().height + 5)
@@ -997,8 +1024,8 @@ void Game::updateMoves(int x, int y, int i) {
 	//system("cls");
 
 	for (int j = 0; j < (int)possibleMovesWhite.size(); j++) {
-	//	if (possibleMovesWhite[j][0] == 'K')
-	//		cout << possibleMovesWhite[j] << endl;
+		//	if (possibleMovesWhite[j][0] == 'K')
+		//		cout << possibleMovesWhite[j] << endl;
 	}
 
 
@@ -1945,37 +1972,33 @@ void Game::checkGameEnd() {
 	}
 }
 
-void Game::save(String s) {
-	ofstream plik(s.toAnsiString() + ".pgn");
-	if (plik.is_open()) {
+void Game::saveFile(String s) {
+	fileS.open("pgns/" + s.toAnsiString() + ".pgn");
+	if (fileS.is_open()) {
 		for (int i = 0; i < (int)gameMoves.size(); i++) {
 			if (i % 2 == 0) {
-				plik << " " << to_string((i + 2) / 2) + ".";
+				fileS << " " << to_string((i + 2) / 2) + ".";
 			}
-			plik << " " << gameMoves[i];
+			fileS << " " << gameMoves[i];
 		}
-		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
 	}
 }
 
-void Game::loadFile() {
-	ifstream plik("asd.txt");
-	string ruch;
-	int licznikPlik = 0;
-	int licznik = 0;
+void Game::loadFile(String s) {
+	fileL.open("pgns/" + s.toAnsiString() + ".pgn");
+	counterL = 0;
+	counterFileL = 0;
 	player = 1;
-	if (plik.is_open()) {
-		string ruchRemis = "1/2-1/2", ruchBiale = "1-0", ruchCzarne = "0-1";
-		while (!plik.eof()) {
-			plik >> ruch;
-			if (licznikPlik % 3 != 0 || (ruch == ruchRemis || ruch == ruchBiale || ruch == ruchCzarne)) {
-				tmpMove = ruch;
+	if (fileL.is_open()) {
+		while (!fileL.eof()) {
+			fileL >> tmpMove;
+			if (counterFileL % 3 != 0) {
 				loadMoves();
-				licznik++;
+				counterL++;
 			}
-			licznikPlik++;
+			counterFileL++;
 		}
-		plik.close();
+		fileL.close();
 	}
 }
 
@@ -1984,7 +2007,7 @@ void Game::loadMoves() {
 		if (tmpMove == "O-O") tmpMove = "Ke1g1";
 		if (tmpMove == "O-O-O") tmpMove = "Ke1c1";
 	}
-	else{
+	else {
 		if (tmpMove == "O-O") tmpMove = "Ke8g8";
 		if (tmpMove == "O-O-O") tmpMove = "Ke8c8";
 	}
