@@ -1,10 +1,11 @@
 #include "pieceTex.h"
 
-//£adowanie tekstur bierek szachowych
+// £adowanie tekstur bierek szachowych
 Texture PieceTex::loadTex(string s) //Funkcja pozwalaj¹ca na za³adowanie tekstur
 {
 	Texture t;
-	t.loadFromFile(s);
+	if (!t.loadFromFile(s))
+		cout << "Couldn't load texture!" << endl;
 	return t;
 }
 
