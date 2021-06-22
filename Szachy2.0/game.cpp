@@ -713,7 +713,6 @@ void Game::clearEnPassant() {
 }
 
 void Game::checkMoves() {
-	//Funkcja zapisuje wszystkie ruchy
 	check = 0;
 	for (int i = 0; i < 32; i++) {
 		if (i < 16) {
@@ -760,7 +759,6 @@ void Game::checkMoves() {
 	checkGameEnd();
 }
 
-//Funkcje dla każdej figury
 void Game::checkRook(Piece tmp) {
 	x = tmp.getX();
 	y = tmp.getY();

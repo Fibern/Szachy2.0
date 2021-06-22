@@ -1,42 +1,12 @@
 #include "game.h"
-#include "menu.h"
-//#include<SFML/Graphics.hpp>
-
-using namespace sf;
+#include <Windows.h>
 
 int main()
 {
-	//Menu menu;
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE); //Ukrywanie konsoli
+	Game game;	
 
-	//while (menu.getWindow().isOpen()) {
-	//	menu.updateWindow();
-	//	menu.renderWindow();
-	//}
-
-	Game game;
-	
-	//window.create(VideoMode(800, 800), "Chess");
-	//Texture xd;
-	//xd.loadFromFile("images/queenw.png"); 
-	//Sprite dx;
-	//dx.setTexture(xd);
-	//dx.scale(Vector2f(0.5f, 0.5f));
-	//Event e;
-	//while (window.isOpen())
-	//{
-	//	while (window.pollEvent(e))
-	//	{
-	//		if (e.type == Event::Closed)
-	//			window.close();
-	//	}
-	//	window.clear();
-	//
-	//window.draw(dx);
-	//	window.display();
-	//}
-	//
-	
-
+	//Pêtla g³ówna gry
 	while (game.getWindow().isOpen()) {
 		if (game.getWindowState() == 1)
 			game.updateWindowMenu();
@@ -53,7 +23,3 @@ int main()
 
 	return 0;
 }
-
-/*
-menu zapisywanie i wczytywanie
-*/

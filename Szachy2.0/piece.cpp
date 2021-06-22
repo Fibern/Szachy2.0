@@ -1,32 +1,8 @@
 #include "piece.h"
 #include "pieceTex.h"
 
-void Piece::setPieceType(char type) {
-	this->type = type;
-	this->setTexture();
-}
-
-void Piece::setPiece(char type, bool color, int x, int y)
-{
-	this->color = color;
-	this->setPieceType(type);
-	if (this->type == 'K' || this->type == 'R')
-		this->castle = 1;
-	this->x = x;
-	this->y = y;
-	this->sprite.setPosition(x * 100.f, y * 100.f);
-	this->set = 1;
-}
-
-void Piece::promoted(char type) {
-	this->setPieceType(type);
-	this->set = 1;
-	this->promotion = 0;
-}
-
 void Piece::setTexture()
 {
-
 	switch (type) {
 	case 'K':
 		sprite.setTexture(color ? PieceTex::wK : PieceTex::bK);
@@ -47,13 +23,37 @@ void Piece::setTexture()
 		sprite.setTexture(color ? PieceTex::wP : PieceTex::bP);
 		break;
 	default:
-		cerr << "ERROR: Piece type does not exist." << endl;
 		break;
 	}
-
 }
 
-void Piece::updateCord(float x, float y) {
+void Piece::setPieceType(char type) 
+{
+	this->type = type;
+	this->setTexture();
+}
+
+void Piece::setPiece(char type, bool color, int x, int y)
+{
+	this->color = color;
+	this->setPieceType(type);
+	if (this->type == 'K' || this->type == 'R')
+		this->castle = 1;
+	this->x = x;
+	this->y = y;
+	this->sprite.setPosition(x * 100.f, y * 100.f);
+	this->set = 1;
+}
+
+void Piece::promoted(char type)
+{
+	this->setPieceType(type);
+	this->set = 1;
+	this->promotion = 0;
+}
+
+void Piece::updateCord(float x, float y) 
+{
 	this->x = (int)x;
 	this->y = (int)y;
 
@@ -66,7 +66,8 @@ void Piece::updateCord(float x, float y) {
 
 }
 
-string Piece::cordToString(int x, int y) {
+string Piece::cordToString(int x, int y) 
+{
 	this->typeStr = this->type;
 	this->s1 = this->typeStr;
 	this->s1 += static_cast<char>(this->x) + 'a';
