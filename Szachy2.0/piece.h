@@ -7,7 +7,6 @@ class Piece
 {
 private:
 
-	void setTexture();
 	char type{}; //K - Król, Q - Hetman, R - Wie¿a, B - Goniec, N - Skoczek, P - Pion
 	bool color{}; //0 - czarny, 1 - bia³y
 	int x{}, y{};
@@ -17,6 +16,8 @@ private:
 	bool promotion = 0; //Zapisuje, czy jest mo¿liwa promocja piona
 	bool castle = 0; //Zapisuje, czy jest mo¿liwa roszada
 	string s1, s2, typeStr; //Stringi do zapisu ruchu
+
+	void setTexture(); //Funkcja ustawiaj¹ca tekstury dla bierek
 
 public:
 

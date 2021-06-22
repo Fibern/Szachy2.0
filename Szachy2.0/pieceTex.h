@@ -9,6 +9,7 @@ using namespace std;
 class PieceTex
 {
 public:
+
 	static Texture bK, bQ, bR, bB, bN, bP;
 	static Texture wK, wQ, wR, wB, wN, wP;
 
