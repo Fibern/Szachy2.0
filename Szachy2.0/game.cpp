@@ -22,7 +22,14 @@ Game::Game()
 	this->initTextSL();
 }
 
-void Game::setPromotionPieces() {
+void Game::initWindow()
+{
+	this->window.create(VideoMode(800, 800), "Chess", sf::Style::Close | sf::Style::Titlebar);
+	this->window.setFramerateLimit(60);
+}
+
+void Game::setPromotionPieces() 
+{
 	promotionWhite[0].setPiece('Q', 1, 0, 0);
 	promotionWhite[1].setPiece('R', 1, 0, 0);
 	promotionWhite[2].setPiece('B', 1, 0, 0);
@@ -50,10 +57,215 @@ void Game::setPromotionPieces() {
 	promotionBlack[3].scale(0.5f, 0.5f);
 }
 
-void Game::initWindow()
+void Game::initBoard()
 {
-	this->window.create(VideoMode(800, 800), "Chess", sf::Style::Close | sf::Style::Titlebar);
-	this->window.setFramerateLimit(60);
+	this->boardt.loadFromFile("images/board.png");
+	this->board.setTexture(this->boardt);
+}
+
+void Game::drawBoard()
+{
+	this->window.draw(board);
+
+	for (int i = 0; i < 16; i++) {
+		if (white[i].getSet() && !dragging[i])
+			this->window.draw(white[i].getSprite());
+		if (black[i].getSet() && !dragging[i])
+			this->window.draw(black[i].getSprite());
+		if (white[i].getPromotion() || black[i].getPromotion()) {
+			if (player) {
+				x = white[i].getX() * 100;
+				y = white[i].getY() * 100;
+				promotionWhite[0].changeColor(0);
+				promotionWhite[1].changeColor(0);
+				promotionWhite[2].changeColor(0);
+				promotionWhite[3].changeColor(0);
+
+				promotionWhite[0].setPos((float)x, (float)y);
+				promotionWhite[1].setPos((float)x + 50.f, (float)y);
+				promotionWhite[2].setPos((float)x, (float)y + 50.f);
+				promotionWhite[3].setPos((float)x + 50.f, (float)y + 50.f);
+
+				this->window.draw(promotionWhite[0].getSprite());
+				this->window.draw(promotionWhite[1].getSprite());
+				this->window.draw(promotionWhite[2].getSprite());
+				this->window.draw(promotionWhite[3].getSprite());
+
+			}
+			else {
+				x = black[i].getX() * 100;
+				y = black[i].getY() * 100;
+				promotionBlack[0].changeColor(0);
+				promotionBlack[1].changeColor(0);
+				promotionBlack[2].changeColor(0);
+				promotionBlack[3].changeColor(0);
+
+				promotionBlack[0].setPos((float)x, (float)y);
+				promotionBlack[1].setPos((float)x + 50.f, (float)y);
+				promotionBlack[2].setPos((float)x, (float)y + 50.f);
+				promotionBlack[3].setPos((float)x + 50.f, (float)y + 50.f);
+
+				this->window.draw(promotionBlack[0].getSprite());
+				this->window.draw(promotionBlack[1].getSprite());
+				this->window.draw(promotionBlack[2].getSprite());
+				this->window.draw(promotionBlack[3].getSprite());
+
+			}
+		}
+	}
+	for (int i = 0; i < 16; i++) {
+		if (dragging[i]) {
+			if (player) {
+				if (black[i].getSet())
+					this->window.draw(black[i].getSprite());
+				this->window.draw(white[i].getSprite());
+			}
+			else {
+				if (white[i].getSet())
+					this->window.draw(white[i].getSprite());
+				this->window.draw(black[i].getSprite());
+			}
+		}
+	}
+}
+
+void Game::updateWindow()
+{
+	pos = Mouse::getPosition(window);
+
+	while (this->window.pollEvent(this->e)) {
+		if (this->e.type == sf::Event::Closed)
+			this->window.close();
+		if (e.type == Event::MouseButtonPressed) {
+			bounds = {};
+			if (e.key.code == Mouse::Left) {
+				if (!promotion) {
+					for (int i = 0; i < 16; i++) {
+						if (player && white[i].getSet()) {
+							bounds = (IntRect)white[i].getSprite().getGlobalBounds();
+							tmp = white[i];
+						}
+						else if (!player && black[i].getSet()) {
+							bounds = (IntRect)black[i].getSprite().getGlobalBounds();
+							tmp = black[i];
+						}
+						if (bounds.contains(pos.x, pos.y)) {
+							dragging[i] = 1;
+							break;
+						}
+					}
+				}
+				else {
+					for (int i = 0; i < 16; i++) {
+						if (player && white[i].getPromotion()) {
+							for (int j = 0; j < 4; j++) {
+								bounds = (IntRect)promotionWhite[j].getSprite().getGlobalBounds();
+								if (bounds.contains(pos.x, pos.y)) {
+									white[i].promoted(promotionWhite[j].getType());
+									updatePromotion(i);
+									break;
+								}
+							}
+						}
+						else if (!player && black[i].getPromotion()) {
+							for (int j = 0; j < 4; j++) {
+								bounds = (IntRect)promotionBlack[j].getSprite().getGlobalBounds();
+								if (bounds.contains(pos.x, pos.y)) {
+									black[i].promoted(promotionBlack[j].getType());
+									updatePromotion(i);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (e.type == Event::MouseButtonReleased) {
+			for (int i = 0; i < 16; i++) {
+				if (e.key.code == Mouse::Left && dragging[i]) {
+
+					dragging[i] = 0;
+					dx = (float)floor(pos.x / 100) * 100;
+					dy = (float)floor(pos.y / 100) * 100;
+					if (player)
+						tmpMove = white[i].cordToString((int)dx / 100, (int)dy / 100);
+					else
+						tmpMove = black[i].cordToString((int)dx / 100, (int)dy / 100);
+
+					if (isLegal(tmpMove)) {
+						if (player) {
+							white[i].setPos(dx, dy);
+							white[i].updateCord(dx / 100, dy / 100);
+							if (tmpMove == "Ke1c1") {
+								white[0].setPos(300, dy);
+								white[0].updateCord(3, dy / 100);
+							}
+							if (tmpMove == "Ke1g1") {
+								white[7].setPos(500, dy);
+								white[7].updateCord(5, dy / 100);
+							}
+						}
+						else {
+							black[i].setPos(dx, dy);
+							black[i].updateCord(dx / 100.f, dy / 100.f);
+							if (tmpMove == "Ke8c8") {
+								black[0].setPos(300, dy);
+								black[0].updateCord(3, dy / 100);
+							}
+							if (tmpMove == "Ke8g8") {
+								black[7].setPos(500, dy);
+								black[7].updateCord(5, dy / 100);
+							}
+						}
+
+						updateMoves((int)(dx / 100), int(dy / 100), i);
+
+
+					}
+					else {
+						tmpMove = "";
+						if (player)
+							white[i].setPos((float)bounds.left, (float)bounds.top);
+						else
+							black[i].setPos((float)bounds.left, (float)bounds.top);
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < 16; i++) {
+			if (dragging[i]) {
+				if (player && white[i].getSet()) {
+					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
+				}
+				else if (!player && black[i].getSet()) {
+					black[i].setPos(pos.x - 50.f, pos.y - 50.f);
+				}
+			}
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+			windowState = 2;
+
+	}
+}
+
+void Game::renderWindow()
+{
+	this->window.clear();
+	if (windowState == 0)
+		this->drawBoard();
+	else if (windowState == 1)
+		this->drawMenu();
+	else if (windowState == 2)
+		this->drawGameMenu();
+	else if (windowState == 3 || windowState == 4 || windowState == 5)
+		this->drawAfterGameMenu();
+	else if (windowState == 6 || windowState == 7)
+		this->drawSL();
+	this->window.display();
 }
 
 void Game::initBackgroundMenu()
@@ -380,217 +592,6 @@ void Game::updateWindowSL()
 	}
 }
 
-void Game::initBoard()
-{
-	this->boardt.loadFromFile("images/board.png");
-	this->board.setTexture(this->boardt);
-}
-
-void Game::updateWindow()
-{
-	pos = Mouse::getPosition(window);
-
-	while (this->window.pollEvent(this->e)) {
-		if (this->e.type == sf::Event::Closed)
-			this->window.close();
-		if (e.type == Event::MouseButtonPressed) {
-			bounds = {};
-			if (e.key.code == Mouse::Left) {
-				if (!promotion) {
-					for (int i = 0; i < 16; i++) {
-						if (player && white[i].getSet()) {
-							bounds = (IntRect)white[i].getSprite().getGlobalBounds();
-							tmp = white[i];
-						}
-						else if (!player && black[i].getSet()) {
-							bounds = (IntRect)black[i].getSprite().getGlobalBounds();
-							tmp = black[i];
-						}
-						if (bounds.contains(pos.x, pos.y)) {
-							dragging[i] = 1;
-							break;
-						}
-					}
-				}
-				else {
-					for (int i = 0; i < 16; i++) {
-						if (player && white[i].getPromotion()) {
-							for (int j = 0; j < 4; j++) {
-								bounds = (IntRect)promotionWhite[j].getSprite().getGlobalBounds();
-								if (bounds.contains(pos.x, pos.y)) {
-									white[i].promoted(promotionWhite[j].getType());
-									updatePromotion(i);
-									break;
-								}
-							}
-						}
-						else if (!player && black[i].getPromotion()) {
-							for (int j = 0; j < 4; j++) {
-								bounds = (IntRect)promotionBlack[j].getSprite().getGlobalBounds();
-								if (bounds.contains(pos.x, pos.y)) {
-									black[i].promoted(promotionBlack[j].getType());
-									updatePromotion(i);
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if (e.type == Event::MouseButtonReleased) {
-			for (int i = 0; i < 16; i++) {
-				if (e.key.code == Mouse::Left && dragging[i]) {
-
-					dragging[i] = 0;
-					dx = (float)floor(pos.x / 100) * 100;
-					dy = (float)floor(pos.y / 100) * 100;
-					if (player)
-						tmpMove = white[i].cordToString((int)dx / 100, (int)dy / 100);
-					else
-						tmpMove = black[i].cordToString((int)dx / 100, (int)dy / 100);
-
-					if (isLegal(tmpMove)) {
-						if (player) {
-							white[i].setPos(dx, dy);
-							white[i].updateCord(dx / 100, dy / 100);
-							if (tmpMove == "Ke1c1") {
-								white[0].setPos(300, dy);
-								white[0].updateCord(3, dy / 100);
-							}
-							if (tmpMove == "Ke1g1") {
-								white[7].setPos(500, dy);
-								white[7].updateCord(5, dy / 100);
-							}
-						}
-						else {
-							black[i].setPos(dx, dy);
-							black[i].updateCord(dx / 100.f, dy / 100.f);
-							if (tmpMove == "Ke8c8") {
-								black[0].setPos(300, dy);
-								black[0].updateCord(3, dy / 100);
-							}
-							if (tmpMove == "Ke8g8") {
-								black[7].setPos(500, dy);
-								black[7].updateCord(5, dy / 100);
-							}
-						}
-
-						updateMoves((int)(dx / 100), int(dy / 100), i);
-
-
-					}
-					else {
-						tmpMove = "";
-						if (player)
-							white[i].setPos((float)bounds.left, (float)bounds.top);
-						else
-							black[i].setPos((float)bounds.left, (float)bounds.top);
-					}
-				}
-			}
-		}
-
-		for (int i = 0; i < 16; i++) {
-			if (dragging[i]) {
-				if (player && white[i].getSet()) {
-					white[i].setPos(pos.x - 50.f, pos.y - 50.f);
-				}
-				else if (!player && black[i].getSet()) {
-					black[i].setPos(pos.x - 50.f, pos.y - 50.f);
-				}
-			}
-		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Escape))
-			windowState = 2;
-
-	}
-}
-
-void Game::drawBoard()
-{
-	this->window.draw(board);
-
-	for (int i = 0; i < 16; i++) {
-		if (white[i].getSet() && !dragging[i])
-			this->window.draw(white[i].getSprite());
-		if (black[i].getSet() && !dragging[i])
-			this->window.draw(black[i].getSprite());
-		if (white[i].getPromotion() || black[i].getPromotion()) {
-			if (player) {
-				x = white[i].getX() * 100;
-				y = white[i].getY() * 100;
-				promotionWhite[0].changeColor(0);
-				promotionWhite[1].changeColor(0);
-				promotionWhite[2].changeColor(0);
-				promotionWhite[3].changeColor(0);
-
-				promotionWhite[0].setPos((float)x, (float)y);
-				promotionWhite[1].setPos((float)x + 50.f, (float)y);
-				promotionWhite[2].setPos((float)x, (float)y + 50.f);
-				promotionWhite[3].setPos((float)x + 50.f, (float)y + 50.f);
-
-				this->window.draw(promotionWhite[0].getSprite());
-				this->window.draw(promotionWhite[1].getSprite());
-				this->window.draw(promotionWhite[2].getSprite());
-				this->window.draw(promotionWhite[3].getSprite());
-
-			}
-			else {
-				x = black[i].getX() * 100;
-				y = black[i].getY() * 100;
-				promotionBlack[0].changeColor(0);
-				promotionBlack[1].changeColor(0);
-				promotionBlack[2].changeColor(0);
-				promotionBlack[3].changeColor(0);
-
-				promotionBlack[0].setPos((float)x, (float)y);
-				promotionBlack[1].setPos((float)x + 50.f, (float)y);
-				promotionBlack[2].setPos((float)x, (float)y + 50.f);
-				promotionBlack[3].setPos((float)x + 50.f, (float)y + 50.f);
-
-				this->window.draw(promotionBlack[0].getSprite());
-				this->window.draw(promotionBlack[1].getSprite());
-				this->window.draw(promotionBlack[2].getSprite());
-				this->window.draw(promotionBlack[3].getSprite());
-
-			}
-		}
-	}
-	for (int i = 0; i < 16; i++) {
-		if (dragging[i]) {
-			if (player) {
-				if (black[i].getSet())
-					this->window.draw(black[i].getSprite());
-				this->window.draw(white[i].getSprite());
-			}
-			else {
-				if (white[i].getSet())
-					this->window.draw(white[i].getSprite());
-				this->window.draw(black[i].getSprite());
-			}
-		}
-	}
-}
-
-void Game::renderWindow()
-{
-	this->window.clear();
-	if (windowState == 0)
-		this->drawBoard();
-	else if (windowState == 1)
-		this->drawMenu();
-	else if (windowState == 2)
-		this->drawGameMenu();
-	else if (windowState == 3 || windowState == 4 || windowState == 5)
-		this->drawAfterGameMenu();
-	else if (windowState == 6 || windowState == 7)
-		this->drawSL();
-	this->window.display();
-}
-
 void Game::startingPosition()
 {
 	white[0].setPiece('R', 1, 0, 7);
@@ -616,7 +617,6 @@ void Game::startingPosition()
 		white[i].setPiece('P', 1, i - 8, 6);
 		black[i].setPiece('P', 0, i - 8, 1);
 	}
-
 }
 
 void Game::checkMoves() {
