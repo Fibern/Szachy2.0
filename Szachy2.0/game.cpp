@@ -1425,7 +1425,6 @@ void Game::checkPin(Piece tmp) {
 }
 
 void Game::checkCheck(Piece tmp) {
-
 	x = tmp.getX();
 	y = tmp.getY();
 
@@ -1462,7 +1461,7 @@ void Game::checkCheck(Piece tmp) {
 				check = 1;
 			}
 		}
-	}
+	}	
 	else {
 		for (int i = 0; i < (int)possibleMovesWhite.size(); i++) {
 			if ((possibleMovesWhite[i][0] == 'P' && possibleMovesWhite[i][1] == possibleMovesWhite[i][3]) || possibleMovesWhite[i][0] == 'O')
@@ -1626,6 +1625,9 @@ void Game::clearCheck(char xK, char yK, char xC, char yC) {
 				if (possibleMovesWhite[i][0] == 'K') {
 					continue;
 				}
+				if (possibleMovesWhite[i][3] == xC && possibleMovesWhite[i][4] == yC) {
+					continue;
+				}
 				possibleMovesWhite.erase(possibleMovesWhite.begin() + i);
 				i--;
 			}
@@ -1778,6 +1780,9 @@ void Game::clearCheck(char xK, char yK, char xC, char yC) {
 		else {
 			for (int i = 0; i < (int)possibleMovesBlack.size(); i++) {
 				if (possibleMovesBlack[i][0] == 'K') {
+					continue;
+				}
+				if (possibleMovesBlack[i][3] == xC && possibleMovesBlack[i][4] == yC) {
 					continue;
 				}
 				possibleMovesBlack.erase(possibleMovesBlack.begin() + i);
@@ -1945,6 +1950,7 @@ void Game::saveFile(String s) {
 			}
 			fileS << " " << gameMoves[i];
 		}
+		fileS.close();
 	}
 }
 
